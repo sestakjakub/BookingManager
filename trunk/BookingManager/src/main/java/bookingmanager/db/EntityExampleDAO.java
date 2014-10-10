@@ -20,7 +20,6 @@ public class EntityExampleDAO {
     private EntityManager em;
     
     public EntityExampleDAO(EntityManagerFactory emf){
-        emf.createEntityManager();
         em = emf.createEntityManager();
     }
     
