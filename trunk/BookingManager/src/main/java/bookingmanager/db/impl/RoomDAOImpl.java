@@ -1,5 +1,6 @@
-package bookingmanager.db;
+package bookingmanager.db.impl;
 
+import bookingmanager.db.RoomDAO;
 import bookingmanager.entity.Room;
 import java.util.List;
 import javax.persistence.EntityManager;
