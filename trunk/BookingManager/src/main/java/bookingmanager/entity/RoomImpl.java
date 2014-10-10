@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author Jiří Kareš
  */
 @Entity
-@Table(name = "hotels")
+@Table(name = "rooms")
 public class RoomImpl implements Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
