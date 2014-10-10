@@ -107,6 +107,6 @@ public class RoomImpl implements Room {
 //
 //    @Override
 //    public Booking getBooking(int id) {
-//        bookings.get(id);
+//        return bookings.get(id);
 //    }
 }
