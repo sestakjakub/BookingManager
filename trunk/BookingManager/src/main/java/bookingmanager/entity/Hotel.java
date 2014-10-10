@@ -1,24 +1,89 @@
 package bookingmanager.entity;
 
+import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Jiří Kareš
  */
-public interface Hotel {
-    public boolean addRoom(Room room);
-    public boolean removeRoom(Room room);
-    public Room getRoom(int roomId);
+@Entity
+@Table(name = "hotels")
+public class Hotel{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     
-    public void setId(int id);
-    public int getId();
+    @Column
+    private String name;
     
-    public void setName(String name);
-    public String getName();
+    @Column
+    private String address;
     
-    public void setAddress(String address);
-    public String getAddress();
+    @Column
+    private int phoneNumber;
     
-    public void setPhoneNumber(int phoneNumber);
-    public int getPhoneNumber();
-}
+    private final ArrayList<Room> rooms; // We should consider the use of map<Integer, Room> instead of list
+
+    public Hotel() {
+        rooms = new ArrayList<>();
+    }
+
+    public Hotel(int id, String name, String address, int phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        rooms = new ArrayList<>();
+    }
+
+    public boolean addRoom(Room room) {
+        return rooms.add(room);
+    }
+
+    public boolean removeRoom(Room room) {
+        return rooms.remove(room);
+    }
+
+    public Room getRoom(int roomId) {
+        return rooms.get(id);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+};
