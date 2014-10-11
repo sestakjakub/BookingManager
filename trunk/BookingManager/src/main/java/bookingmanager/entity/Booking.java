@@ -55,7 +55,7 @@ public class Booking implements Serializable {
 
     @Override
     public String toString() {
-        return "bookingmanager.entity.Book[ id=" + id + " ]";
+        return "bookingmanager.entity.Booking[ id=" + id + " ]";
     }
     
 }

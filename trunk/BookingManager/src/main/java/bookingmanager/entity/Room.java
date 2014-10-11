@@ -2,6 +2,7 @@ package bookingmanager.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class Room implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column
     private int roomNumber;
@@ -43,7 +44,7 @@ public class Room implements Serializable {
         bookings = new ArrayList<>();
     }
 
-    public Room(int id, int roomNumber, Hotel hotel, int capacity, int price) {
+    public Room(Long id, int roomNumber, Hotel hotel, int capacity, int price) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.hotel = hotel;
@@ -52,11 +53,11 @@ public class Room implements Serializable {
         bookings = new ArrayList<>();
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -102,5 +103,25 @@ public class Room implements Serializable {
 
     public Booking getBooking(int id) {
         return bookings.get(id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (object instanceof Room) {
+            Room other = (Room)object;
+            return Objects.equals(id, other.getId());
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "bookingmanager.entity.Room[ id=" + id + " ]";
     }
 }

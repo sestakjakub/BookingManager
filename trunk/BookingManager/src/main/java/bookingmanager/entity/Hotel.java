@@ -2,6 +2,7 @@ package bookingmanager.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,19 +18,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "hotel")
 public class Hotel implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    
+    private Long id;
+
     @Column
     private String name;
-    
+
     @Column
     private String address;
-    
+
     @Column
     private int phoneNumber;
-    
+
     @OneToMany(mappedBy = "hotel")
     private final ArrayList<Room> rooms; // We should consider the use of map<Integer, Room> instead of list
 
@@ -37,7 +39,7 @@ public class Hotel implements Serializable {
         rooms = new ArrayList<>();
     }
 
-    public Hotel(int id, String name, String address, int phoneNumber) {
+    public Hotel(Long id, String name, String address, int phoneNumber) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -53,15 +55,15 @@ public class Hotel implements Serializable {
         return rooms.remove(room);
     }
 
-    public Room getRoom(int roomId) {
-        return rooms.get(id);
+    public Room getRoom(int roomNumber) {
+        return rooms.get(roomNumber);
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -89,4 +91,23 @@ public class Hotel implements Serializable {
         return phoneNumber;
     }
 
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+
+        if (object instanceof Hotel) {
+            Hotel other = (Hotel)object;
+            return Objects.equals(id, other.getId());
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "bookingmanager.entity.Hotel[ id=" + id + " ]";
+    }
 };
