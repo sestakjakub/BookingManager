@@ -101,7 +101,7 @@ public class Room implements Serializable {
         return bookings.remove(booking);
     }
 
-    public Booking getBooking(int id) {
+    public Booking getBookingById(int id) {
         return bookings.get(id);
     }
     

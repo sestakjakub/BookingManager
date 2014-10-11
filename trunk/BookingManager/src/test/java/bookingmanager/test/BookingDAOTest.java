@@ -6,9 +6,14 @@
 package bookingmanager.test;
 
 import bookingmanager.db.impl.BookingDAOImpl;
+import bookingmanager.db.impl.CustomerDAOImpl;
+import bookingmanager.db.impl.RoomDAOImpl;
 import bookingmanager.entity.Booking;
 import bookingmanager.entity.Booking;
 import bookingmanager.entity.Booking;
+import bookingmanager.entity.Customer;
+import bookingmanager.entity.Hotel;
+import bookingmanager.entity.Room;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,7 +48,16 @@ public class BookingDAOTest {
     @Test
     public void persistBookingTest()
     {
-        Booking booking = new Booking(1,);
+        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
+        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
+        customerEntityManager.persistCustomer(customer);
+        
+        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        RoomDAOImpl roomEntityManager = new RoomDAOImpl();
+        roomEntityManager.persistRoom(room);
+        
+        
+        Booking booking = new Booking(1, customer, room);
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -52,15 +66,24 @@ public class BookingDAOTest {
         
         assertEquals("Persisted entity: " + booking.toString() + "does not equal to entity extracted from DB: " +
                 booking2.toString(), booking, booking2);
-    
+        
+        Customer customer2 = customerEntityManager.getCustomerById(customer.getId());
+        Room room2 = roomEntityManager.getCustomerById(room.getId());        
+        
+        assertTrue("Entity: " + customer2.toString() + "does not contain mapping for entity:" +
+                booking.toString(), customer2.getBookings().contains(booking)); 
+        
+        assertEquals("Entity: " + room2.toString() + "does not contain mapping for entity:" +
+                booking.toString(), booking, room2.getBookingById(booking.getId()));   
+        // TODO: must unite approach for getting Booking from Customer and Room
     }
     
     @Test
     public void getAllBookingsTest(){
         
-        Booking booking = new Booking(1, "Ritz", "Ukrajinska 4", 123456);
-        Booking booking2 = new Booking(2, "Hilton", "Rumunska 5", 654321);
-        Booking booking3 = new Booking(3, "HolidayInn", "Botanicka 6", 134652);
+        Booking booking = new Booking(1, new Customer(), new Room());
+        Booking booking2 = new Booking(2, new Customer(), new Room());
+        Booking booking3 = new Booking(3, new Customer(), new Room());
         
         List<Booking> bookings = Arrays.asList(booking, booking2, booking3);
         
@@ -89,12 +112,12 @@ public class BookingDAOTest {
     @Test
     public void mergeBookingTest()
     {
-        Booking booking = new Booking(1, "Ritz", "Ukrajinska 4", 123456);
+        Booking booking = new Booking(1, new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
         
-        booking.setAddress("Manesova 12");
+        booking.setAddress("Manesova 12"); // update
         
         Booking bookingManaged = bookingEntityManager.mergeBooking(booking);
         
@@ -102,7 +125,7 @@ public class BookingDAOTest {
         assertEquals("Merged entity: " + booking.toString() + "does not equal to entity extracted from DB: " +
                 booking2.toString(), booking, booking2);
         
-        bookingManaged.setAddress("Malinovskeho namesti");
+        bookingManaged.setAddress("Malinovskeho namesti"); // update
         
         booking2 = bookingEntityManager.getBookingById(bookingManaged.getId());
         assertEquals("Managed entity: " + bookingManaged.toString() + "does not equal to entity extracted from DB: " +
@@ -113,15 +136,24 @@ public class BookingDAOTest {
     @Test
     public void updateBookingTest()
     {
-        Booking booking = new Booking(1, "Ritz", "Ukrajinska 4", 123456);
-        Booking booking2 = new Booking(2, "Hilton", "Rumunska 5", 654321);
+        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
+        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
+        customerEntityManager.persistCustomer(customer);
+        
+        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        RoomDAOImpl roomEntityManager = new RoomDAOImpl();
+        roomEntityManager.persistRoom(room);
+        
+        
+        Booking booking = new Booking(new Long(1), customer, room); // TODO: Long vs. long
+        Booking booking2 = new Booking(2, new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
         bookingEntityManager.persistBooking(booking2);
         
-        booking.setName("Martin Kuba");
-        booking.setAddress("Kotlarska 45");
+        booking.setName("Martin Kuba"); // update
+        booking.setAddress("Kotlarska 45"); // update
         
         Booking bookingDB = bookingEntityManager.getBookingById(booking.getId());
                 
@@ -133,13 +165,28 @@ public class BookingDAOTest {
         assertEquals("Entity: " + booking2 + "was disturbed in DB while updating entity: " +
                 booking, booking2, bookingDB2);
         
+        assertEquals("Entity: " + customer.toString() + "contains not correctly updated version of entity: " +
+                booking.toString(), booking, customer.getBookingById(booking.getId().intValue()));
+        
+        assertEquals("Entity: " + room.toString() + "contains not correctly updated version of entity: " +
+                booking.toString(), booking, room.getBookingById(booking.getId().intValue()));
+                
     }
     
     @Test
     public void removeBookingTest()
     {
-        Booking booking = new Booking(1, "Ritz", "Ukrajinska 4", 123456);
-        Booking booking2 = new Booking(2, "Hilton", "Rumunska 5", 654321);
+        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
+        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
+        customerEntityManager.persistCustomer(customer);
+        
+        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        RoomDAOImpl roomEntityManager = new RoomDAOImpl();
+        roomEntityManager.persistRoom(room);
+        
+        
+        Booking booking = new Booking(1, customer, room);
+        Booking booking2 = new Booking(2, new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -154,14 +201,21 @@ public class BookingDAOTest {
         
         assertEquals("Entity: " + booking2.toString() +
                 "was disturbed while removing entity: " + booking.toString(), booking2, bookingDB);
+        
+        assertNull("Entity: " + booking.toString() + "was not correctly removed from entity: " +
+                customer.toString(), customer.getBookingById(booking.getId().intValue()));
+        
+        assertNull("Entity: " + booking.toString() + "was not correctly removed from entity: " +
+                room.toString(), room.getBookingById(booking.getId().intValue()));
+          
     }
     
     
     
     private static Comparator<Booking> idComparator = new Comparator<Booking>() {
         @Override
-        public int compare(Booking r1, Booking r2) {
-            return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
+        public int compare(Booking b1, Booking b2) {
+            return Long.valueOf(b1.getId()).compareTo(Long.valueOf(b2.getId()));
         }
     };
 }

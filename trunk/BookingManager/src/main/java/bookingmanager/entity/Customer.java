@@ -23,6 +23,8 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer implements Serializable {
     
+    public Customer() {}
+    
     public Customer(long id, String name, String address) {
         this.id = id;
         this.name = name;
@@ -59,12 +61,8 @@ public class Customer implements Serializable {
         this.address = address;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
+    public Booking getBookingById(int id){
+        return bookings.get(id);
     }
     
     public Long getId() {
