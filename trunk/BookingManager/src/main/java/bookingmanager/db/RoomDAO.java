@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface RoomDAO {
     public List<Room> getAllRooms();
-    public void persist(Room room);
+    public void persistRoom(Room room);
 }

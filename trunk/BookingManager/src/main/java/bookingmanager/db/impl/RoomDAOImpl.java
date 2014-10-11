@@ -20,7 +20,7 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void persist(Room room) {
+    public void persistRoom(Room room) {
         em.getTransaction().begin();
         em.persist(room);
         em.getTransaction().commit();

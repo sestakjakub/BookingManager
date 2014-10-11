@@ -22,6 +22,13 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer implements Serializable {
     
+    public Customer(long id, String name, String address, List<Booking> bookings) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.bookings = bookings;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

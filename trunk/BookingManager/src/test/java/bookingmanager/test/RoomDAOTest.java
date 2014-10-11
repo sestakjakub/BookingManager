@@ -44,7 +44,7 @@ public class RoomDAOTest {
         Room room = new Room(1, 11, new Hotel(), 1, 100);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persist(room);
+        roomEntityManager.persistRoom(room);
         
         Room room2 = roomEntityManager.getRoomById(room.getId());
         
@@ -56,7 +56,6 @@ public class RoomDAOTest {
     @Test
     public void getAllRoomsTest(){
         
-        int persistedEntities = 3;
         Room room = new Room(1, 11, new Hotel(), 1, 100);
         Room room2 = new Room(2, 12, new Hotel(), 2, 200);
         Room room3 = new Room(3, 13, new Hotel(), 3, 300);
@@ -64,9 +63,9 @@ public class RoomDAOTest {
         List<Room> rooms = Arrays.asList(room, room2, room3);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persist(room);
-        roomEntityManager.persist(room2);
-        roomEntityManager.persist(room3);
+        roomEntityManager.persistRoom(room);
+        roomEntityManager.persistRoom(room2);
+        roomEntityManager.persistRoom(room3);
         
         List<Room> roomsExtracted = roomEntityManager.getAllRooms();
         
@@ -74,7 +73,7 @@ public class RoomDAOTest {
         Collections.sort(roomsExtracted, idComparator);
         
         assertEquals("Number of persisted entities does not match to " + 
-                "number of entities extracted from DB", persistedEntities, rooms.size());
+                "number of entities extracted from DB", rooms.size(), roomsExtracted.size());
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
         
@@ -91,7 +90,7 @@ public class RoomDAOTest {
         Room room = new Room(1, 11, new Hotel(), 1, 100);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persist(room);
+        roomEntityManager.persistRoom(room);
         
         room.setCapacity(10);
         
@@ -116,8 +115,8 @@ public class RoomDAOTest {
         Room room2 = new Room(2, 12, new Hotel(), 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persist(room);
-        roomEntityManager.persist(room2);
+        roomEntityManager.persistRoom(room);
+        roomEntityManager.persistRoom(room2);
         
         room.setCapacity(10);
         room.setPrice(200);
@@ -142,8 +141,8 @@ public class RoomDAOTest {
         Room room2 = new Room(2, 12, new Hotel(), 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persist(room);
-        roomEntityManager.persist(room2);
+        roomEntityManager.persistRoom(room);
+        roomEntityManager.persistRoom(room2);
         
         roomEntityManager.remove(room);
         
