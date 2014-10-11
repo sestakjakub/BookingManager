@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface HotelDAO {
     public List<Hotel> getAllHotels();
-    public void persist(Hotel hotel);
+    public void persistHotel(Hotel hotel);
 }

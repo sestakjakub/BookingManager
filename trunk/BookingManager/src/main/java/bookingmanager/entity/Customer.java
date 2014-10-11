@@ -5,6 +5,7 @@
 package bookingmanager.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,11 +23,11 @@ import javax.persistence.Table;
 @Table(name = "customer")
 public class Customer implements Serializable {
     
-    public Customer(long id, String name, String address, List<Booking> bookings) {
+    public Customer(long id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.bookings = bookings;
+        this.bookings = new ArrayList<Booking>();
     }
     
     @Id

@@ -17,6 +17,13 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Booking implements Serializable {
+    
+    public Booking(Long id, Customer customer, Room room){
+        this.id = id;
+        this.customer = customer;
+        this.room = room;
+    }
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +31,9 @@ public class Booking implements Serializable {
     
     @ManyToOne
     private Room room;
+    
+    @ManyToOne
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -56,6 +66,34 @@ public class Booking implements Serializable {
     @Override
     public String toString() {
         return "bookingmanager.entity.Booking[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the room
+     */
+    public Room getRoom() {
+        return room;
+    }
+
+    /**
+     * @param room the room to set
+     */
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    /**
+     * @return the customer
+     */
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    /**
+     * @param customer the customer to set
+     */
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
     
 }

@@ -23,7 +23,7 @@ public class HotelDAOImpl implements HotelDAO {
     }
 
     @Override
-    public void persist(Hotel hotel) {
+    public void persistHotel(Hotel hotel) {
         em.getTransaction().begin();
         em.persist(hotel);
         em.getTransaction().commit();
