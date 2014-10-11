@@ -33,7 +33,7 @@ public class Customer implements Serializable {
     private String address;
     
     @OneToMany
-    private List<Book> bookings;
+    private List<Booking> bookings;
 
     public String getName() {
         return name;
@@ -51,11 +51,11 @@ public class Customer implements Serializable {
         this.address = address;
     }
 
-    public List<Book> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<Book> bookings) {
+    public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
     }
     

@@ -1,11 +1,14 @@
 package bookingmanager.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -13,8 +16,8 @@ import javax.persistence.Table;
  * @author Jiří Kareš
  */
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "room")
+public class Room implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +27,7 @@ public class Room {
     private int roomNumber;
 
     @Column
+    @ManyToOne
     private Hotel hotel;
 
     @Column
@@ -31,10 +35,12 @@ public class Room {
 
     @Column
     private int price;
-//    private ArrayList<Booking> bookings;
+    
+    @OneToMany(mappedBy = "room")
+    private ArrayList<Booking> bookings;
 
     public Room() {
-//        bookings = new ArrayList<>();
+        bookings = new ArrayList<>();
     }
 
     public Room(int id, int roomNumber, Hotel hotel, int capacity, int price) {
@@ -43,7 +49,7 @@ public class Room {
         this.hotel = hotel;
         this.capacity = capacity;
         this.price = price;
-//        bookings = new ArrayList<>();
+        bookings = new ArrayList<>();
     }
 
     public void setId(int id) {
@@ -86,18 +92,15 @@ public class Room {
         return price;
     }
 
-//    @Override
-//    public boolean addBooking(Booking booking) {
-//        return bookings.add(booking);
-//    }
-//
-//    @Override
-//    public boolean removeBooking(Booking booking) {
-//        return bookings.remove(booking);
-//    }
-//
-//    @Override
-//    public Booking getBooking(int id) {
-//        return bookings.get(id);
-//    }
+    public boolean addBooking(Booking booking) {
+        return bookings.add(booking);
+    }
+
+    public boolean removeBooking(Booking booking) {
+        return bookings.remove(booking);
+    }
+
+    public Booking getBooking(int id) {
+        return bookings.get(id);
+    }
 }

@@ -1,11 +1,13 @@
 package bookingmanager.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -13,8 +15,8 @@ import javax.persistence.Table;
  * @author Jiří Kareš
  */
 @Entity
-@Table(name = "hotels")
-public class Hotel{
+@Table(name = "hotel")
+public class Hotel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -28,6 +30,7 @@ public class Hotel{
     @Column
     private int phoneNumber;
     
+    @OneToMany(mappedBy = "hotel")
     private final ArrayList<Room> rooms; // We should consider the use of map<Integer, Room> instead of list
 
     public Hotel() {
