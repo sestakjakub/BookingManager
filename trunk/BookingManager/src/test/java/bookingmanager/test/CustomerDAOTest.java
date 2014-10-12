@@ -104,7 +104,7 @@ public class CustomerDAOTest {
         assertEquals("Managed entity: " + customerManaged.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customerManaged, customer2);
                
-        customerEntityManager.removeCustomer(customer);
+        customerEntityManager.removeCustomer(customerManaged);
     }
     
     @Test
@@ -147,7 +147,7 @@ public class CustomerDAOTest {
         customerEntityManager.removeCustomer(customer);
         
         assertEquals("Entity: " + customer.toString() + 
-                "was not correctly removed from DB", customerEntityManager.getAllCustomers().size(), 1);
+                "was not correctly removed from DB", 1, customerEntityManager.getAllCustomers().size());
         
         Customer customerDB = customerEntityManager.getCustomerById(customer2.getId());
         
@@ -155,7 +155,6 @@ public class CustomerDAOTest {
                 "was disturbed while removing entity: " + customer.toString(), customer2, customerDB);
         
         
-        customerEntityManager.removeCustomer(customer);
         customerEntityManager.removeCustomer(customer2);
     }
     
