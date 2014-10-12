@@ -50,6 +50,7 @@ public class CustomerDAOTest {
         assertEquals("Persisted entity: " + customer.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customer, customer2);
     
+        customerEntityManager.removeCustomer(customer);
     }
     
     @Test
@@ -76,11 +77,9 @@ public class CustomerDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", customers, customersExtracted);
         
-    }
-    
-    @Test
-    public void findCustomerByIdTest(){
-        // the same as PersistCustomerTest?
+        customerEntityManager.removeCustomer(customer);
+        customerEntityManager.removeCustomer(customer2);
+        customerEntityManager.removeCustomer(customer3);
     }
     
     @Test
@@ -105,6 +104,7 @@ public class CustomerDAOTest {
         assertEquals("Managed entity: " + customerManaged.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customerManaged, customer2);
                
+        customerEntityManager.removeCustomer(customer);
     }
     
     @Test
@@ -130,6 +130,8 @@ public class CustomerDAOTest {
         assertEquals("Entity: " + customer2 + "was disturbed in DB while updating entity: " +
                 customer, customer2, customerDB2);
         
+        customerEntityManager.removeCustomer(customer);
+        customerEntityManager.removeCustomer(customer2);
     }
     
     @Test
@@ -151,6 +153,10 @@ public class CustomerDAOTest {
         
         assertEquals("Entity: " + customer2.toString() +
                 "was disturbed while removing entity: " + customer.toString(), customer2, customerDB);
+        
+        
+        customerEntityManager.removeCustomer(customer);
+        customerEntityManager.removeCustomer(customer2);
     }
     
     
