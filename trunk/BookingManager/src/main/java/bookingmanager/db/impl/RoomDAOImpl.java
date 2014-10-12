@@ -8,10 +8,18 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+/**
+ * Class RoomDAOImpl
+ * 
+ * @author Jiří Kareš
+ */
 public class RoomDAOImpl implements RoomDAO {
 
     private EntityManager em;
     
+    /**
+     * Default constructor
+     */
     public RoomDAOImpl()
     {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");

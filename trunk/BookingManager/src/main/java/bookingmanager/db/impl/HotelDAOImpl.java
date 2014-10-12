@@ -9,13 +9,17 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 /**
- *
- * @author Kupker
+ * Class HotelDAOImpl
+ * 
+ * @author Jiří Kareš
  */
 public class HotelDAOImpl implements HotelDAO {
 
     private EntityManager em;
 
+    /**
+     * Default constructor
+     */
     public HotelDAOImpl() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
         em = emf.createEntityManager();
