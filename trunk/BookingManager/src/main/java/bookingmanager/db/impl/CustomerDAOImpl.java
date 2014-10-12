@@ -37,8 +37,10 @@ public class CustomerDAOImpl implements CustomerDAO {
     
     @Override
     public Customer getCustomerById(long id) {
+        entityManager.getTransaction().begin();
         Query query = entityManager.createNativeQuery("select * from customer where id = :id", Customer.class);
         query.setParameter("id", id);
+        entityManager.getTransaction().commit();
         
         Customer customer = (Customer) query.getSingleResult();
         return customer;
