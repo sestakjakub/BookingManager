@@ -21,6 +21,7 @@ public class BookingDAOImpl implements BookingDAO {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         entityManager = emf.createEntityManager();
     }
+    
     @Override
     public void persistBooking(Booking booking) {
         entityManager.getTransaction().begin();
@@ -31,7 +32,7 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     public Booking getBookingById(long id) {
         entityManager.getTransaction().begin();
-        Query query = entityManager.createNativeQuery("select * from customer where id = :id", Booking.class);
+        Query query = entityManager.createNativeQuery("select * from booking where id = :id", Booking.class);
         query.setParameter("id", id);
         entityManager.getTransaction().commit();
         
