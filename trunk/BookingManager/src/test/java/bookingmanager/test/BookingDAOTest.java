@@ -97,6 +97,8 @@ public class BookingDAOTest {
         bookingEntityManager.persistBooking(booking);
 
         Booking bookingManaged = bookingEntityManager.mergeBooking(booking);
+        
+        bookingManaged.setDateFrom(new Date(2014, 10, 12));
 
         Booking booking2 = bookingEntityManager.getBookingById(booking.getId());
         assertEquals("Merged entity: " + booking.toString() + "does not equal to entity extracted from DB: "
@@ -108,51 +110,32 @@ public class BookingDAOTest {
         bookingEntityManager.removeBooking(booking2);
     }
 
-  /**
-     @Test public void updateBookingTest() { Customer customer = new
-     Customer(); customer.setName("Franta Sádlo"); CustomerDAOImpl
-     customerEntityManager = new CustomerDAOImpl();
-     customerEntityManager.persistCustomer(customer);
-    
-      Room room = createRoom(11, new Hotel(), 1, 100); RoomDAOImpl
-      roomEntityManager = new RoomDAOImpl();
-      roomEntityManager.persistRoom(room);
-     
-     
-      Booking booking = new Booking(); Booking booking2 = createBooking(new
-      Customer(), new Room());
-     
-      BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
-      bookingEntityManager.persistBooking(booking);
-      bookingEntityManager.persistBooking(booking2);
-     
-      Customer customer2 = new Customer(); booking.setCustomer(customer2);
-     
-      Booking bookingDB = bookingEntityManager.getBookingById(booking.getId());
-     
-      assertEquals("Entity: " + booking + "was not correctly updated in DB,
-      actual entity: " + bookingDB, booking, bookingDB);
-     
-      Booking bookingDB2 =
-      bookingEntityManager.getBookingById(booking2.getId());
-     
-      assertEquals("Entity: " + booking2 + "was disturbed in DB while updating
-      entity: " + booking, booking2, bookingDB2);
-     
-      assertTrue("Entity: " + customer.toString() + "contains not correctly
-      updated version of entity: " + booking.toString(),
-      customer.getBookings().contains(booking));
-     
-      assertTrue("Entity: " + room.toString() + "contains not correctly updated
-      version of entity: " + booking.toString(),
-      room.getBookings().contains(booking));
-     
-      }
-     */
+    @Test
+    public void updateBookingTest() {
+
+        Booking booking = TestUtils.createBooking(new Date(2013, 10, 14), new Date(2014, 10, 14));
+        Booking booking2 = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
+
+        BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
+        bookingEntityManager.persistBooking(booking);
+        bookingEntityManager.persistBooking(booking2);
+
+        Booking bookingDB = bookingEntityManager.getBookingById(booking.getId());
+
+        assertEquals("Entity: " + booking + "was not correctly updated in DB, actual entity: "
+                + bookingDB, booking, bookingDB);
+
+        Booking bookingDB2 = bookingEntityManager.getBookingById(booking2.getId());
+
+        assertEquals("Entity: " + booking2 + "was disturbed in DB while updating entity: "
+                + booking, booking2, bookingDB2);
+
+        bookingEntityManager.removeBooking(booking);
+        bookingEntityManager.removeBooking(booking2);
+    }
+
     @Test
     public void removeBookingTest() {
-
-
 
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
         Booking booking2 = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
@@ -173,6 +156,7 @@ public class BookingDAOTest {
 
         bookingEntityManager.removeBooking(booking2);
     }
+    
     private static Comparator<Booking> idComparator = new Comparator<Booking>() {
         @Override
         public int compare(Booking b1, Booking b2) {
