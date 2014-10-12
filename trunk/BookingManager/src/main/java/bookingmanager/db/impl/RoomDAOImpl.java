@@ -22,7 +22,7 @@ public class RoomDAOImpl implements RoomDAO {
      */
     public RoomDAOImpl()
     {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         em = emf.createEntityManager();
     };
 
@@ -53,7 +53,7 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Room merge(Room room) {
+    public Room mergeRoom(Room room) {
         em.getTransaction().begin();
         Room mergedRoom = em.merge(room);
         em.getTransaction().commit();
@@ -62,10 +62,9 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void remove(Room room) {
+    public void removeRoom(Room room) {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("delete from room where id = :id");
-        query.setParameter("id", room.getId());
+        em.remove(room);
         em.getTransaction().commit();
     }
 

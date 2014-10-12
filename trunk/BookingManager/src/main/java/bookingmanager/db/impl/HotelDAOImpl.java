@@ -21,7 +21,7 @@ public class HotelDAOImpl implements HotelDAO {
      * Default constructor
      */
     public HotelDAOImpl() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         em = emf.createEntityManager();
     }
 
@@ -62,8 +62,7 @@ public class HotelDAOImpl implements HotelDAO {
     @Override
     public void removeHotel(Hotel hotel) {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("delete from hotel where id = :id");
-        query.setParameter("id", hotel.getId());
+        em.remove(hotel);
         em.getTransaction().commit();
     }
 

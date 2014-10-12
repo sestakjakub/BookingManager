@@ -4,73 +4,67 @@
  */
 package bookingmanager.db.impl;
 
-import bookingmanager.db.CustomerDAO;
+import bookingmanager.db.BookingDAO;
+import bookingmanager.entity.Booking;
 import bookingmanager.entity.Customer;
 import java.util.List;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 /**
- * DAO class of customer entity.
- * 
+ *
  * @author Robert
  */
-@Stateless
-public class CustomerDAOImpl implements CustomerDAO {
+public class BookingDAOImpl implements BookingDAO {
     
     private EntityManager entityManager;
     
-    public CustomerDAOImpl() {
+    public BookingDAOImpl(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         entityManager = emf.createEntityManager();
     }
-
     @Override
-    public void persistCustomer(Customer customer) {
+    public void persistBooking(Booking booking) {
         entityManager.getTransaction().begin();
-        entityManager.persist(customer);
+        entityManager.persist(booking);
         entityManager.getTransaction().commit();
     }
-    
+
     @Override
-    public Customer getCustomerById(long id) {
+    public Booking getBookingById(long id) {
         entityManager.getTransaction().begin();
-        Query query = entityManager.createNativeQuery("select * from customer where id = :id", Customer.class);
+        Query query = entityManager.createNativeQuery("select * from customer where id = :id", Booking.class);
         query.setParameter("id", id);
         entityManager.getTransaction().commit();
         
-        Customer customer = (Customer) query.getSingleResult();
-        return customer;
-    }
-    
-    @Override
-    public Customer mergeCustomer(Customer customer) {
-        entityManager.getTransaction().begin();
-        
-        Customer mergedCustomer = entityManager.merge(customer);
-        
-        entityManager.getTransaction().commit();
-        
-        return mergedCustomer;
+        Booking booking = (Booking) query.getSingleResult();
+        return booking;
     }
 
     @Override
-    public void removeCustomer(Customer customer) {
+    public Booking mergeBooking(Booking booking) {
         entityManager.getTransaction().begin();
         
-        entityManager.remove(customer);
+        Booking mergedBooking = entityManager.merge(booking);
+        
+        entityManager.getTransaction().commit();
+        
+        return mergedBooking;
+    }
+
+    @Override
+    public void removeCustomer(Booking booking) {
+        entityManager.getTransaction().begin();
+        
+        entityManager.remove(booking);
         
         entityManager.getTransaction().commit();
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        
+    public List<Booking> getAllBooking() {
         entityManager.getTransaction().begin();
         Query query = entityManager.createNativeQuery("select * from customer", Customer.class);
         entityManager.getTransaction().commit();

@@ -2,6 +2,7 @@ package bookingmanager.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,15 +33,13 @@ public class Hotel implements Serializable {
     @Column
     private int phoneNumber;
 
-    @OneToMany(mappedBy = "hotel")
-    private final ArrayList<Room> rooms; // We should consider the use of map<Integer, Room> instead of list
+    @OneToMany
+    private List<Room> rooms;
 
     /**
      * Default Hotel constructor, sets hotel id to 0.
      */
     public Hotel() {
-        id = 0;
-        rooms = new ArrayList<>();
     }
 
     /**
@@ -51,43 +50,21 @@ public class Hotel implements Serializable {
      * @param address hotel address
      * @param phoneNumber hotel phone number
      */
-    public Hotel(long id, String name, String address, int phoneNumber) {
-        this.id = id;
+    public Hotel(String name, String address, int phoneNumber) {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
         rooms = new ArrayList<>();
     }
 
-    /**
-     * Adds new room to the hotel
-     * 
-     * @param room room to add
-     * @return true if success, false otherwise
-     */
-    public boolean addRoom(Room room) {
-        return rooms.add(room);
-    }
-
-    /**
-     * Removes room from the hotel
-     * 
-     * @param room room to remove
-     * @return true if success, false otherwise
-     */
-    public boolean removeRoom(Room room) {
-        return rooms.remove(room);
-    }
-
-    /**
-     * Returns room list of current hotel
-     * 
-     * @return room list
-     */
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+    
     /**
      * Sets hotel id
      * 
@@ -132,6 +109,8 @@ public class Hotel implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+    
+    
 
     /**
      * Returns hotel address 
@@ -162,16 +141,24 @@ public class Hotel implements Serializable {
 
     @Override
     public int hashCode() {
-        return Long.hashCode(id);
+        int hash = 5;
+        hash = 83 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-
-        if (object instanceof Hotel) {
-            return id == ((Hotel)object).getId();
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
-        return false;
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hotel other = (Hotel) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
     @Override

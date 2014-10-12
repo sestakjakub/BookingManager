@@ -5,6 +5,7 @@
 package bookingmanager.db;
 
 import bookingmanager.entity.Customer;
+import java.util.List;
 
 /**
  *
@@ -34,4 +35,19 @@ public interface CustomerDAO {
      * @return merged customer entity.
      */
     public Customer mergeCustomer(Customer customer);
+    
+    /**
+     * Removes customer.
+     * 
+     * @param customer customer to be removed.
+     */
+    public void removeCustomer(Customer customer);
+    
+    /**
+     * Returns list of all customers.
+     * 
+     * @return list of all customers.
+     */
+    public List<Customer> getAllCustomers();
+    
 }
