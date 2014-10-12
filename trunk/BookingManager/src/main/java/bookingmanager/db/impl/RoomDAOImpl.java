@@ -14,7 +14,7 @@ public class RoomDAOImpl implements RoomDAO {
     
     public RoomDAOImpl()
     {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("roomManager");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
         em = emf.createEntityManager();
     };
 
