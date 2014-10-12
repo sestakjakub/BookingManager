@@ -13,9 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -37,28 +35,36 @@ public class RoomDAOTest {
     public void tearDown() {
     }
 
-    
     @Test
-    public void persistRoomTest()
+    public void removeRoomTest()
     {
-        Room room = createRoom( 11, new Hotel(), 1, 100);
+        Room room = TestUtils.createRoom( 11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
+        roomEntityManager.persistRoom(room2);
         
-        Room room2 = roomEntityManager.getRoomById(room.getId());
+        roomEntityManager.removeRoom(room);
         
-        assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
-                room2.toString(), room, room2);
-    
+        assertEquals("Entity: " + room.toString() + 
+                "was not correctly removed from DB", roomEntityManager.getAllRooms().size(), 1);
+        
+        Room roomDB = roomEntityManager.getRoomById(room2.getId());
+        
+        assertEquals("Entity: " + room2.toString() +
+                "was disturbed while removing entity: " + room.toString(), room2, roomDB);
+        
+        roomEntityManager.removeRoom(room2);
+        
     }
     
     @Test
     public void getAllRoomsTest(){
         
-        Room room = createRoom(11, new Hotel(), 1, 100);
-        Room room2 = createRoom(12, new Hotel(), 2, 200);
-        Room room3 = createRoom(13, new Hotel(), 3, 300);
+        Room room = TestUtils.createRoom(11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
+        Room room3 = TestUtils.createRoom(13, 3, 300);
         
         List<Room> rooms = Arrays.asList(room, room2, room3);
         
@@ -77,17 +83,32 @@ public class RoomDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
         
+        
+        roomEntityManager.removeRoom(room);
+        roomEntityManager.removeRoom(room2);
+        roomEntityManager.removeRoom(room3);
     }
     
     @Test
-    public void findRoomByIdTest(){
-        // the same as PersistRoomTest?
+    public void persistRoomTest()
+    {
+        Room room = TestUtils.createRoom(11, 1, 100);
+        
+        RoomDAOImpl roomEntityManager = new RoomDAOImpl();
+        roomEntityManager.persistRoom(room);
+        
+        Room room2 = roomEntityManager.getRoomById(room.getId());
+        
+        assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
+                room2.toString(), room, room2);
+        
+        roomEntityManager.removeRoom(room);
     }
     
     @Test
     public void mergeRoomTest()
     {
-        Room room = createRoom( 11, new Hotel(), 1, 100);
+        Room room = TestUtils.createRoom(11, 1, 100);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -105,14 +126,15 @@ public class RoomDAOTest {
         room2 = roomEntityManager.getRoomById(roomManaged.getId());
         assertEquals("Managed entity: " + roomManaged.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), roomManaged, room2);
-               
+        
+        roomEntityManager.removeRoom(roomManaged);
     }
     
     @Test
     public void updateRoomTest()
     {
-        Room room = createRoom( 11, new Hotel(), 1, 100);
-        Room room2 = createRoom(12, new Hotel(), 2, 200);
+        Room room = TestUtils.createRoom( 11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -132,28 +154,11 @@ public class RoomDAOTest {
         assertEquals("Entity: " + room2 + "was disturbed in DB while updating entity: " +
                 room, room2, roomDB2);
         
+        roomEntityManager.removeRoom(roomDB);
+        roomEntityManager.removeRoom(roomDB2);
     }
     
-    @Test
-    public void removeRoomTest()
-    {
-        Room room = createRoom( 11, new Hotel(), 1, 100);
-        Room room2 = createRoom(12, new Hotel(), 2, 200);
-        
-        RoomDAOImpl roomEntityManager = new RoomDAOImpl();
-        roomEntityManager.persistRoom(room);
-        roomEntityManager.persistRoom(room2);
-        
-        roomEntityManager.removeRoom(room);
-        
-        assertEquals("Entity: " + room.toString() + 
-                "was not correctly removed from DB", roomEntityManager.getAllRooms().size(), 1);
-        
-        Room roomDB = roomEntityManager.getRoomById(room2.getId());
-        
-        assertEquals("Entity: " + room2.toString() +
-                "was disturbed while removing entity: " + room.toString(), room2, roomDB);
-    }
+    
     
     
     
