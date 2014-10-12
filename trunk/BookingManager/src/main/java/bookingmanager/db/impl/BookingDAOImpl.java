@@ -63,7 +63,7 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     public List<Booking> getAllBookings() {
         entityManager.getTransaction().begin();
-        Query query = entityManager.createNativeQuery("select * from customer", Customer.class);
+        Query query = entityManager.createNativeQuery("select * from booking", Booking.class);
         entityManager.getTransaction().commit();
         
         return query.getResultList();

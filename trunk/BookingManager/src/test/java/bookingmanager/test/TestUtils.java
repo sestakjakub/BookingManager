@@ -8,6 +8,7 @@ import bookingmanager.entity.Booking;
 import bookingmanager.entity.Customer;
 import bookingmanager.entity.Hotel;
 import bookingmanager.entity.Room;
+import java.util.Date;
 
 /**
  *
@@ -20,15 +21,13 @@ public class TestUtils {
         room.setRoomNumber(roomNumber);
         room.setCapacity(capacity);
         room.setPrice(price);
-        
         return room;
     }
     
-    public static Booking createBooking(Customer customer, Room room){
+    public static Booking createBooking(Date dateFrom, Date dateTo){
         Booking booking = new Booking();
-        booking.setCustomer(customer);
-        booking.setRoom(room);
-        
+        booking.setDateFrom(dateFrom);
+        booking.setDateTo(dateTo);
         return booking;
     }
     
@@ -37,7 +36,6 @@ public class TestUtils {
         hotel.setAddress(address);
         hotel.setName(name);
         hotel.setPhoneNumber(phone);
-        
         return hotel;
     }
     
@@ -45,7 +43,6 @@ public class TestUtils {
         Customer customer = new Customer();
         customer.setName(name);
         customer.setAddress(address);
-        
         return customer;
     }
 }
