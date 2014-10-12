@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-
 public class RoomDAOImpl implements RoomDAO {
 
     private EntityManager em;
@@ -14,8 +13,9 @@ public class RoomDAOImpl implements RoomDAO {
     @Override
     public List<Room> getAllRooms() {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("select * from rooms", Room.class);
+        Query query = em.createNativeQuery("select * from room", Room.class);
         em.getTransaction().commit();
+        
         return query.getResultList();
     }
 
@@ -25,5 +25,32 @@ public class RoomDAOImpl implements RoomDAO {
         em.persist(room);
         em.getTransaction().commit();
     }
-    
+
+    @Override
+    public Room getRoomById(long id) {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("select * from room where id = :id", Room.class);
+        query.setParameter("id", id);
+        em.getTransaction().commit();
+        
+        return (Room) query.getSingleResult();
+    }
+
+    @Override
+    public Room merge(Room room) {
+        em.getTransaction().begin();
+        Room mergedRoom = em.merge(room);
+        em.getTransaction().commit();
+        
+        return mergedRoom;
+    }
+
+    @Override
+    public void remove(Room room) {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("delete from room where id = :id");
+        query.setParameter("id", room.getId());
+        em.getTransaction().commit();
+    }
+
 }

@@ -10,4 +10,7 @@ import java.util.List;
 public interface RoomDAO {
     public List<Room> getAllRooms();
     public void persistRoom(Room room);
+    public Room getRoomById(long id);
+    public Room merge(Room room);
+    public void remove(Room room);
 }
