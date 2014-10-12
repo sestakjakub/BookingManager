@@ -16,7 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Class for customer entity.
+ * 
  * @author Robert Golej
  */
 @Entity
@@ -94,7 +95,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "bookingmanager.entity.Cutomer[ id=" + id + " ]";
+        return "Customer[ id=" + id + ", name= " + name + " ,address: " + address + "]";
     }
     
 }

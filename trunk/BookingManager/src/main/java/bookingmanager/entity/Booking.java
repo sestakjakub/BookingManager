@@ -15,7 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Class for Booking entity.
+ * 
  * @author Robert
  */
 @Entity
@@ -106,7 +107,7 @@ public class Booking implements Serializable {
     
     @Override
     public String toString() {
-        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" +dateTo.toString() + "]";
+        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" +dateTo.toString() + " ]";
     }
 
 }

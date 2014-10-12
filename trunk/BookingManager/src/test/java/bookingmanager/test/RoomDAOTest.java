@@ -94,7 +94,7 @@ public class RoomDAOTest {
         
         room.setCapacity(10);
         
-        Room roomManaged = roomEntityManager.merge(room);
+        Room roomManaged = roomEntityManager.mergeRoom(room);
         
         Room room2 = roomEntityManager.getRoomById(room.getId());
         assertEquals("Merged entity: " + room.toString() + "does not equal to entity extracted from DB: " +
@@ -144,7 +144,7 @@ public class RoomDAOTest {
         roomEntityManager.persistRoom(room);
         roomEntityManager.persistRoom(room2);
         
-        roomEntityManager.remove(room);
+        roomEntityManager.removeRoom(room);
         
         assertEquals("Entity: " + room.toString() + 
                 "was not correctly removed from DB", roomEntityManager.getAllRooms().size(), 1);

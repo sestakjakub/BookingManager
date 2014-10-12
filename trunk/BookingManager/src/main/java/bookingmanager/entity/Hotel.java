@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Class Hotel
+ * Class for Hotel entity.
  * 
  * @author Jiří Kareš
  */
@@ -36,25 +36,7 @@ public class Hotel implements Serializable {
     @OneToMany
     private List<Room> rooms;
 
-    /**
-     * Default Hotel constructor, sets hotel id to 0.
-     */
     public Hotel() {
-    }
-
-    /**
-     * Hotel constructor
-     * 
-     * @param id hotel id
-     * @param name hotel name
-     * @param address hotel address
-     * @param phoneNumber hotel phone number
-     */
-    public Hotel(String name, String address, int phoneNumber) {
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        rooms = new ArrayList<>();
     }
 
     public List<Room> getRooms() {
@@ -65,76 +47,34 @@ public class Hotel implements Serializable {
         this.rooms = rooms;
     }
     
-    /**
-     * Sets hotel id
-     * 
-     * @param id id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * Returns hotel id
-     * 
-     * @return id
-     */
     public long getId() {
         return id;
     }
 
-    /**
-     * Sets hotel name
-     * 
-     * @param name name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Returns hotel name
-     * 
-     * @return name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Sets hotel address
-     * 
-     * @param address address
-     */
     public void setAddress(String address) {
         this.address = address;
     }
     
-    
-
-    /**
-     * Returns hotel address 
-     * 
-     * @return address
-     */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * Sets hotel phone number
-     * 
-     * @param phoneNumber phone number
-     */
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    /**
-     * Returns hotel phone number
-     * 
-     * @return phone number
-     */
     public int getPhoneNumber() {
         return phoneNumber;
     }
@@ -163,6 +103,6 @@ public class Hotel implements Serializable {
 
     @Override
     public String toString() {
-        return "bookingmanager.entity.Hotel[ id=" + id + " ]";
+        return "Hotel[ id=" + id + ", name=" + name + ", address=" + address +", phoneNumber=" + phoneNumber + "]";
     }
 };
