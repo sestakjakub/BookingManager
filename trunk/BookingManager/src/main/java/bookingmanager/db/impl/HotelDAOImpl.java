@@ -62,8 +62,7 @@ public class HotelDAOImpl implements HotelDAO {
     @Override
     public void removeHotel(Hotel hotel) {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("delete from hotel where id = :id");
-        query.setParameter("id", hotel.getId());
+        em.remove(hotel);
         em.getTransaction().commit();
     }
 
