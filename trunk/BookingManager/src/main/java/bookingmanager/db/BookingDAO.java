@@ -40,7 +40,7 @@ public interface BookingDAO{
      * 
      * @param booking booking to be removed.
      */
-    public void removeCustomer(Booking booking);
+    public void removeBooking(Booking booking);
     
     /**
      * Returns list of all bookings.

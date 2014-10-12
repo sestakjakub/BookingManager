@@ -51,7 +51,7 @@ public class BookingDAOImpl implements BookingDAO {
     }
 
     @Override
-    public void removeCustomer(Booking booking) {
+    public void removeBooking(Booking booking) {
         entityManager.getTransaction().begin();
         
         entityManager.remove(booking);
