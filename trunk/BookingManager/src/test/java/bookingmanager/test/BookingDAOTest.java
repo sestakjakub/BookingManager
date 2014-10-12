@@ -52,7 +52,7 @@ public class BookingDAOTest {
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        Room room = createRoom(11, new Hotel(), 1, 100);
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
         
@@ -141,7 +141,7 @@ public class BookingDAOTest {
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        Room room = createRoom(11, new Hotel(), 1, 100);
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
         
@@ -181,7 +181,7 @@ public class BookingDAOTest {
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        Room room = createRoom(11, new Hotel(), 1, 100);
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
         
@@ -226,5 +226,15 @@ public class BookingDAOTest {
         booking.setRoom(room);
         
         return booking;
+    }
+    
+    private Room createRoom(int roomNumber, Hotel hotel, int capacity, int price){
+        Room room = new Room();
+        room.setRoomNumber(roomNumber);
+        room.setHotel(hotel);
+        room.setCapacity(capacity);
+        room.setPrice(price);
+        
+        return room;
     }
 }
