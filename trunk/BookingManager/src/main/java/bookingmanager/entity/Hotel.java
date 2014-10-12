@@ -21,7 +21,7 @@ public class Hotel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column
     private String name;
@@ -93,15 +93,14 @@ public class Hotel implements Serializable {
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return Long.hashCode(id);
     }
 
     @Override
     public boolean equals(Object object) {
 
         if (object instanceof Hotel) {
-            Hotel other = (Hotel)object;
-            return Objects.equals(id, other.getId());
+            return id == ((Hotel)object).getId();
         }
         return false;
     }

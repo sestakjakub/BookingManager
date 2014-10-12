@@ -60,7 +60,7 @@ public class Customer implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
-
+    // Beware of param id, it's an index of position in the list, not the booking ID
     public Booking getBookingById(int id){
         return bookings.get(id);
     }
@@ -73,6 +73,7 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
+    // Consider "return Long.hashCode(id);", it presumes id of type long instead of Long
     @Override
     public int hashCode() {
         int hash = 0;
