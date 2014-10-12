@@ -109,6 +109,8 @@ public class Hotel implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+    
+    
 
     /**
      * Returns hotel address 

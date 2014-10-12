@@ -34,11 +34,11 @@ public interface RoomDAO {
      * @param room room to be merged
      * @return Room merged room
      */
-    public Room merge(Room room);
+    public Room mergeRoom(Room room);
     
     /**
      * Removes room
      * @param room to be removed
      */
-    public void remove(Room room);
+    public void removeRoom(Room room);
 }

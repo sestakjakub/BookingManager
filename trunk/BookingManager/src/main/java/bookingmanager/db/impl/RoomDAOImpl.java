@@ -53,7 +53,7 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public Room merge(Room room) {
+    public Room mergeRoom(Room room) {
         em.getTransaction().begin();
         Room mergedRoom = em.merge(room);
         em.getTransaction().commit();
@@ -62,7 +62,7 @@ public class RoomDAOImpl implements RoomDAO {
     }
 
     @Override
-    public void remove(Room room) {
+    public void removeRoom(Room room) {
         em.getTransaction().begin();
         em.remove(room);
         em.getTransaction().commit();

@@ -106,7 +106,7 @@ public class Booking implements Serializable {
     
     @Override
     public String toString() {
-        return "bookingmanager.entity.Booking[ id=" + id + " ]";
+        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" +dateTo.toString() + "]";
     }
 
 }
