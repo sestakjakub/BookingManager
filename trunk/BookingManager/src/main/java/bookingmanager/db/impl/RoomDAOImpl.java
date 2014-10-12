@@ -64,8 +64,7 @@ public class RoomDAOImpl implements RoomDAO {
     @Override
     public void remove(Room room) {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("delete from room where id = :id");
-        query.setParameter("id", room.getId());
+        em.remove(room);
         em.getTransaction().commit();
     }
 
