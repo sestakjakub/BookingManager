@@ -47,5 +47,5 @@ public interface BookingDAO{
      * 
      * @return list of all bookings.
      */
-    public List<Booking> getAllBooking();
+    public List<Booking> getAllBookings();
 }
