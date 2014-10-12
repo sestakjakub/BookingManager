@@ -52,7 +52,8 @@ public class HotelDAOTest {
         
         assertEquals("Persisted entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
-    
+        
+        hotelEntityManager.removeHotel(hotel);
     }
     
     @Test
@@ -79,6 +80,9 @@ public class HotelDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", hotels, hotelsExtracted);
         
+        hotelEntityManager.removeHotel(hotel);
+        hotelEntityManager.removeHotel(hotel2);
+        hotelEntityManager.removeHotel(hotel3);
     }
     
     @Test
@@ -107,7 +111,8 @@ public class HotelDAOTest {
         hotel2 = hotelEntityManager.getHotelById(hotelManaged.getId());
         assertEquals("Managed entity: " + hotelManaged.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotelManaged, hotel2);
-               
+        
+        hotelEntityManager.removeHotel(hotel);
     }
     
     @Test
@@ -133,6 +138,8 @@ public class HotelDAOTest {
         assertEquals("Entity: " + hotel2 + "was disturbed in DB while updating entity: " +
                 hotel, hotel2, hotelDB2);
         
+        hotelEntityManager.removeHotel(hotel);
+        hotelEntityManager.removeHotel(hotel2);
     }
     
     @Test
@@ -154,6 +161,8 @@ public class HotelDAOTest {
         
         assertEquals("Entity: " + hotel2.toString() +
                 "was disturbed while removing entity: " + hotel.toString(), hotel2, hotelDB);
+        
+        hotelEntityManager.removeHotel(hotel2);
     }
     
     

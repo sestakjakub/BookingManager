@@ -28,7 +28,7 @@ public class HotelDAOImpl implements HotelDAO {
     @Override
     public List<Hotel> getAllHotels() {
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("select * from hotels", Hotel.class);
+        Query query = em.createNativeQuery("select * from hotel", Hotel.class);
         em.getTransaction().commit();
         return query.getResultList();
     }
