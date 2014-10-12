@@ -6,6 +6,7 @@ package bookingmanager.db.impl;
 
 import bookingmanager.db.CustomerDAO;
 import bookingmanager.entity.Customer;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -56,6 +57,25 @@ public class CustomerDAOImpl implements CustomerDAO {
         entityManager.getTransaction().commit();
         
         return mergedCustomer;
-        
     }
+
+    @Override
+    public void removeCustomer(Customer customer) {
+        entityManager.getTransaction().begin();
+        
+        entityManager.remove(customer);
+        
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        
+        entityManager.getTransaction().begin();
+        Query query = entityManager.createNativeQuery("select * from customer", Customer.class);
+        entityManager.getTransaction().commit();
+        
+        return query.getResultList();
+    }
+    
 }

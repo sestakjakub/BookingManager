@@ -5,11 +5,14 @@
 package bookingmanager.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,15 +33,15 @@ public class Booking implements Serializable {
     @ManyToOne
     private Customer customer;
     
+    @Temporal(TemporalType.DATE)
+    private Date dateFrom;
+    
+    @Temporal(TemporalType.DATE)
+    private Date dateTo;
+    
     public Booking(){
     }
     
-    public Booking(long id, Customer customer, Room room){
-        this.id = id;
-        this.customer = customer;
-        this.room = room;
-    }
-
     public long getId() {
         return id;
     }
@@ -47,32 +50,36 @@ public class Booking implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the room
-     */
     public Room getRoom() {
         return room;
     }
 
-    /**
-     * @param room the room to set
-     */
     public void setRoom(Room room) {
         this.room = room;
     }
 
-    /**
-     * @return the customer
-     */
     public Customer getCustomer() {
         return customer;
     }
 
-    /**
-     * @param customer the customer to set
-     */
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public void setDateFrom(Date dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
+    public void setDateTo(Date dateTo) {
+        this.dateTo = dateTo;
     }
 
     @Override
