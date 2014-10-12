@@ -40,7 +40,7 @@ public class CustomerDAOTest {
     @Test
     public void persistCustomerTest()
     {
-        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
+        Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
@@ -55,9 +55,9 @@ public class CustomerDAOTest {
     @Test
     public void getAllCustomersTest(){
         
-        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
-        Customer customer2 = new Customer(2, "Tomas Pittner", "Botanicka 69");
-        Customer customer3 = new Customer(3, "Filip Nguyen", "Botanicka 70");
+        Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
+        Customer customer2 = createCustomer("Tomas Pittner", "Botanicka 69");
+        Customer customer3 = createCustomer("Filip Nguyen", "Botanicka 70");
         
         List<Customer> customers = Arrays.asList(customer, customer2, customer3);
         
@@ -86,7 +86,7 @@ public class CustomerDAOTest {
     @Test
     public void mergeCustomerTest()
     {
-        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
+        Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
@@ -110,8 +110,8 @@ public class CustomerDAOTest {
     @Test
     public void updateCustomerTest()
     {
-        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
-        Customer customer2 = new Customer(2, "Tomas Pittner", "Botanicka 69");
+        Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
+        Customer customer2 = createCustomer("Tomas Pittner", "Botanicka 69");
         
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
@@ -135,8 +135,8 @@ public class CustomerDAOTest {
     @Test
     public void removeCustomerTest()
     {
-        Customer customer = new Customer(1, "Petr Adamek", "Botanicka 68");
-        Customer customer2 = new Customer(2, "Tomas Pittner", "Botanicka 69");
+        Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
+        Customer customer2 = createCustomer("Tomas Pittner", "Botanicka 69");
         
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
@@ -161,4 +161,12 @@ public class CustomerDAOTest {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
+    
+    private Customer createCustomer(String name, String address){
+        Customer customer = new Customer();
+        customer.setName(name);
+        customer.setAddress(address);
+        
+        return customer;
+    }
 }

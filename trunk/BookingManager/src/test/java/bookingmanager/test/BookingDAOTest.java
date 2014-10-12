@@ -57,7 +57,7 @@ public class BookingDAOTest {
         roomEntityManager.persistRoom(room);
         
         
-        Booking booking = new Booking(1, customer, room);
+        Booking booking = createBooking(customer, room);
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -70,20 +70,20 @@ public class BookingDAOTest {
         Customer customer2 = customerEntityManager.getCustomerById(customer.getId());
         Room room2 = roomEntityManager.getCustomerById(room.getId());        
         
-        assertTrue("Entity: " + customer2.toString() + "does not contain mapping for entity:" +
-                booking.toString(), customer2.getBookings().contains(booking)); 
+        assertNotNull("Entity: " + customer2.toString() + "does not contain mapping for entity:" +
+                booking.toString(), customer2.getBookingById(booking.getId().intValue())); 
         
         assertEquals("Entity: " + room2.toString() + "does not contain mapping for entity:" +
-                booking.toString(), booking, room2.getBookingById(booking.getId()));   
+                booking.toString(), booking, room2.getBookingById(booking.getId().intValue()));   
         // TODO: must unite approach for getting Booking from Customer and Room
     }
     
     @Test
     public void getAllBookingsTest(){
         
-        Booking booking = new Booking(1, new Customer(), new Room());
-        Booking booking2 = new Booking(2, new Customer(), new Room());
-        Booking booking3 = new Booking(3, new Customer(), new Room());
+        Booking booking = createBooking(new Customer(), new Room());
+        Booking booking2 = createBooking(new Customer(), new Room());
+        Booking booking3 = createBooking(new Customer(), new Room());
         
         List<Booking> bookings = Arrays.asList(booking, booking2, booking3);
         
@@ -112,7 +112,7 @@ public class BookingDAOTest {
     @Test
     public void mergeBookingTest()
     {
-        Booking booking = new Booking(1, new Customer(), new Room());
+        Booking booking = createBooking(new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -146,7 +146,7 @@ public class BookingDAOTest {
         
         
         Booking booking = new Booking(new Long(1), customer, room); // TODO: Long vs. long
-        Booking booking2 = new Booking(2, new Customer(), new Room());
+        Booking booking2 = createBooking(new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -185,8 +185,8 @@ public class BookingDAOTest {
         roomEntityManager.persistRoom(room);
         
         
-        Booking booking = new Booking(1, customer, room);
-        Booking booking2 = new Booking(2, new Customer(), new Room());
+        Booking booking = createBooking(customer, room);
+        Booking booking2 = createBooking(new Customer(), new Room());
         
         BookingDAOImpl bookingEntityManager = new BookingDAOImpl();
         bookingEntityManager.persistBooking(booking);
@@ -218,4 +218,12 @@ public class BookingDAOTest {
             return Long.valueOf(b1.getId()).compareTo(Long.valueOf(b2.getId()));
         }
     };
+    
+    private Booking createBooking(Customer customer, Room room){
+        Booking booking = new Booking();
+        booking.setCustomer(customer);
+        booking.setRoom(room);
+        
+        return booking;
+    }
 }

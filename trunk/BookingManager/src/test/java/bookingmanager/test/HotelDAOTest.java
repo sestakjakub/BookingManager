@@ -43,7 +43,7 @@ public class HotelDAOTest {
     @Test
     public void persistHotelTest()
     {
-        Hotel hotel = new Hotel(1, "Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         
         HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
         hotelEntityManager.persistHotel(hotel);
@@ -58,9 +58,9 @@ public class HotelDAOTest {
     @Test
     public void getAllHotelsTest(){
         
-        Hotel hotel = new Hotel(1, "Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = new Hotel(2, "Hilton", "Rumunska 5", 654321);
-        Hotel hotel3 = new Hotel(3, "HolidayInn", "Botanicka 6", 134652);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
+        Hotel hotel3 = createHotel("HolidayInn", "Botanicka 6", 134652);
         
         List<Hotel> hotels = Arrays.asList(hotel, hotel2, hotel3);
         
@@ -89,7 +89,7 @@ public class HotelDAOTest {
     @Test
     public void mergeHotelTest()
     {
-        Hotel hotel = new Hotel(1, "Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         
         HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
         hotelEntityManager.persistHotel(hotel);
@@ -113,8 +113,8 @@ public class HotelDAOTest {
     @Test
     public void updateHotelTest()
     {
-        Hotel hotel = new Hotel(1, "Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = new Hotel(2, "Hilton", "Rumunska 5", 654321);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
         
         HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
         hotelEntityManager.persistHotel(hotel);
@@ -138,8 +138,8 @@ public class HotelDAOTest {
     @Test
     public void removeHotelTest()
     {
-        Hotel hotel = new Hotel(1, "Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = new Hotel(2, "Hilton", "Rumunska 5", 654321);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
         
         HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
         hotelEntityManager.persistHotel(hotel);
@@ -164,4 +164,13 @@ public class HotelDAOTest {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
+    
+    private Hotel createHotel(String name, String address, int phone){
+        Hotel hotel = new Hotel();
+        hotel.setAddress(address);
+        hotel.setName(name);
+        hotel.setPhoneNumber(phone);
+        
+        return hotel;
+    }
 }

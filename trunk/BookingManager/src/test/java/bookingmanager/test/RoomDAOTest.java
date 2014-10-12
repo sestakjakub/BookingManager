@@ -41,7 +41,7 @@ public class RoomDAOTest {
     @Test
     public void persistRoomTest()
     {
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        Room room = createRoom( 11, new Hotel(), 1, 100);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -56,9 +56,9 @@ public class RoomDAOTest {
     @Test
     public void getAllRoomsTest(){
         
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
-        Room room2 = new Room(2, 12, new Hotel(), 2, 200);
-        Room room3 = new Room(3, 13, new Hotel(), 3, 300);
+        Room room = createRoom(11, new Hotel(), 1, 100);
+        Room room2 = createRoom(12, new Hotel(), 2, 200);
+        Room room3 = createRoom(13, new Hotel(), 3, 300);
         
         List<Room> rooms = Arrays.asList(room, room2, room3);
         
@@ -87,7 +87,7 @@ public class RoomDAOTest {
     @Test
     public void mergeRoomTest()
     {
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
+        Room room = createRoom( 11, new Hotel(), 1, 100);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -111,8 +111,8 @@ public class RoomDAOTest {
     @Test
     public void updateRoomTest()
     {
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
-        Room room2 = new Room(2, 12, new Hotel(), 2, 200);
+        Room room = createRoom( 11, new Hotel(), 1, 100);
+        Room room2 = createRoom(12, new Hotel(), 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -137,8 +137,8 @@ public class RoomDAOTest {
     @Test
     public void removeRoomTest()
     {
-        Room room = new Room(1, 11, new Hotel(), 1, 100);
-        Room room2 = new Room(2, 12, new Hotel(), 2, 200);
+        Room room = createRoom( 11, new Hotel(), 1, 100);
+        Room room2 = createRoom(12, new Hotel(), 2, 200);
         
         RoomDAOImpl roomEntityManager = new RoomDAOImpl();
         roomEntityManager.persistRoom(room);
@@ -163,4 +163,15 @@ public class RoomDAOTest {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
+    
+    private Room createRoom(int roomNumber, Hotel hotel, int capacity, int price){
+        Room room = new Room();
+        room.setRoomNumber(roomNumber);
+        room.setHotel(hotel);
+        room.setCapacity(capacity);
+        room.setPrice(price);
+        
+        return room;
+        
+    }
 }
