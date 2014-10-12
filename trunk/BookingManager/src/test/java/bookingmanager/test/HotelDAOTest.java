@@ -39,7 +39,7 @@ public class HotelDAOTest {
     public void tearDown() {
     }
 
-    
+    /**
     @Test
     public void persistHotelTest()
     {
@@ -164,4 +164,5 @@ public class HotelDAOTest {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
+    * */
 }

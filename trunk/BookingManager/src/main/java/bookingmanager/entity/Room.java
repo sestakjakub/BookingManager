@@ -2,6 +2,7 @@ package bookingmanager.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,6 @@ public class Room implements Serializable {
     @Column
     private int roomNumber;
 
-    @Column
     @ManyToOne
     private Hotel hotel;
 
@@ -37,15 +37,13 @@ public class Room implements Serializable {
     @Column
     private float price;
     
-    @OneToMany(mappedBy = "room")
-    private ArrayList<Booking> bookings;
+    @OneToMany
+    private List<Booking> bookings;
 
     /**
      * Default Room constructor, sets default room id to 0.
      */
     public Room() {
-        id = 0;
-        bookings = new ArrayList<>();
     }
 
     /**
@@ -155,48 +153,36 @@ public class Room implements Serializable {
         return price;
     }
 
-    /**
-     * Adds new booking to the room
-     * 
-     * @param booking booking to add
-     * @return true if success, false otherwise
-     */
-    public boolean addBooking(Booking booking) {
-        return bookings.add(booking);
-    }
-
-    /**
-     * Removes given booking from the room
-     * 
-     * @param booking booking to remove
-     * @return true if success, false otherwise
-     */
-    public boolean removeBooking(Booking booking) {
-        return bookings.remove(booking);
-    }
-
-    /**
-     * Returns list of room bookings
-     * 
-     * @return bookings
-     */
-    public ArrayList<Booking> getBookings() {
+    public List<Booking> getBookings() {
         return bookings;
     }
-    
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
     @Override
     public int hashCode() {
-        return Long.hashCode(id);
+        int hash = 3;
+        hash = 83 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (object instanceof Room) {
-            return id == ((Room)object).getId();
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
         }
-        return false;
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
-
+    
     @Override
     public String toString() {
         return "bookingmanager.entity.Room[ id=" + id + " ]";

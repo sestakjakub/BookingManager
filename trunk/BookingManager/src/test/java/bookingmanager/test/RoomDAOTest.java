@@ -37,7 +37,7 @@ public class RoomDAOTest {
     public void tearDown() {
     }
 
-    
+    /**
     @Test
     public void persistRoomTest()
     {
@@ -163,4 +163,5 @@ public class RoomDAOTest {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
+    * */
 }

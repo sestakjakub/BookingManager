@@ -21,7 +21,7 @@ public class HotelDAOImpl implements HotelDAO {
      * Default constructor
      */
     public HotelDAOImpl() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         em = emf.createEntityManager();
     }
 

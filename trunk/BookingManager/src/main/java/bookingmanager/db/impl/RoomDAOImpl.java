@@ -22,7 +22,7 @@ public class RoomDAOImpl implements RoomDAO {
      */
     public RoomDAOImpl()
     {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myUnit");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
         em = emf.createEntityManager();
     };
 
@@ -67,6 +67,10 @@ public class RoomDAOImpl implements RoomDAO {
         Query query = em.createNativeQuery("delete from room where id = :id");
         query.setParameter("id", room.getId());
         em.getTransaction().commit();
+    }
+
+    public Room getCustomerById(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

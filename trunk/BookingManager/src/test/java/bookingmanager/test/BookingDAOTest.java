@@ -9,20 +9,15 @@ import bookingmanager.db.impl.BookingDAOImpl;
 import bookingmanager.db.impl.CustomerDAOImpl;
 import bookingmanager.db.impl.RoomDAOImpl;
 import bookingmanager.entity.Booking;
-import bookingmanager.entity.Booking;
-import bookingmanager.entity.Booking;
 import bookingmanager.entity.Customer;
 import bookingmanager.entity.Hotel;
 import bookingmanager.entity.Room;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -44,7 +39,7 @@ public class BookingDAOTest {
     public void tearDown() {
     }
 
-    
+    /**
     @Test
     public void persistBookingTest()
     {
@@ -218,4 +213,6 @@ public class BookingDAOTest {
             return Long.valueOf(b1.getId()).compareTo(Long.valueOf(b2.getId()));
         }
     };
+    * 
+    * */
 }

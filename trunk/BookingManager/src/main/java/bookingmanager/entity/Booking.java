@@ -18,54 +18,33 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Booking implements Serializable {
     
-    public Booking(Long id, Customer customer, Room room){
-        this.id = id;
-        this.customer = customer;
-        this.room = room;
-    }
-    
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     
     @ManyToOne
     private Room room;
     
     @ManyToOne
     private Customer customer;
+    
+    public Booking(){
+    }
+    
+    public Booking(long id, Customer customer, Room room){
+        this.id = id;
+        this.customer = customer;
+        this.room = room;
+    }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Booking)) {
-            return false;
-        }
-        Booking other = (Booking) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "bookingmanager.entity.Booking[ id=" + id + " ]";
     }
 
     /**
@@ -95,5 +74,32 @@ public class Booking implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Booking other = (Booking) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
     
+    @Override
+    public String toString() {
+        return "bookingmanager.entity.Booking[ id=" + id + " ]";
+    }
+
 }
