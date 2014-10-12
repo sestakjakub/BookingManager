@@ -49,6 +49,8 @@ public class BookingDAOTest {
     public void persistBookingTest()
     {
         Customer customer = new Customer();
+        customer.setName("Jarda Pádlo");
+        
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
@@ -138,6 +140,7 @@ public class BookingDAOTest {
     public void updateBookingTest()
     {
         Customer customer = new Customer();
+        customer.setName("Franta Sádlo");
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
@@ -178,6 +181,7 @@ public class BookingDAOTest {
     public void removeBookingTest()
     {
         Customer customer = new Customer();
+        customer.setName("Tak Víšjak");
         CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
         customerEntityManager.persistCustomer(customer);
         
