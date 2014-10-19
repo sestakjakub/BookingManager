@@ -5,6 +5,7 @@
  */
 package bookingmanager.test;
 
+import bookingmanager.db.HotelDAO;
 import bookingmanager.db.impl.HotelDAOImpl;
 import bookingmanager.entity.Booking;
 import bookingmanager.entity.Hotel;
@@ -45,15 +46,15 @@ public class HotelDAOTest {
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         
-        HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
-        hotelEntityManager.persistHotel(hotel);
+        HotelDAO hoteDAOManager = new HotelDAOImpl();
+        hoteDAOManager.persistHotel(hotel);
         
-        Hotel hotel2 = hotelEntityManager.getHotelById(hotel.getId());
+        Hotel hotel2 = hoteDAOManager.getHotelById(hotel.getId());
         
         assertEquals("Persisted entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
         
-        hotelEntityManager.removeHotel(hotel);
+        hoteDAOManager.removeHotel(hotel);
     }
     
     @Test
@@ -65,12 +66,12 @@ public class HotelDAOTest {
         
         List<Hotel> hotels = Arrays.asList(hotel, hotel2, hotel3);
         
-        HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
-        hotelEntityManager.persistHotel(hotel);
-        hotelEntityManager.persistHotel(hotel2);
-        hotelEntityManager.persistHotel(hotel3);
+        HotelDAO hoteDAOManager = new HotelDAOImpl();
+        hoteDAOManager.persistHotel(hotel);
+        hoteDAOManager.persistHotel(hotel2);
+        hoteDAOManager.persistHotel(hotel3);
         
-        List<Hotel> hotelsExtracted = hotelEntityManager.getAllHotels();
+        List<Hotel> hotelsExtracted = hoteDAOManager.getAllHotels();
         
         Collections.sort(hotels, idComparator);
         Collections.sort(hotelsExtracted, idComparator);
@@ -80,14 +81,9 @@ public class HotelDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", hotels, hotelsExtracted);
         
-        hotelEntityManager.removeHotel(hotel);
-        hotelEntityManager.removeHotel(hotel2);
-        hotelEntityManager.removeHotel(hotel3);
-    }
-    
-    @Test
-    public void findHotelByIdTest(){
-        // the same as PersistHotelTest?
+        hoteDAOManager.removeHotel(hotel);
+        hoteDAOManager.removeHotel(hotel2);
+        hoteDAOManager.removeHotel(hotel3);
     }
     
     @Test
@@ -95,24 +91,24 @@ public class HotelDAOTest {
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         
-        HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
-        hotelEntityManager.persistHotel(hotel);
+        HotelDAO hoteDAOManager = new HotelDAOImpl();
+        hoteDAOManager.persistHotel(hotel);
         
         hotel.setAddress("Manesova 12");
         
-        Hotel hotelManaged = hotelEntityManager.mergeHotel(hotel);
+        Hotel hotelManaged = hoteDAOManager.mergeHotel(hotel);
         
-        Hotel hotel2 = hotelEntityManager.getHotelById(hotel.getId());
+        Hotel hotel2 = hoteDAOManager.getHotelById(hotel.getId());
         assertEquals("Merged entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
         
         hotelManaged.setAddress("Malinovskeho namesti");
         
-        hotel2 = hotelEntityManager.getHotelById(hotelManaged.getId());
+        hotel2 = hoteDAOManager.getHotelById(hotelManaged.getId());
         assertEquals("Managed entity: " + hotelManaged.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotelManaged, hotel2);
         
-        hotelEntityManager.removeHotel(hotel);
+        hoteDAOManager.removeHotel(hotel);
     }
     
     @Test
@@ -121,25 +117,25 @@ public class HotelDAOTest {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
         
-        HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
-        hotelEntityManager.persistHotel(hotel);
-        hotelEntityManager.persistHotel(hotel2);
+        HotelDAO hoteDAOManager = new HotelDAOImpl();
+        hoteDAOManager.persistHotel(hotel);
+        hoteDAOManager.persistHotel(hotel2);
         
         hotel.setName("Martin Kuba");
         hotel.setAddress("Kotlarska 45");
         
-        Hotel hotelDB = hotelEntityManager.getHotelById(hotel.getId());
+        Hotel hotelDB = hoteDAOManager.getHotelById(hotel.getId());
                 
         assertEquals("Entity: " + hotel + "was not correctly updated in DB, actual entity: " + 
                 hotelDB, hotel, hotelDB);
         
-        Hotel hotelDB2 = hotelEntityManager.getHotelById(hotel2.getId());
+        Hotel hotelDB2 = hoteDAOManager.getHotelById(hotel2.getId());
         
         assertEquals("Entity: " + hotel2 + "was disturbed in DB while updating entity: " +
                 hotel, hotel2, hotelDB2);
         
-        hotelEntityManager.removeHotel(hotel);
-        hotelEntityManager.removeHotel(hotel2);
+        hoteDAOManager.removeHotel(hotel);
+        hoteDAOManager.removeHotel(hotel2);
     }
     
     @Test
@@ -148,21 +144,21 @@ public class HotelDAOTest {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
         Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
         
-        HotelDAOImpl hotelEntityManager = new HotelDAOImpl();
-        hotelEntityManager.persistHotel(hotel);
-        hotelEntityManager.persistHotel(hotel2);
+        HotelDAO hoteDAOManager = new HotelDAOImpl();
+        hoteDAOManager.persistHotel(hotel);
+        hoteDAOManager.persistHotel(hotel2);
         
-        hotelEntityManager.removeHotel(hotel);
+        hoteDAOManager.removeHotel(hotel);
         
         assertEquals("Entity: " + hotel.toString() + 
-                "was not correctly removed from DB", hotelEntityManager.getAllHotels().size(), 1);
+                "was not correctly removed from DB", hoteDAOManager.getAllHotels().size(), 1);
         
-        Hotel hotelDB = hotelEntityManager.getHotelById(hotel2.getId());
+        Hotel hotelDB = hoteDAOManager.getHotelById(hotel2.getId());
         
         assertEquals("Entity: " + hotel2.toString() +
                 "was disturbed while removing entity: " + hotel.toString(), hotel2, hotelDB);
         
-        hotelEntityManager.removeHotel(hotel2);
+        hoteDAOManager.removeHotel(hotel2);
     }
     
     

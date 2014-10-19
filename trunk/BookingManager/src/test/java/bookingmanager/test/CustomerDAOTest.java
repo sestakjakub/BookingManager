@@ -5,6 +5,7 @@
  */
 package bookingmanager.test;
 
+import bookingmanager.db.CustomerDAO;
 import bookingmanager.db.impl.CustomerDAOImpl;
 import bookingmanager.entity.Customer;
 import java.util.Arrays;
@@ -42,15 +43,15 @@ public class CustomerDAOTest {
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         
-        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
-        customerEntityManager.persistCustomer(customer);
+        CustomerDAO customerDAOManager = new CustomerDAOImpl();
+        customerDAOManager.persistCustomer(customer);
         
-        Customer customer2 = customerEntityManager.getCustomerById(customer.getId());
+        Customer customer2 = customerDAOManager.getCustomerById(customer.getId());
         
         assertEquals("Persisted entity: " + customer.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customer, customer2);
     
-        customerEntityManager.removeCustomer(customer);
+        customerDAOManager.removeCustomer(customer);
     }
     
     @Test
@@ -62,12 +63,12 @@ public class CustomerDAOTest {
         
         List<Customer> customers = Arrays.asList(customer, customer2, customer3);
         
-        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
-        customerEntityManager.persistCustomer(customer);
-        customerEntityManager.persistCustomer(customer2);
-        customerEntityManager.persistCustomer(customer3);
+        CustomerDAO customerDAOManager = new CustomerDAOImpl();
+        customerDAOManager.persistCustomer(customer);
+        customerDAOManager.persistCustomer(customer2);
+        customerDAOManager.persistCustomer(customer3);
         
-        List<Customer> customersExtracted = customerEntityManager.getAllCustomers();
+        List<Customer> customersExtracted = customerDAOManager.getAllCustomers();
         
         Collections.sort(customers, idComparator);
         Collections.sort(customersExtracted, idComparator);
@@ -77,9 +78,9 @@ public class CustomerDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", customers, customersExtracted);
         
-        customerEntityManager.removeCustomer(customer);
-        customerEntityManager.removeCustomer(customer2);
-        customerEntityManager.removeCustomer(customer3);
+        customerDAOManager.removeCustomer(customer);
+        customerDAOManager.removeCustomer(customer2);
+        customerDAOManager.removeCustomer(customer3);
     }
     
     @Test
@@ -87,24 +88,24 @@ public class CustomerDAOTest {
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         
-        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
-        customerEntityManager.persistCustomer(customer);
+        CustomerDAO customerDAOManager = new CustomerDAOImpl();
+        customerDAOManager.persistCustomer(customer);
         
         customer.setAddress("Manesova 12");
         
-        Customer customerManaged = customerEntityManager.mergeCustomer(customer);
+        Customer customerManaged = customerDAOManager.mergeCustomer(customer);
         
-        Customer customer2 = customerEntityManager.getCustomerById(customer.getId());
+        Customer customer2 = customerDAOManager.getCustomerById(customer.getId());
         assertEquals("Merged entity: " + customer.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customer, customer2);
         
         customerManaged.setAddress("Malinovskeho namesti");
         
-        customer2 = customerEntityManager.getCustomerById(customerManaged.getId());
+        customer2 = customerDAOManager.getCustomerById(customerManaged.getId());
         assertEquals("Managed entity: " + customerManaged.toString() + "does not equal to entity extracted from DB: " +
                 customer2.toString(), customerManaged, customer2);
                
-        customerEntityManager.removeCustomer(customerManaged);
+        customerDAOManager.removeCustomer(customerManaged);
     }
     
     @Test
@@ -113,25 +114,25 @@ public class CustomerDAOTest {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         Customer customer2 = createCustomer("Tomas Pittner", "Botanicka 69");
         
-        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
-        customerEntityManager.persistCustomer(customer);
-        customerEntityManager.persistCustomer(customer2);
+        CustomerDAO customerDAOManager = new CustomerDAOImpl();
+        customerDAOManager.persistCustomer(customer);
+        customerDAOManager.persistCustomer(customer2);
         
         customer.setName("Martin Kuba");
         customer.setAddress("Kotlarska 45");
         
-        Customer customerDB = customerEntityManager.getCustomerById(customer.getId());
+        Customer customerDB = customerDAOManager.getCustomerById(customer.getId());
                 
         assertEquals("Entity: " + customer + "was not correctly updated in DB, actual entity: " + 
                 customerDB, customer, customerDB);
         
-        Customer customerDB2 = customerEntityManager.getCustomerById(customer2.getId());
+        Customer customerDB2 = customerDAOManager.getCustomerById(customer2.getId());
         
         assertEquals("Entity: " + customer2 + "was disturbed in DB while updating entity: " +
                 customer, customer2, customerDB2);
         
-        customerEntityManager.removeCustomer(customer);
-        customerEntityManager.removeCustomer(customer2);
+        customerDAOManager.removeCustomer(customer);
+        customerDAOManager.removeCustomer(customer2);
     }
     
     @Test
@@ -140,22 +141,22 @@ public class CustomerDAOTest {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
         Customer customer2 = createCustomer("Tomas Pittner", "Botanicka 69");
         
-        CustomerDAOImpl customerEntityManager = new CustomerDAOImpl();
-        customerEntityManager.persistCustomer(customer);
-        customerEntityManager.persistCustomer(customer2);
+        CustomerDAO customerDAOManager = new CustomerDAOImpl();
+        customerDAOManager.persistCustomer(customer);
+        customerDAOManager.persistCustomer(customer2);
         
-        customerEntityManager.removeCustomer(customer);
+        customerDAOManager.removeCustomer(customer);
         
         assertEquals("Entity: " + customer.toString() + 
-                "was not correctly removed from DB", 1, customerEntityManager.getAllCustomers().size());
+                "was not correctly removed from DB", 1, customerDAOManager.getAllCustomers().size());
         
-        Customer customerDB = customerEntityManager.getCustomerById(customer2.getId());
+        Customer customerDB = customerDAOManager.getCustomerById(customer2.getId());
         
         assertEquals("Entity: " + customer2.toString() +
                 "was disturbed while removing entity: " + customer.toString(), customer2, customerDB);
         
         
-        customerEntityManager.removeCustomer(customer2);
+        customerDAOManager.removeCustomer(customer2);
     }
     
     
