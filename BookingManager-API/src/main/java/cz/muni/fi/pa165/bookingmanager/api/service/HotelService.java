@@ -5,10 +5,14 @@
  */
 package cz.muni.fi.pa165.bookingmanager.api.service;
 
+import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
+
 /**
  *
  * @author Jakub
  */
-public class HotelService {
+public interface HotelService {
+    
+    public HotelDTO create(HotelDTO hotelDTO);
     
 }
