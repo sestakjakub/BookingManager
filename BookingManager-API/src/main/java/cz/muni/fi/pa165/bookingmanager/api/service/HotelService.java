@@ -14,13 +14,10 @@ import java.util.List;
  */
 public interface HotelService {
     
-    public HotelDTO create(HotelDTO hotelDTO);
-    
-    public HotelDTO update(HotelDTO hotelDTO);
-    
-    public HotelDTO getById(Long id);
-    
-    public HotelDTO delete(HotelDTO hotelDTO);
+    public void addHotel(HotelDTO hotelDTO);
+   
+    public void deleteHotel(HotelDTO hotelDTO);
     
     public List<HotelDTO> getAllHotels();
+    
 }

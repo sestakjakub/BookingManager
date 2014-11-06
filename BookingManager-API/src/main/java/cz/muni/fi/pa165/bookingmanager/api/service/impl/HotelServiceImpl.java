@@ -10,29 +10,52 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Hotel;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Jakub
  */
+@Service
 public class HotelServiceImpl implements HotelService {
-    
+
     @Autowired
-	private HotelDAO hotelDao;
-    
+    private HotelDAO hotelDao;
+
     @Override
-    public HotelDTO create(HotelDTO hotelDTO) {
-            HotelDTO dto = null;
-            Hotel hotel = null;
-            try {
-                    hotel = hotelDao.create(HotelDTOConverter.dtoToEntity(hotelDTO));
-                    dto = HotelDTOConverter.entityToDto(hotel);
-            } catch (IllegalArgumentException e) {
-                    throw new Exception(
-                                    "Error occured during storing Hotel", e);
-            }
-            return dto;
+    public void addHotel(HotelDTO hotelDTO) {
+        
+        if (hotelDTO == null){
+            throw new IllegalArgumentException("Hotel is null");
+        }
+        
+        hotelDao.persistHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
     }
+
+    @Override
+    public void deleteHotel(HotelDTO hotelDTO) {
+        
+        if (hotelDTO == null){
+            throw new IllegalArgumentException("Hotel is null");
+        }
+        
+        hotelDao.removeHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+    }
+
+    @Override
+    public List<HotelDTO> getAllHotels() {
+        List<Hotel> hotelList= hotelDao.getAllHotels();
+        
+        List<HotelDTO> hotelDtoList = new ArrayList<>();
+        
+        for (Hotel hotel: hotelList){
+            hotelDtoList.add(HotelDTOConverter.entityToDto(hotel));
+        }
+        
+        return hotelDtoList;
+    }
+    
 }
