@@ -70,6 +70,10 @@ public class BookingManagerServiceImpl implements BookingManagerService {
         if (room == null) {
             throw new IllegalArgumentException("Room is null");
         }
+        
+        if (!roomService.isAvailable(from, to, room)){
+            throw new IllegalArgumentException("Room is not available");
+        }
 
         BookingDTO booking = new BookingDTO();
         booking.setCustomer(customer);
