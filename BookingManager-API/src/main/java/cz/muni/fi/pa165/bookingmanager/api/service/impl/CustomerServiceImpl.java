@@ -29,7 +29,12 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             throw new IllegalArgumentException("null parameter");
         }
-
+        
+        if (customer.getAddress() == "")
+            throw new IllegalArgumentException("Customer address is empty");
+        if (customer.getName() == "")    
+            throw new IllegalArgumentException("Customer name is empty");
+        
         customerDAO.persistCustomer(customerConverter.dtoToEntity(customer));
     }
 
@@ -47,6 +52,11 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             throw new IllegalArgumentException("null parameter");
         }
+        
+        if (customer.getAddress() == "")
+            throw new IllegalArgumentException("Customer address is empty");
+        if (customer.getName() == "")    
+            throw new IllegalArgumentException("Customer name is empty");
         
         customerDAO.mergeCustomer(customerConverter.dtoToEntity(customer));
     }
