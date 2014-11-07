@@ -22,6 +22,10 @@ public class CustomerDTO {
     private String address;
     
     private List<BookingDTO> bookings;
+    
+    public void addBooking(BookingDTO booking) {
+        bookings.add(booking);
+    }
 
     public String getName() {
         return name;

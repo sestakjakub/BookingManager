@@ -12,19 +12,19 @@ import java.util.List;
  * @author Jakub
  */
 public class RoomDTO {
+
     private long id;
-
     private int roomNumber;
-
     private HotelDTO hotel;
-
     private int capacity;
-
     private float price;
-    
     private List<BookingDTO> bookings;
 
     public RoomDTO() {
+    }
+
+    public void addBooking(BookingDTO booking) {
+        bookings.add(booking);
     }
 
     public void setId(long id) {
@@ -96,7 +96,7 @@ public class RoomDTO {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return "Room[ id=" + id + ", room number=" + roomNumber + ", capacity: " + capacity + " ]";
