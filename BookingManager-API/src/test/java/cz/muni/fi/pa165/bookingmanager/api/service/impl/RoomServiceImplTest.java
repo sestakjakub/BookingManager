@@ -15,7 +15,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -56,7 +55,7 @@ public class RoomServiceImplTest {
     public void testAddRoom() {
         System.out.println("addRoom");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         
         service.addRoom(roomDTO);
         
@@ -78,7 +77,7 @@ public class RoomServiceImplTest {
     public void testAddRoomWithNegativeCapacity() {
         System.out.println("addRoomWithNegativeCapacity");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         roomDTO.setCapacity(-2);
         
         service.addRoom(roomDTO);
@@ -91,7 +90,7 @@ public class RoomServiceImplTest {
     public void testAddRoomWithNegativeNumber() {
         System.out.println("addRoomWithNegativeNumber");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         roomDTO.setRoomNumber(-22);
         
         service.addRoom(roomDTO);
@@ -103,7 +102,7 @@ public class RoomServiceImplTest {
     public void testAddRoomWithNegativePrice() {
         System.out.println("addRoomWithNegativePrice");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         roomDTO.setCapacity(-2);
         
         service.addRoom(roomDTO);
@@ -115,7 +114,7 @@ public class RoomServiceImplTest {
     public void testAddRoomWithNullHotel() {
         System.out.println("addRoomWithNullHotel");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         roomDTO.setCapacity(-2);
         
         service.addRoom(roomDTO);
@@ -130,7 +129,7 @@ public class RoomServiceImplTest {
     public void testDeleteRoom() {
         System.out.println("deleteRoom");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         
         service.addRoom(roomDTO);
         service.deleteRoom(roomDTO);
@@ -145,7 +144,7 @@ public class RoomServiceImplTest {
     public void testUpdateRoom() {
         System.out.println("updateRoom");
         
-        RoomDTO roomDTO = newRoomDTO();
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
         
         service.addRoom(roomDTO);
         service.updateRoom(roomDTO);
@@ -153,34 +152,6 @@ public class RoomServiceImplTest {
         verify(roomDAO, Mockito.times(1)).mergeRoom(roomDTOConverter.dtoToEntity(roomDTO));
     }
 
-    /**
-     * Test of getPriceOfRoom method, of class RoomServiceImpl.
-     */
-    @Test
-    public void testGetPriceOfRoom() {
-       System.out.println("addRoom");
-        
-        RoomDTO roomDTO = newRoomDTO();
-        
-        service.addRoom(roomDTO);
-        float price = service.getPriceOfRoom(roomDTO);
-        
-        verify(roomDAO, Mockito.times(1)).getRoomById(roomDTO.getId());
-        
-        assertSame(roomDTO.getPrice(), price);
-    }
     
-    private RoomDTO newRoomDTO(){
-        RoomDTO room = new RoomDTO();
-        room.setCapacity(2);
-        room.setPrice(1222);
-        room.setHotel(new HotelDTO());
-        room.setRoomNumber(45);
-        
-        List<BookingDTO> bookings = Arrays.asList(new BookingDTO());
-        room.setBookings(bookings);
-                
-        return room;        
-    }
     
 }

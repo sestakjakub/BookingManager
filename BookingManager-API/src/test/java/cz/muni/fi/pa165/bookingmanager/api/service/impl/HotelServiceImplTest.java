@@ -58,7 +58,7 @@ public class HotelServiceImplTest {
     public void testAddHotel() {
         System.out.println("addHotel");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         
         service.addHotel(hotelDTO);
         
@@ -81,7 +81,7 @@ public class HotelServiceImplTest {
     public void testAddHotelWithNullName() {
         System.out.println("addHotelWithNullName");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         hotelDTO.setName(null);
         
         service.addHotel(hotelDTO);
@@ -93,7 +93,7 @@ public class HotelServiceImplTest {
     public void testAddHotelWithNullAddress() {
         System.out.println("addHotelWithNullAddress");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         hotelDTO.setAddress(null);
         
         service.addHotel(hotelDTO);
@@ -105,7 +105,7 @@ public class HotelServiceImplTest {
     public void testAddHotelWithNegativePhoneNumber() {
         System.out.println("addHotelWithNegativePhoneNumber");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         hotelDTO.setPhoneNumber(-123456);
         
         service.addHotel(hotelDTO);
@@ -120,7 +120,7 @@ public class HotelServiceImplTest {
     public void testDeleteHotel() {
         System.out.println("deleteHotel");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         
         service.addHotel(hotelDTO);
         service.deleteHotel(hotelDTO);
@@ -146,7 +146,7 @@ public class HotelServiceImplTest {
     public void testGetAllHotels() {
         System.out.println("getAllHotels");
         
-        HotelDTO hotelDTO = newHotelDTO();
+        HotelDTO hotelDTO = TestUtils.newHotelDTO();
         
         service.addHotel(hotelDTO);
         service.getAllHotels();
@@ -154,16 +154,5 @@ public class HotelServiceImplTest {
         verify(hotelDAO, Mockito.times(1)).getAllHotels();
     }
     
-    private HotelDTO newHotelDTO(){
-        HotelDTO hotel = new HotelDTO();
-        hotel.setAddress("Botanicka 14");
-        hotel.setName("Modra ustrica");
-        hotel.setPhoneNumber(123456);
-        
-        List<RoomDTO> rooms = Arrays.asList(new RoomDTO());
-        hotel.setRooms(rooms);
-        
-        return hotel;
-    }
     
 }

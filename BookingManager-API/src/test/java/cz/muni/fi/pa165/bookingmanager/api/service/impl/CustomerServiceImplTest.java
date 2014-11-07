@@ -58,7 +58,7 @@ public class CustomerServiceImplTest {
     public void testGetAllCustomers() {
         System.out.println("getAllCustomers");
         
-        CustomerDTO customerDTO = newCustomerDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
         service.addCustomer(customerDTO);
         service.getAllCustomers();
@@ -73,7 +73,7 @@ public class CustomerServiceImplTest {
     public void testAddCustomer() {
         System.out.println("addCustomer");
         
-        CustomerDTO customerDTO = newCustomerDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
         service.addCustomer(customerDTO);
         
@@ -95,7 +95,7 @@ public class CustomerServiceImplTest {
     public void testAddCustomerWithNullName() {
         System.out.println("addCustomerWithNullName");
         
-        CustomerDTO customerDTO = newCustomerDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         customerDTO.setName(null);
         
         service.addCustomer(customerDTO);
@@ -108,7 +108,7 @@ public class CustomerServiceImplTest {
     public void testAddCustomerWithNullAddress() {
         System.out.println("addCustomerWithNullAddress");
         
-        CustomerDTO customerDTO = newCustomerDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         customerDTO.setAddress(null);
         
         service.addCustomer(customerDTO);
@@ -120,7 +120,7 @@ public class CustomerServiceImplTest {
     public void testDeleteCustomer() {
         System.out.println("deleteCustomer");
         
-        CustomerDTO customerDTO = newCustomerDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
         service.addCustomer(customerDTO);
         service.deleteCustomer(customerDTO);
@@ -139,16 +139,5 @@ public class CustomerServiceImplTest {
         verifyZeroInteractions(customerDTO);
     }
     
-    private CustomerDTO newCustomerDTO(){
-        CustomerDTO customer = new CustomerDTO();
-        
-        customer.setName("Tomas Pittner");
-        customer.setAddress("Ucitelska 12");
-        
-        List<BookingDTO> bookings = Arrays.asList(new BookingDTO());
-        customer.setBookings(bookings);
-        
-        return customer;
-    }
     
 }
