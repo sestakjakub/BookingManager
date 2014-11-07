@@ -32,8 +32,10 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class HotelServiceImplTest {
+    private HotelDTOConverter hotelDTOconverter;
     
     public HotelServiceImplTest() {
+        hotelDTOconverter = new HotelDTOConverter();
     }
     
     @InjectMocks
@@ -62,7 +64,7 @@ public class HotelServiceImplTest {
         
         service.addHotel(hotelDTO);
         
-        verify(hotelDAO, Mockito.times(1)).persistHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+        verify(hotelDAO, Mockito.times(1)).persistHotel(hotelDTOconverter.dtoToEntity(hotelDTO));
         
     }
     
@@ -89,7 +91,7 @@ public class HotelServiceImplTest {
         service.addHotel(hotelDTO);
         service.deleteHotel(hotelDTO);
         
-        verify(hotelDAO, Mockito.times(1)).removeHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+        verify(hotelDAO, Mockito.times(1)).removeHotel(hotelDTOconverter.dtoToEntity(hotelDTO));
     }
 
     /**
