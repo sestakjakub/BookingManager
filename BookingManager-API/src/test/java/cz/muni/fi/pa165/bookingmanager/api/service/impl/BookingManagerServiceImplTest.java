@@ -101,10 +101,18 @@ public class BookingManagerServiceImplTest {
     }
 
     /**
-     * Test of getReservationsOfHotel method, of class BookingManagerServiceImpl.
+     * Test of getReservationsOfHotelByDates method, of class BookingManagerServiceImpl.
      */
     @Test
     public void testGetReservationsOfHotelByDates() {
-        
+        HotelDTO hotel = new HotelDTO();
+        CustomerDTO customer = new CustomerDTO();
+        RoomDTO room = new RoomDTO();
+        List<RoomDTO> rooms = new ArrayList();
+        rooms.add(room);
+        hotel.setRooms(rooms);
+        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
+        List<BookingDTO> reservedRooms = bookingManagerService.getReservationsOfHotelByDates(hotel, new Date(500), new Date(1200));
+        assertFalse(reservedRooms.isEmpty());
     }
 }
