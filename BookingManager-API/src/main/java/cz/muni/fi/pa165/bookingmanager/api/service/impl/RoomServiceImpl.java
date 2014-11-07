@@ -57,7 +57,10 @@ public class RoomServiceImpl implements RoomService {
     public boolean isAvailable(Date from, Date to, RoomDTO room) {
         for(BookingDTO booking : room.getBookings())
         {
-            if ((from.before(booking.getDateFrom()) && to.after(booking.getDateFrom())) || (booking.getDateFrom().before(from) && booking.getDateTo().after(from)))
+            if ((from.before(booking.getDateFrom()) && to.after(booking.getDateFrom())) ||
+                    (booking.getDateFrom().before(from) && booking.getDateTo().after(from)) ||
+                    (booking.getDateFrom().before(from) && booking.getDateTo().after(to)) ||
+                    (from.before(booking.getDateFrom()) && to.after(booking.getDateTo())))
                 return false;
         }
         
