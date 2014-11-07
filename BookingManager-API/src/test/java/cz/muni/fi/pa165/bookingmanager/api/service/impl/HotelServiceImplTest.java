@@ -8,15 +8,12 @@ package cz.muni.fi.pa165.bookingmanager.api.service.impl;
 import cz.muni.fi.pa165.bookingmanager.api.converter.HotelDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
-import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
-import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.HotelDAOImpl;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,7 +32,7 @@ public class HotelServiceImplTest {
     private HotelDTOConverter hotelDTOconverter;
     
     public HotelServiceImplTest() {
-        hotelDTOconverter = new HotelDTOConverter();
+        
     }
     
     @InjectMocks
@@ -47,6 +44,7 @@ public class HotelServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        hotelDTOconverter = new HotelDTOConverter();
     }
     
     @After
