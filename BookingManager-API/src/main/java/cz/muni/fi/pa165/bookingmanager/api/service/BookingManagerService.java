@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public interface BookingManagerService {
     
-    void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer);
+    void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, Date from, Date to);
     
     List<RoomDTO> getAvailableRoomsOfHotel(HotelDTO hotel);
     
