@@ -27,6 +27,15 @@ public class RoomServiceImpl implements RoomService {
             throw new IllegalArgumentException("null parameter");
         }
         
+        if (room.getCapacity()<0)
+            throw new IllegalArgumentException("Room capacity is negative");
+        if (room.getHotel()==null)
+            throw new IllegalArgumentException("Room is not assigned to hotel");
+        if (room.getPrice()<0)
+            throw new IllegalArgumentException("Room price is negative");
+        if (room.getRoomNumber()<0)
+            throw new IllegalArgumentException("Room number is negative");
+        
         roomDAO.persistRoom(roomConverter.dtoToEntity(room));
     }
 
@@ -44,6 +53,15 @@ public class RoomServiceImpl implements RoomService {
         if (room == null){
             throw new IllegalArgumentException("null parameter");
         }
+        
+        if (room.getCapacity()<0)
+            throw new IllegalArgumentException("Room capacity is negative");
+        if (room.getHotel()==null)
+            throw new IllegalArgumentException("Room is not assigned to hotel");
+        if (room.getPrice()<0)
+            throw new IllegalArgumentException("Room price is negative");
+        if (room.getRoomNumber()<0)
+            throw new IllegalArgumentException("Room number is negative");
         
         roomDAO.mergeRoom(roomConverter.dtoToEntity(room));
     }
