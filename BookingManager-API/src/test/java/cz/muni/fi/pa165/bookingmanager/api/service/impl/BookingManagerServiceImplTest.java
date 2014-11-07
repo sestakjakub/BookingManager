@@ -15,6 +15,7 @@ import cz.muni.fi.pa165.bookingmanager.backend.db.impl.BookingDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.CustomerDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.RoomDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
@@ -29,7 +30,7 @@ import org.mockito.MockitoAnnotations;
 
 /**
  *
- * @author Jana
+ * @author Jana, Jiří Kareš
  */
 public class BookingManagerServiceImplTest {
     
@@ -88,16 +89,22 @@ public class BookingManagerServiceImplTest {
      * Test of getAvailableRoomsOfHotel method, of class BookingManagerServiceImpl.
      */
     @Test
-    public void testGetAvailableRoomsOfHotel() {
-        
+    public void testGetAvailableRoomsOfHotelByDates() {
+        HotelDTO hotel = new HotelDTO();
+        CustomerDTO customer = new CustomerDTO();
+        List<RoomDTO> rooms = new ArrayList();
+        RoomDTO room = new RoomDTO();
+        rooms.add(room);
+        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
+        List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
+        assertTrue(availableRooms.isEmpty());
     }
 
     /**
      * Test of getReservationsOfHotel method, of class BookingManagerServiceImpl.
      */
     @Test
-    public void testGetReservationsOfHotel() {
+    public void testGetReservationsOfHotelByDates() {
         
     }
-    
 }
