@@ -37,6 +37,10 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Hotel name is empty");
         } else if (hotelDTO.getPhoneNumber() == "") {
             throw new IllegalArgumentException("Hotel phone number is empty");
+        } else if (hotelDTO.getAddress() == null){
+            throw new IllegalArgumentException("Address is null");
+        } else if (hotelDTO.getName() == null){
+            throw new IllegalArgumentException("Name is null");
         }
 
         hotelDAO.persistHotel(hotelConverter.dtoToEntity(hotelDTO));
