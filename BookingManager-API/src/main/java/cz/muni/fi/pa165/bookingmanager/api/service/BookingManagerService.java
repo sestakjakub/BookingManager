@@ -19,8 +19,8 @@ public interface BookingManagerService {
     
     void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, Date from, Date to);
     
-    List<RoomDTO> getAvailableRoomsOfHotel(HotelDTO hotel);
+    List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, Date from, Date to);
     
-    List<BookingDTO> getReservationsOfHotel(HotelDTO hotel);
+    List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, Date from, Date to);
     
 }

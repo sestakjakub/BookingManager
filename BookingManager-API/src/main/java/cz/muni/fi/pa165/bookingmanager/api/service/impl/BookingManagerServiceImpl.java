@@ -50,6 +50,8 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     private BookingDTOConverter bookingDTOConverter;
     @Autowired
     private HotelDTOConverter hotelDTOConverter;
+    @Autowired
+    private RoomService roomService;
 
     public BookingManagerServiceImpl() {
     }
@@ -83,21 +85,43 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     }
 
     @Override
-    public List<RoomDTO> getAvailableRoomsOfHotel(HotelDTO hotel) {
-        //TODO: date from, date to as params
-        return null;
+    public List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, Date from, Date to) {
+        if (hotel == null){
+            throw new IllegalArgumentException("Hotel is null");
+        }
+        
+        List<RoomDTO> roomList = hotel.getRooms();
+        List<RoomDTO> availableRoomList = new ArrayList<>();
+        
+        for (RoomDTO room: roomList){
+            if (roomService.isAvailable(from, to, room)){
+            availableRoomList.add(room);
+            }
+        }
+        
+        return availableRoomList;
     }
 
     @Override
     public List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, Date from, Date to) {
         
+        if (hotel == null){
+            throw new IllegalArgumentException("Hotel is null");
+        }
+        
+        if (from.after(to)){
+            throw new IllegalArgumentException("From date is after to");
+        }
         
         List<RoomDTO> rooms = hotel.getRooms();
+        
         List<BookingDTO> bookings = new ArrayList();
 
         for (RoomDTO room : rooms) {
             for (BookingDTO booking : room.getBookings()) {
-                bookings.add(booking);
+                if (!roomService.isAvailable(from, to, room)){
+                    bookings.add(booking);
+                }
             }
         }
 
