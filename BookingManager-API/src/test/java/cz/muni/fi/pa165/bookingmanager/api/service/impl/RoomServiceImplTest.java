@@ -6,12 +6,12 @@
 package cz.muni.fi.pa165.bookingmanager.api.service.impl;
 
 import cz.muni.fi.pa165.bookingmanager.api.converter.RoomDTOConverter;
-import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
-import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.backend.db.impl.BookingDAOImpl;
+import cz.muni.fi.pa165.bookingmanager.backend.db.impl.CustomerDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.RoomDAOImpl;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +21,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import org.mockito.MockitoAnnotations;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -32,6 +33,18 @@ public class RoomServiceImplTest {
     }
     
     private RoomDTOConverter roomDTOConverter;
+    
+    @InjectMocks
+    private CustomerServiceImpl customerService;
+    @InjectMocks
+    private HotelServiceImpl hotelService;
+    @InjectMocks
+    private BookingManagerServiceImpl bookingManagerService;
+        
+    @Mock
+    private CustomerDAOImpl customerDAO;
+    @Mock
+    private BookingDAOImpl bookingDAO;
     
     @InjectMocks
     private RoomServiceImpl service;
@@ -150,6 +163,30 @@ public class RoomServiceImplTest {
         service.updateRoom(roomDTO);
         
         verify(roomDAO, Mockito.times(1)).mergeRoom(roomDTOConverter.dtoToEntity(roomDTO));
+    }
+    
+    @Test
+    public void testIsRoomAvailable() {
+        System.out.println("updateRoom");
+        
+        RoomDTO roomDTO = TestUtils.newRoomDTO();
+        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
+                       
+        service.addRoom(roomDTO);
+        customerService.addCustomer(customerDTO);
+        
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1), new Date(2013,3,1));
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,5,1), new Date(2013,7,1));
+        
+        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,4,1), roomDTO));
+        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,6,1), roomDTO));
+        assertFalse(service.isAvailable(new Date(2013,4,1), new Date(2013,6,1), roomDTO));
+        assertFalse(service.isAvailable(new Date(2013,1,1), new Date(2013,8,1), roomDTO));
+        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,2,12), roomDTO));
+        
+        
+        assertTrue(service.isAvailable(new Date(2013,4,1), new Date(2013,4,12), roomDTO));
+        assertTrue(service.isAvailable(new Date(2013,8,1), new Date(2013,8,12), roomDTO));
     }
 
     
