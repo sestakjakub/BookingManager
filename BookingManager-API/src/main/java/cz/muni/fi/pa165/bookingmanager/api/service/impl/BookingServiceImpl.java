@@ -9,13 +9,19 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.BookingService;
 import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Robert
  */
+@Service
 public class BookingServiceImpl implements BookingService{
+    
+    @Autowired
     private BookingDTOConverter bookingConverter;
+    @Autowired
     private BookingDAO bookingDAO;
 
     @Override
@@ -27,27 +33,4 @@ public class BookingServiceImpl implements BookingService{
         bookingDAO.mergeBooking(bookingConverter.dtoToEntity(booking));
     }
 
-    @Override
-    public void addBooking(BookingDTO booking) {
-        if (booking == null) {
-            throw new IllegalArgumentException("null parameter");
-        }
-
-        bookingDAO.persistBooking(bookingConverter.dtoToEntity(booking));
-    }
-
-    @Override
-    public void deleteBooking(BookingDTO booking) {
-        if (booking == null) {
-            throw new IllegalArgumentException("null parameter");
-        }
-        
-        bookingDAO.removeBooking(bookingConverter.dtoToEntity(booking));
-    }
-
-    @Override
-    public List<BookingDTO> getAllBookings() {
-        return bookingConverter.entityListToDtoList(bookingDAO.getAllBookings());
-    }
-    
 }

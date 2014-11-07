@@ -13,8 +13,5 @@ import java.util.List;
  */
 public interface BookingService {
     
-    void addBooking(BookingDTO booking);
-    void deleteBooking(BookingDTO booking);
     void updateBooking(BookingDTO booking);
-    List<BookingDTO> getAllBookings();
 }
