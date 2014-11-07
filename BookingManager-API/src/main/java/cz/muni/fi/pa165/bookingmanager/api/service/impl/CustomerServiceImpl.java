@@ -34,7 +34,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             throw new IllegalArgumentException("null parameter");
         }
-        
+        if (customer.getName() == null){
+            throw new IllegalArgumentException("Name is null");
+        }
         if (customer.getAddress() == "")
             throw new IllegalArgumentException("Customer address is empty");
         if (customer.getAddress() == null){
