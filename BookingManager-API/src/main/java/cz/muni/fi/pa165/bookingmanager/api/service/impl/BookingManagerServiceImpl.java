@@ -51,7 +51,7 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     @Autowired
     private HotelDTOConverter hotelDTOConverter = new HotelDTOConverter();
     @Autowired
-    private RoomService roomService;
+    private RoomServiceImpl roomService;
 
     public BookingManagerServiceImpl() {
     }
@@ -71,12 +71,14 @@ public class BookingManagerServiceImpl implements BookingManagerService {
             throw new IllegalArgumentException("Room is null");
         }
         
+        roomService = new RoomServiceImpl();
         if (!roomService.isAvailable(from, to, room)){
             throw new IllegalArgumentException("Room is not available");
         }
 
         BookingDTO booking = new BookingDTO();
         booking.setCustomer(customer);
+        booking.setRoom(room);
         booking.setDateFrom(from);
         booking.setDateTo(to);
 
