@@ -6,6 +6,7 @@ package cz.muni.fi.pa165.bookingmanager.api.service.impl;
 
 import cz.muni.fi.pa165.bookingmanager.api.converter.BookingDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.converter.CustomerDTOConverter;
+import cz.muni.fi.pa165.bookingmanager.api.converter.HotelDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.converter.RoomDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
@@ -18,6 +19,7 @@ import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.CustomerDAO;
+import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +35,8 @@ import org.springframework.stereotype.Service;
 public class BookingManagerServiceImpl implements BookingManagerService {
 
     @Autowired
+    private HotelDAO hotelDAO;
+    @Autowired
     private RoomDAO roomDAO;
     @Autowired
     private CustomerDAO customerDAO;
@@ -44,6 +48,8 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     private CustomerDTOConverter customerDTOConverter;
     @Autowired
     private BookingDTOConverter bookingDTOConverter;
+    @Autowired
+    private HotelDTOConverter hotelDTOConverter;
 
     public BookingManagerServiceImpl() {
     }
@@ -73,7 +79,7 @@ public class BookingManagerServiceImpl implements BookingManagerService {
 
         roomDAO.mergeRoom(roomDTOConverter.dtoToEntity(room));
         customerDAO.mergeCustomer(customerDTOConverter.dtoToEntity(customer));
-        bookingDAO.mergeBooking(bookingDTOConverter.dtoToEntity(booking));
+        bookingDAO.persistBooking(bookingDTOConverter.dtoToEntity(booking));
     }
 
     @Override
@@ -83,7 +89,9 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     }
 
     @Override
-    public List<BookingDTO> getReservationsOfHotel(HotelDTO hotel) {
+    public List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, Date from, Date to) {
+        
+        
         List<RoomDTO> rooms = hotel.getRooms();
         List<BookingDTO> bookings = new ArrayList();
 
