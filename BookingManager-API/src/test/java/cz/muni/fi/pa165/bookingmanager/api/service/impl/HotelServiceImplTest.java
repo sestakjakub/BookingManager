@@ -29,6 +29,7 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class HotelServiceImplTest {
+    
     private HotelDTOConverter hotelDTOconverter;
     
     public HotelServiceImplTest() {
@@ -101,18 +102,6 @@ public class HotelServiceImplTest {
         verifyZeroInteractions(hotelDAO);
     }
     
-    @Test(expected = IllegalArgumentException.class)
-    public void testAddHotelWithNegativePhoneNumber() {
-        System.out.println("addHotelWithNegativePhoneNumber");
-        
-        HotelDTO hotelDTO = TestUtils.newHotelDTO();
-        hotelDTO.setPhoneNumber(-123456);
-        
-        service.addHotel(hotelDTO);
-        
-        verifyZeroInteractions(hotelDAO);
-    }
-
     /**
      * Test of deleteHotel method, of class HotelServiceImpl.
      */

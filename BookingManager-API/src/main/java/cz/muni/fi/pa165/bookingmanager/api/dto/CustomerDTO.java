@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pa165.bookingmanager.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,9 @@ import java.util.List;
  */
 public class CustomerDTO {
     
-    public CustomerDTO() {}
+    public CustomerDTO() {
+        this.bookings = new ArrayList<>();
+    }
     
     private long id;
     

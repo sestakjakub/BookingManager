@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pa165.bookingmanager.api.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ public class HotelDTO {
     private List<RoomDTO> rooms;
 
     public HotelDTO() {
+        this.rooms = new ArrayList<>();
     }
 
     public List<RoomDTO> getRooms() {

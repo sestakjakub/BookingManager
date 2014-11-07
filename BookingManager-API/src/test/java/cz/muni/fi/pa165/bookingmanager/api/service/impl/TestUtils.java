@@ -26,8 +26,8 @@ public class TestUtils {
         room.setHotel(new HotelDTO());
         room.setRoomNumber(45);
         
-        List<BookingDTO> bookings = Arrays.asList(new BookingDTO());
-        room.setBookings(bookings);
+        //List<BookingDTO> bookings = Arrays.asList(newBookingDTO(newCustomerDTO(), room));
+        //room.setBookings(bookings);
                 
         return room;        
     }
@@ -37,9 +37,9 @@ public class TestUtils {
         HotelDTO hotel = new HotelDTO();
         hotel.setAddress("Botanicka 14");
         hotel.setName("Modra ustrica");
-        hotel.setPhoneNumber(123456);
+        hotel.setPhoneNumber("123456");
         
-        List<RoomDTO> rooms = Arrays.asList(new RoomDTO());
+        List<RoomDTO> rooms = Arrays.asList(newRoomDTO());
         hotel.setRooms(rooms);
         
         return hotel;
@@ -52,8 +52,8 @@ public class TestUtils {
         customer.setName("Tomas Pittner");
         customer.setAddress("Ucitelska 12");
         
-        List<BookingDTO> bookings = Arrays.asList(new BookingDTO());
-        customer.setBookings(bookings);
+        //List<BookingDTO> bookings = Arrays.asList(newBookingDTO(newCustomerDTO(), newRoomDTO()));
+        //customer.setBookings(bookings);
         
         return customer;
     }
@@ -66,6 +66,17 @@ public class TestUtils {
         booking.setRoom(room);
         booking.setDateFrom(from);
         booking.setDateTo(to);
+        
+        return booking;
+    }
+    
+     public static BookingDTO newBookingDTO(CustomerDTO customer, RoomDTO room){
+        BookingDTO booking = new BookingDTO();
+        
+        booking.setCustomer(customer);
+        booking.setRoom(room);
+        booking.setDateFrom(new Date(2014,1,1));
+        booking.setDateTo(new Date(2014,2,1));
         
         return booking;
     }

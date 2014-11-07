@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HotelServiceImpl implements HotelService {
 
+    @Autowired
     private HotelDTOConverter hotelConverter = new HotelDTOConverter();
     @Autowired
     private HotelDAO hotelDAO;

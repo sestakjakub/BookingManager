@@ -60,6 +60,8 @@ public class BookingManagerServiceImplTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        roomDTOConverter = new RoomDTOConverter();
+        customerDTOConverter = new CustomerDTOConverter();
     }
     
     @After
