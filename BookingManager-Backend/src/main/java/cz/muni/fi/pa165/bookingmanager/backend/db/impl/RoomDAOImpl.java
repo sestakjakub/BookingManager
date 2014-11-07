@@ -7,12 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * Class RoomDAOImpl
  * 
  * @author JiĹ™Ă­ KareĹˇ
  */
+@Repository
 public class RoomDAOImpl implements RoomDAO {
 
     private EntityManager em;

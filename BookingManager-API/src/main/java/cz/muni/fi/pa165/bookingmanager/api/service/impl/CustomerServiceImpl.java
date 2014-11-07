@@ -10,17 +10,19 @@ import cz.muni.fi.pa165.bookingmanager.api.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.backend.db.CustomerDAO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Robert, Jiří Kareš
  */
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerDAO customerDAO;
     @Autowired
-    private CustomerDTOConverter customerConverter;
+    private CustomerDTOConverter customerConverter = new CustomerDTOConverter();
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
@@ -35,6 +37,9 @@ public class CustomerServiceImpl implements CustomerService {
         
         if (customer.getAddress() == "")
             throw new IllegalArgumentException("Customer address is empty");
+        if (customer.getAddress() == null){
+            throw new IllegalArgumentException("Address is null");
+        }
         if (customer.getName() == "")    
             throw new IllegalArgumentException("Customer name is empty");
         

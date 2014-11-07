@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Jakub Šesták, Jiří Kareš
  */
+@Component("hotelConvertor")
 public class HotelDTOConverter {
 
     private Mapper mapper;

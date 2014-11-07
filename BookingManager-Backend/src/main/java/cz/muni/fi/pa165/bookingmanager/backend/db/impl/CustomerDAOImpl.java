@@ -6,26 +6,27 @@ package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.CustomerDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Customer;
+import cz.muni.fi.pa165.bookingmanager.utils.EntityManagerSingleton;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
 
 /**
  * DAO class of customer entity.
  * 
  * @author Robert
  */
-@Stateless
+@Repository
 public class CustomerDAOImpl implements CustomerDAO {
     
     private EntityManager entityManager;
     
     public CustomerDAOImpl() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
-        entityManager = emf.createEntityManager();
+        entityManager = EntityManagerSingleton.getInstance();
     }
 
     @Override

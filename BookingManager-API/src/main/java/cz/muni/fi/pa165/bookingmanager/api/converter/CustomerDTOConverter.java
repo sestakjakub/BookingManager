@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Jiří Kareš
  */
+@Component("customerConvertor")
 public class CustomerDTOConverter {
 
     private Mapper mapper;

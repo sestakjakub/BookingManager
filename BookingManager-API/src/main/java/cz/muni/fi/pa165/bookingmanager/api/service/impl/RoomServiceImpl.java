@@ -12,17 +12,19 @@ import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Robert
  */
+@Service
 public class RoomServiceImpl implements RoomService {
     
     @Autowired
     private RoomDAO roomDAO;
     @Autowired
-    private RoomDTOConverter roomConverter;
+    private RoomDTOConverter roomConverter = new RoomDTOConverter();
 
     @Override
     public void addRoom(RoomDTO room) {

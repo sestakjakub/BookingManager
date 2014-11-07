@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class BookingServiceImpl implements BookingService{
     
     @Autowired
-    private BookingDTOConverter bookingConverter;
+    private BookingDTOConverter bookingConverter = new BookingDTOConverter();
     @Autowired
     private BookingDAO bookingDAO;
 
