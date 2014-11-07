@@ -46,7 +46,7 @@ public class Hotel implements Serializable {
         this.rooms = rooms;
     }
     
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

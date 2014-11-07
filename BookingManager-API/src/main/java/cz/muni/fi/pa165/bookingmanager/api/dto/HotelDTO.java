@@ -9,18 +9,14 @@ import java.util.List;
 
 /**
  *
- * @author Jakub
+ * @author Jakub Šesták
  */
 public class HotelDTO {
 
     private long id;
-
     private String name;
-
     private String address;
-
     private int phoneNumber;
-
     private List<RoomDTO> rooms;
 
     public HotelDTO() {
@@ -34,7 +30,7 @@ public class HotelDTO {
         this.rooms = rooms;
     }
     
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

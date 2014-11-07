@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HotelServiceImpl implements HotelService {
-
+    
+    private HotelDTOConverter convertor = new HotelDTOConverter();
+    
     @Autowired
     private HotelDAO hotelDao;
 
@@ -32,7 +34,7 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Hotel is null");
         }
         
-        hotelDao.persistHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+        hotelDao.persistHotel(convertor.dtoToEntity(hotelDTO));
     }
 
     @Override
@@ -42,7 +44,7 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Hotel is null");
         }
         
-        hotelDao.removeHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+        hotelDao.removeHotel(convertor.dtoToEntity(hotelDTO));
     }
 
     @Override
@@ -52,7 +54,7 @@ public class HotelServiceImpl implements HotelService {
         List<HotelDTO> hotelDtoList = new ArrayList<>();
         
         for (Hotel hotel: hotelList){
-            hotelDtoList.add(HotelDTOConverter.entityToDto(hotel));
+            hotelDtoList.add(convertor.entityToDto(hotel));
         }
         
         return hotelDtoList;
