@@ -5,6 +5,7 @@
 package cz.muni.fi.pa165.bookingmanager.api.service;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface RoomService {
     void updateRoom(RoomDTO room);
     
     List<RoomDTO> getAllRooms();
+    
+    boolean isAvailable(Date from, Date to, RoomDTO room);
 }
