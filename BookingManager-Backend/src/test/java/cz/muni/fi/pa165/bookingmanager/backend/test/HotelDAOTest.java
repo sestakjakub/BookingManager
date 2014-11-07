@@ -41,7 +41,7 @@ public class HotelDAOTest {
     @Test
     public void persistHotelTest()
     {
-        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
         
         HotelDAO hoteDAOManager = new HotelDAOImpl();
         hoteDAOManager.persistHotel(hotel);
@@ -57,9 +57,9 @@ public class HotelDAOTest {
     @Test
     public void getAllHotelsTest(){
         
-        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
-        Hotel hotel3 = createHotel("HolidayInn", "Botanicka 6", 134652);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", "654321");
+        Hotel hotel3 = createHotel("HolidayInn", "Botanicka 6", "134652");
         
         List<Hotel> hotels = Arrays.asList(hotel, hotel2, hotel3);
         
@@ -86,7 +86,7 @@ public class HotelDAOTest {
     @Test
     public void mergeHotelTest()
     {
-        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
         
         HotelDAO hoteDAOManager = new HotelDAOImpl();
         hoteDAOManager.persistHotel(hotel);
@@ -111,8 +111,8 @@ public class HotelDAOTest {
     @Test
     public void updateHotelTest()
     {
-        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", "654321");
         
         HotelDAO hoteDAOManager = new HotelDAOImpl();
         hoteDAOManager.persistHotel(hotel);
@@ -138,8 +138,8 @@ public class HotelDAOTest {
     @Test
     public void removeHotelTest()
     {
-        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", 123456);
-        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", 654321);
+        Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
+        Hotel hotel2 = createHotel("Hilton", "Rumunska 5", "654321");
         
         HotelDAO hoteDAOManager = new HotelDAOImpl();
         hoteDAOManager.persistHotel(hotel);
@@ -167,7 +167,7 @@ public class HotelDAOTest {
         }
     };
     
-    private Hotel createHotel(String name, String address, int phone){
+    private Hotel createHotel(String name, String address, String phone){
         Hotel hotel = new Hotel();
         hotel.setAddress(address);
         hotel.setName(name);

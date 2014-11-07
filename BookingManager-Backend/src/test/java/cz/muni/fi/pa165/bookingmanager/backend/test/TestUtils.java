@@ -31,7 +31,7 @@ public class TestUtils {
         return booking;
     }
     
-    public static Hotel createHotel(String name, String address, int phone){
+    public static Hotel createHotel(String name, String address, String phone){
         Hotel hotel = new Hotel();
         hotel.setAddress(address);
         hotel.setName(name);

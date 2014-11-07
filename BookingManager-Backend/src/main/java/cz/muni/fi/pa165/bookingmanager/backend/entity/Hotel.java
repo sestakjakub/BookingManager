@@ -30,7 +30,7 @@ public class Hotel implements Serializable {
     private String address;
 
     @Column
-    private int phoneNumber;
+    private String phoneNumber;
 
     @OneToMany
     private List<Room> rooms;
@@ -70,11 +70,11 @@ public class Hotel implements Serializable {
         return address;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 

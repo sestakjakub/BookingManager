@@ -25,7 +25,7 @@ public class HotelServiceImpl implements HotelService {
     private HotelDTOConverter hotelConverter = new HotelDTOConverter();
     
     @Autowired
-    private HotelDAO hotelDao;
+    private HotelDAO hotelDAO;
 
     @Override
     public void addHotel(HotelDTO hotelDTO) {
@@ -33,8 +33,16 @@ public class HotelServiceImpl implements HotelService {
         if (hotelDTO == null){
             throw new IllegalArgumentException("Hotel is null");
         }
+        else if (hotelDTO.getId() < 0)
+            throw new IllegalArgumentException("Hotel id is negative");
+        else if (hotelDTO.getAddress() == "")
+            throw new IllegalArgumentException("Hotel address is empty");
+        else if (hotelDTO.getName() == "")
+            throw new IllegalArgumentException("Hotel name is empty");
+        else if (hotelDTO.getPhoneNumber() == "")
+            throw new IllegalArgumentException("Hotel phone number is empty");
         
-        hotelDao.persistHotel(hotelConverter.dtoToEntity(hotelDTO));
+        hotelDAO.persistHotel(hotelConverter.dtoToEntity(hotelDTO));
     }
 
     @Override
@@ -44,12 +52,23 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Hotel is null");
         }
         
-        hotelDao.removeHotel(hotelConverter.dtoToEntity(hotelDTO));
+        hotelDAO.removeHotel(hotelConverter.dtoToEntity(hotelDTO));
     }
+    
+    
 
     @Override
     public List<HotelDTO> getAllHotels() {
-        return hotelConverter.entityListToDtoList(hotelDao.getAllHotels());
+        return hotelConverter.entityListToDtoList(hotelDAO.getAllHotels());
+    }
+
+    @Override
+    public void updateHotel(HotelDTO hotelDTO) {
+        if (hotelDTO == null) {
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        hotelDAO.mergeHotel(hotelConverter.dtoToEntity(hotelDTO));
     }
     
 }

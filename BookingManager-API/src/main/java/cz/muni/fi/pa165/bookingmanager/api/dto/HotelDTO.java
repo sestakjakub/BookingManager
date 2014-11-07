@@ -16,7 +16,7 @@ public class HotelDTO {
     private long id;
     private String name;
     private String address;
-    private int phoneNumber;
+    private String phoneNumber;
     private List<RoomDTO> rooms;
 
     public HotelDTO() {
@@ -54,11 +54,11 @@ public class HotelDTO {
         return address;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 

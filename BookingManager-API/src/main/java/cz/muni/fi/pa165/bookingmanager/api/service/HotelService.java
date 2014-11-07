@@ -18,6 +18,8 @@ public interface HotelService {
    
     public void deleteHotel(HotelDTO hotelDTO);
     
+    public void updateHotel(HotelDTO hotelDTO);
+    
     public List<HotelDTO> getAllHotels();
     
 }
