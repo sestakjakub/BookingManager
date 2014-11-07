@@ -15,6 +15,7 @@ import cz.muni.fi.pa165.bookingmanager.backend.db.impl.BookingDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.CustomerDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.impl.RoomDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
+import java.util.Date;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -73,7 +74,7 @@ public class BookingManagerServiceImplTest {
         RoomDTO roomDTO = TestUtils.newRoomDTO();
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
-        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO);
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1),new Date(2013,2,15));
         
         verify(roomDAO, Mockito.times(1)).mergeRoom(roomDTOConverter.dtoToEntity(roomDTO));
         verify(customerDAO, Mockito.times(1)).mergeCustomer(customerDTOConverter.dtoToEntity(customerDTO));

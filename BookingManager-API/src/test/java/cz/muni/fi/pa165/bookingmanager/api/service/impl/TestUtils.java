@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,5 +56,17 @@ public class TestUtils {
         customer.setBookings(bookings);
         
         return customer;
+    }
+    
+    // to be deleted
+    public static BookingDTO newBookingDTO(CustomerDTO customer, RoomDTO room, Date from, Date to){
+        BookingDTO booking = new BookingDTO();
+        
+        booking.setCustomer(customer);
+        booking.setRoom(room);
+        booking.setDateFrom(from);
+        booking.setDateTo(to);
+        
+        return booking;
     }
 }
