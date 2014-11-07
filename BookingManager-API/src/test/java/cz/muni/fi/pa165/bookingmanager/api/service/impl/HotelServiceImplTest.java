@@ -76,6 +76,42 @@ public class HotelServiceImplTest {
         
         verifyZeroInteractions(hotelDAO);
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddHotelWithNullName() {
+        System.out.println("addHotelWithNullName");
+        
+        HotelDTO hotelDTO = newHotelDTO();
+        hotelDTO.setName(null);
+        
+        service.addHotel(hotelDTO);
+        
+        verifyZeroInteractions(hotelDAO);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddHotelWithNullAddress() {
+        System.out.println("addHotelWithNullAddress");
+        
+        HotelDTO hotelDTO = newHotelDTO();
+        hotelDTO.setAddress(null);
+        
+        service.addHotel(hotelDTO);
+        
+        verifyZeroInteractions(hotelDAO);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddHotelWithNegativePhoneNumber() {
+        System.out.println("addHotelWithNegativePhoneNumber");
+        
+        HotelDTO hotelDTO = newHotelDTO();
+        hotelDTO.setPhoneNumber(-123456);
+        
+        service.addHotel(hotelDTO);
+        
+        verifyZeroInteractions(hotelDAO);
+    }
 
     /**
      * Test of deleteHotel method, of class HotelServiceImpl.
@@ -90,6 +126,17 @@ public class HotelServiceImplTest {
         service.deleteHotel(hotelDTO);
         
         verify(hotelDAO, Mockito.times(1)).removeHotel(HotelDTOConverter.dtoToEntity(hotelDTO));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteHotelAsNull() {
+        System.out.println("addHotelAsNull");
+        
+        HotelDTO hotelDTO = null;
+        
+        service.deleteHotel(hotelDTO);
+        
+        verifyZeroInteractions(hotelDAO);
     }
 
     /**
