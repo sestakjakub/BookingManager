@@ -9,11 +9,15 @@ import java.util.List;
 
 /**
  *
- * @author Robert
+ * @author Robert, Jiří Kareš
  */
 public interface CustomerService {
     
     List<CustomerDTO> getAllCustomers();
     
     void addCustomer(CustomerDTO customer);
+    
+    void deleteCustomer(CustomerDTO customer);
+    
+    void updateCustomer(CustomerDTO customer);
 }

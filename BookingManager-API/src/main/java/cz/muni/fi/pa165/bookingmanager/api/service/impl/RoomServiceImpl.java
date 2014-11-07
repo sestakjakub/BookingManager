@@ -4,33 +4,52 @@
  */
 package cz.muni.fi.pa165.bookingmanager.api.service.impl;
 
+import cz.muni.fi.pa165.bookingmanager.api.converter.RoomDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
+import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
+import java.util.List;
 
 /**
  *
  * @author Robert
  */
 public class RoomServiceImpl implements RoomService {
+    
+    private RoomDAO roomDAO;
+    private RoomDTOConverter roomConverter;
 
     @Override
     public void addRoom(RoomDTO room) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (room == null){
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        roomDAO.persistRoom(roomConverter.dtoToEntity(room));
     }
 
     @Override
     public void deleteRoom(RoomDTO room) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (room == null){
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        roomDAO.removeRoom(roomConverter.dtoToEntity(room));
     }
 
     @Override
     public void updateRoom(RoomDTO room) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (room == null){
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        roomDAO.mergeRoom(roomConverter.dtoToEntity(room));
     }
 
     @Override
-    public float getPriceOfRoom(RoomDTO room) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<RoomDTO> getAllRooms() {
+        return roomConverter.entityListToDtoList(roomDAO.getAllRooms());
     }
+
     
 }

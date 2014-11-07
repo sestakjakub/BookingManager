@@ -4,24 +4,50 @@
  */
 package cz.muni.fi.pa165.bookingmanager.api.service.impl;
 
+import cz.muni.fi.pa165.bookingmanager.api.converter.CustomerDTOConverter;
 import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.CustomerService;
+import cz.muni.fi.pa165.bookingmanager.backend.db.CustomerDAO;
 import java.util.List;
 
 /**
  *
- * @author Robert
+ * @author Robert, Jiří Kareš
  */
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
+
+    private CustomerDAO customerDAO;
+    private CustomerDTOConverter customerConverter;
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return customerConverter.entityListToDtoList(customerDAO.getAllCustomers());
     }
 
     @Override
     public void addCustomer(CustomerDTO customer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (customer == null) {
+            throw new IllegalArgumentException("null parameter");
+        }
+
+        customerDAO.persistCustomer(customerConverter.dtoToEntity(customer));
     }
-    
+
+    @Override
+    public void deleteCustomer(CustomerDTO customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        customerDAO.removeCustomer(customerConverter.dtoToEntity(customer));
+    }
+
+    @Override
+    public void updateCustomer(CustomerDTO customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("null parameter");
+        }
+        
+        customerDAO.mergeCustomer(customerConverter.dtoToEntity(customer));
+    }
 }

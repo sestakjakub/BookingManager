@@ -5,6 +5,7 @@
 package cz.muni.fi.pa165.bookingmanager.api.service;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
+import java.util.List;
 
 /**
  *
@@ -18,5 +19,5 @@ public interface RoomService {
     
     void updateRoom(RoomDTO room);
     
-    float getPriceOfRoom(RoomDTO room);
+    List<RoomDTO> getAllRooms();
 }
