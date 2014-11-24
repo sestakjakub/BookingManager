@@ -95,6 +95,7 @@ public class BookingManagerServiceImplTest {
         List<RoomDTO> rooms = new ArrayList();
         RoomDTO room = new RoomDTO();
         rooms.add(room);
+        hotel.setRooms(rooms);
         bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
         List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
         assertTrue(availableRooms.isEmpty());
