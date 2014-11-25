@@ -54,7 +54,8 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     @Transactional
     public void removeBooking(Booking booking) {
-        entityManager.remove(booking);
+        Booking mergedBooking = this.mergeBooking(booking);
+        entityManager.remove(mergedBooking);
     }
 
     @Override

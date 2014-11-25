@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class HotelDAOImpl
@@ -31,44 +32,40 @@ public class HotelDAOImpl implements HotelDAO {
     }
     
     @Override
+    @Transactional
     public List<Hotel> getAllHotels() {
-        entityManager.getTransaction().begin();
         Query query = entityManager.createNativeQuery("select * from hotel", Hotel.class);
-        entityManager.getTransaction().commit();
         return query.getResultList();
     }
 
     @Override
+    @Transactional
     public void persistHotel(Hotel hotel) {
-        entityManager.getTransaction().begin();
         entityManager.persist(hotel);
-        entityManager.getTransaction().commit();
     }
 
     @Override
+    @Transactional
     public Hotel getHotelById(long id) {
-        entityManager.getTransaction().begin();
         Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
         query.setParameter("id", id);
-        entityManager.getTransaction().commit();
 
         return (Hotel) query.getSingleResult();
     }
 
     @Override
+    @Transactional
     public Hotel mergeHotel(Hotel hotel) {
-        entityManager.getTransaction().begin();
         Hotel mergedHotel = entityManager.merge(hotel);
-        entityManager.getTransaction().commit();
 
         return mergedHotel;
     }
 
     @Override
+    @Transactional
     public void removeHotel(Hotel hotel) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(hotel);
-        entityManager.getTransaction().commit();
+        Hotel mergedHotel = this.mergeHotel(hotel);
+        entityManager.remove(mergedHotel);
     }
 
 }

@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class RoomDAOImpl
@@ -19,56 +20,51 @@ import org.springframework.stereotype.Repository;
 public class RoomDAOImpl implements RoomDAO {
 
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
 
-    public EntityManager getEm() {
-        return em;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
-    public void setEm(EntityManager em) {
-        this.em = em;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
-    
+
     @Override
+    @Transactional
     public List<Room> getAllRooms() {
-        em.getTransaction().begin();
-        Query query = em.createNativeQuery("select * from room", Room.class);
-        em.getTransaction().commit();
+        Query query = entityManager.createNativeQuery("select * from room", Room.class);
         
         return query.getResultList();
     }
 
     @Override
+    @Transactional
     public void persistRoom(Room room) {
-        em.getTransaction().begin();
-        em.persist(room);
-        em.getTransaction().commit();
+        entityManager.persist(room);
     }
 
     @Override
+    @Transactional
     public Room getRoomById(long id) {
-        em.getTransaction().begin();
-        Query query = em.createNativeQuery("select * from room where id = :id", Room.class);
+        Query query = entityManager.createNativeQuery("select * from room where id = :id", Room.class);
         query.setParameter("id", id);
-        em.getTransaction().commit();
         
         return (Room) query.getSingleResult();
     }
 
     @Override
+    @Transactional
     public Room mergeRoom(Room room) {
-        em.getTransaction().begin();
-        Room mergedRoom = em.merge(room);
-        em.getTransaction().commit();
-        
+        Room mergedRoom = entityManager.merge(room);
         return mergedRoom;
     }
 
     @Override
+    @Transactional
     public void removeRoom(Room room) {
-        em.getTransaction().begin();
-        em.remove(room);
-        em.getTransaction().commit();
+        Room mergedRoom = this.mergeRoom(room);
+        entityManager.remove(mergedRoom);
     }
 
 }

@@ -6,59 +6,50 @@
 package cz.muni.fi.pa165.bookingmanager.backend.test;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
-import cz.muni.fi.pa165.bookingmanager.backend.db.impl.RoomDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author Jana
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class RoomDAOTest {
     
-    public RoomDAOTest() {
-    }
+    @Autowired
+    private RoomDAO roomDAO;
     
-    @Before
-    public void setUp() {
-        
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     @Test
     public void removeRoomTest()
     {
         Room room = TestUtils.createRoom( 11, 1, 100);
         Room room2 = TestUtils.createRoom(12, 2, 200);
         
-        RoomDAO roomDAOManager = new RoomDAOImpl();
-        roomDAOManager.persistRoom(room);
-        roomDAOManager.persistRoom(room2);
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
         
-        roomDAOManager.removeRoom(room);
+        roomDAO.removeRoom(room);
         
         assertEquals("Entity: " + room.toString() + 
-                "was not correctly removed from DB", roomDAOManager.getAllRooms().size(), 1);
+                "was not correctly removed from DB", roomDAO.getAllRooms().size(), 1);
         
-        Room roomDB = roomDAOManager.getRoomById(room2.getId());
+        Room roomDB = roomDAO.getRoomById(room2.getId());
         
         assertEquals("Entity: " + room2.toString() +
                 "was disturbed while removing entity: " + room.toString(), room2, roomDB);
         
-        roomDAOManager.removeRoom(room2);
+        roomDAO.removeRoom(room2);
         
     }
     
@@ -71,12 +62,11 @@ public class RoomDAOTest {
         
         List<Room> rooms = Arrays.asList(room, room2, room3);
         
-        RoomDAO roomDAOManager = new RoomDAOImpl();
-        roomDAOManager.persistRoom(room);
-        roomDAOManager.persistRoom(room2);
-        roomDAOManager.persistRoom(room3);
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
+        roomDAO.persistRoom(room3);
         
-        List<Room> roomsExtracted = roomDAOManager.getAllRooms();
+        List<Room> roomsExtracted = roomDAO.getAllRooms();
         
         Collections.sort(rooms, idComparator);
         Collections.sort(roomsExtracted, idComparator);
@@ -87,9 +77,9 @@ public class RoomDAOTest {
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
         
         
-        roomDAOManager.removeRoom(room);
-        roomDAOManager.removeRoom(room2);
-        roomDAOManager.removeRoom(room3);
+        roomDAO.removeRoom(room);
+        roomDAO.removeRoom(room2);
+        roomDAO.removeRoom(room3);
     }
     
     @Test
@@ -97,15 +87,14 @@ public class RoomDAOTest {
     {
         Room room = TestUtils.createRoom(11, 1, 100);
         
-        RoomDAO roomDAOManager = new RoomDAOImpl();
-        roomDAOManager.persistRoom(room);
+        roomDAO.persistRoom(room);
         
-        Room room2 = roomDAOManager.getRoomById(room.getId());
+        Room room2 = roomDAO.getRoomById(room.getId());
         
         assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), room, room2);
         
-        roomDAOManager.removeRoom(room);
+        roomDAO.removeRoom(room);
     }
     
     @Test
@@ -113,24 +102,23 @@ public class RoomDAOTest {
     {
         Room room = TestUtils.createRoom(11, 1, 100);
         
-        RoomDAO roomDAOManager = new RoomDAOImpl();
-        roomDAOManager.persistRoom(room);
+        roomDAO.persistRoom(room);
         
         room.setCapacity(10);
         
-        Room roomManaged = roomDAOManager.mergeRoom(room);
+        Room roomManaged = roomDAO.mergeRoom(room);
         
-        Room room2 = roomDAOManager.getRoomById(room.getId());
+        Room room2 = roomDAO.getRoomById(room.getId());
         assertEquals("Merged entity: " + room.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), room, room2);
         
         roomManaged.setCapacity(12);
         
-        room2 = roomDAOManager.getRoomById(roomManaged.getId());
+        room2 = roomDAO.getRoomById(roomManaged.getId());
         assertEquals("Managed entity: " + roomManaged.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), roomManaged, room2);
         
-        roomDAOManager.removeRoom(roomManaged);
+        roomDAO.removeRoom(roomManaged);
     }
     
     @Test
@@ -139,26 +127,25 @@ public class RoomDAOTest {
         Room room = TestUtils.createRoom( 11, 1, 100);
         Room room2 = TestUtils.createRoom(12, 2, 200);
         
-        RoomDAO roomDAOManager = new RoomDAOImpl();
-        roomDAOManager.persistRoom(room);
-        roomDAOManager.persistRoom(room2);
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
         
         room.setCapacity(10);
         room.setPrice(200);
         room.setRoomNumber(12);
         
-        Room roomDB = roomDAOManager.getRoomById(room.getId());
+        Room roomDB = roomDAO.getRoomById(room.getId());
                 
         assertEquals("Entity: " + room + "was not correctly updated in DB, actual entity: " + 
                 roomDB, room, roomDB);
         
-        Room roomDB2 = roomDAOManager.getRoomById(room2.getId());
+        Room roomDB2 = roomDAO.getRoomById(room2.getId());
         
         assertEquals("Entity: " + room2 + "was disturbed in DB while updating entity: " +
                 room, room2, roomDB2);
         
-        roomDAOManager.removeRoom(roomDB);
-        roomDAOManager.removeRoom(roomDB2);
+        roomDAO.removeRoom(roomDB);
+        roomDAO.removeRoom(roomDB2);
     }
     
     
