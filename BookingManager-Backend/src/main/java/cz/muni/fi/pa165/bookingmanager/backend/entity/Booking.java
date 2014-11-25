@@ -11,38 +11,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  * Class for Booking entity.
- * 
+ *
  * @author Robert
  */
 @Entity
 public class Booking implements Serializable {
-    
-    private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
-    
     @ManyToOne
     private Room room;
-    
     @ManyToOne
     private Customer customer;
-    
     @Temporal(TemporalType.DATE)
     private Date dateFrom;
-    
     @Temporal(TemporalType.DATE)
     private Date dateTo;
-    
-    public Booking(){
+
+    public Booking() {
     }
-    
+
     public long getId() {
         return id;
     }
@@ -104,10 +99,9 @@ public class Booking implements Serializable {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" +dateTo.toString() + " ]";
+        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" + dateTo.toString() + " ]";
     }
-
 }

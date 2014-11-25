@@ -19,37 +19,35 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  *
  * @author Jana
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class BookingDAOTest {
 
-    public BookingDAOTest() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
+    @Autowired
+    private BookingDAO bookingDAO;
+    
     @Test
     public void persistBookingTest() {
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
-        BookingDAO bookingDAOManager = new BookingDAOImpl();
-        bookingDAOManager.persistBooking(booking);
+        
+        bookingDAO.persistBooking(booking);
 
-        Booking booking2 = bookingDAOManager.getBookingById(booking.getId());
+        Booking booking2 = bookingDAO.getBookingById(booking.getId());
 
         assertEquals("Persisted entity: " + booking.toString() + "does not equal to entity extracted from DB: "
                 + booking2.toString(), booking, booking2);
 
-        bookingDAOManager.removeBooking(booking2);
+        bookingDAO.removeBooking(booking2);
     }
 
     @Test
@@ -61,12 +59,12 @@ public class BookingDAOTest {
 
         List<Booking> bookings = Arrays.asList(booking, booking2, booking3);
 
-        BookingDAO bookingDAOManager = new BookingDAOImpl();
-        bookingDAOManager.persistBooking(booking);
-        bookingDAOManager.persistBooking(booking2);
-        bookingDAOManager.persistBooking(booking3);
 
-        List<Booking> bookingsExtracted = bookingDAOManager.getAllBookings();
+        bookingDAO.persistBooking(booking);
+        bookingDAO.persistBooking(booking2);
+        bookingDAO.persistBooking(booking3);
+
+        List<Booking> bookingsExtracted = bookingDAO.getAllBookings();
 
         Collections.sort(bookings, idComparator);
         Collections.sort(bookingsExtracted, idComparator);
@@ -76,9 +74,9 @@ public class BookingDAOTest {
 
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", bookings, bookingsExtracted);
 
-        bookingDAOManager.removeBooking(booking);
-        bookingDAOManager.removeBooking(booking2);
-        bookingDAOManager.removeBooking(booking3);
+        bookingDAO.removeBooking(booking);
+        bookingDAO.removeBooking(booking2);
+        bookingDAO.removeBooking(booking3);
 
     }
 
@@ -86,21 +84,20 @@ public class BookingDAOTest {
     public void mergeBookingTest() {
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
-        BookingDAO bookingDAOManager = new BookingDAOImpl();
-        bookingDAOManager.persistBooking(booking);
+        bookingDAO.persistBooking(booking);
 
-        Booking bookingManaged = bookingDAOManager.mergeBooking(booking);
+        Booking bookingManaged = bookingDAO.mergeBooking(booking);
         
         bookingManaged.setDateFrom(new Date(2014, 10, 12));
 
-        Booking booking2 = bookingDAOManager.getBookingById(booking.getId());
+        Booking booking2 = bookingDAO.getBookingById(booking.getId());
         assertEquals("Merged entity: " + booking.toString() + "does not equal to entity extracted from DB: "
                 + booking2.toString(), booking, booking2);
 
-        booking2 = bookingDAOManager.getBookingById(bookingManaged.getId());
+        booking2 = bookingDAO.getBookingById(bookingManaged.getId());
         assertEquals("Managed entity: " + bookingManaged.toString() + "does not equal to entity extracted from DB: "
                 + booking2.toString(), bookingManaged, booking2);
-        bookingDAOManager.removeBooking(booking2);
+        bookingDAO.removeBooking(booking2);
     }
 
     @Test
@@ -109,22 +106,21 @@ public class BookingDAOTest {
         Booking booking = TestUtils.createBooking(new Date(2013, 10, 14), new Date(2014, 10, 14));
         Booking booking2 = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
-        BookingDAO bookingDAOManager = new BookingDAOImpl();
-        bookingDAOManager.persistBooking(booking);
-        bookingDAOManager.persistBooking(booking2);
+        bookingDAO.persistBooking(booking);
+        bookingDAO.persistBooking(booking2);
 
-        Booking bookingDB = bookingDAOManager.getBookingById(booking.getId());
+        Booking bookingDB = bookingDAO.getBookingById(booking.getId());
 
         assertEquals("Entity: " + booking + "was not correctly updated in DB, actual entity: "
                 + bookingDB, booking, bookingDB);
 
-        Booking bookingDB2 = bookingDAOManager.getBookingById(booking2.getId());
+        Booking bookingDB2 = bookingDAO.getBookingById(booking2.getId());
 
         assertEquals("Entity: " + booking2 + "was disturbed in DB while updating entity: "
                 + booking, booking2, bookingDB2);
 
-        bookingDAOManager.removeBooking(booking);
-        bookingDAOManager.removeBooking(booking2);
+        bookingDAO.removeBooking(booking);
+        bookingDAO.removeBooking(booking2);
     }
 
     @Test
@@ -133,21 +129,20 @@ public class BookingDAOTest {
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
         Booking booking2 = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
-        BookingDAO bookingDAOManager = new BookingDAOImpl();
-        bookingDAOManager.persistBooking(booking);
-        bookingDAOManager.persistBooking(booking2);
+        bookingDAO.persistBooking(booking);
+        bookingDAO.persistBooking(booking2);
 
-        bookingDAOManager.removeBooking(booking);
+        bookingDAO.removeBooking(booking);
 
         assertEquals("Entity: " + booking.toString()
-                + "was not correctly removed from DB", bookingDAOManager.getAllBookings().size(), 1);
+                + "was not correctly removed from DB", bookingDAO.getAllBookings().size(), 1);
 
-        Booking bookingDB = bookingDAOManager.getBookingById(booking2.getId());
+        Booking bookingDB = bookingDAO.getBookingById(booking2.getId());
 
         assertEquals("Entity: " + booking2.toString()
                 + "was disturbed while removing entity: " + booking.toString(), booking2, bookingDB);
 
-        bookingDAOManager.removeBooking(booking2);
+        bookingDAO.removeBooking(booking2);
     }
     
     private static Comparator<Booking> idComparator = new Comparator<Booking>() {
