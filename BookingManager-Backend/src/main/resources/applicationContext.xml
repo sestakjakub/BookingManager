@@ -46,5 +46,9 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
         <property name="jpaDialect" ref="jpaDialect" />
     </bean>
     
+    
+    <bean id="roomDAO" class = "cz.muni.fi.pa165.bookingmanager.backend.db.impl.RoomDAOImpl"></bean>
+    <bean id="hotelDAO" class = "cz.muni.fi.pa165.bookingmanager.backend.db.impl.HotelDAOImpl"></bean>
+    <bean id="customerDAO" class = "cz.muni.fi.pa165.bookingmanager.backend.db.impl.CustomerDAOImpl"></bean>
     <bean id="bookingDAO" class = "cz.muni.fi.pa165.bookingmanager.backend.db.impl.BookingDAOImpl"></bean>
 </beans>

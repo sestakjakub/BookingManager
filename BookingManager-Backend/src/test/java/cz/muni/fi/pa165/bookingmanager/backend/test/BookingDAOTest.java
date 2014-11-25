@@ -6,17 +6,12 @@
 package cz.muni.fi.pa165.bookingmanager.backend.test;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
-import cz.muni.fi.pa165.bookingmanager.backend.db.impl.BookingDAOImpl;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;

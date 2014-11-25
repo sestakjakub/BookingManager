@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,15 +19,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class HotelDAOImpl implements HotelDAO {
 
+    @PersistenceContext
     private EntityManager entityManager;
 
-    /**
-     * Default constructor
-     */
-    public HotelDAOImpl() {
-        entityManager = EntityManagerSingleton.getInstance();
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+    
     @Override
     public List<Hotel> getAllHotels() {
         entityManager.getTransaction().begin();

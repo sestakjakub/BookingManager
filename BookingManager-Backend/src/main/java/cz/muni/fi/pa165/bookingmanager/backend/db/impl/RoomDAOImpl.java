@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
@@ -17,17 +18,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoomDAOImpl implements RoomDAO {
 
+    @PersistenceContext
     private EntityManager em;
-    
-    /**
-     * Default constructor
-     */
-    public RoomDAOImpl()
-    {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingManager");
-        em = emf.createEntityManager();
-    };
 
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
+    
     @Override
     public List<Room> getAllRooms() {
         em.getTransaction().begin();

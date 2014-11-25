@@ -26,7 +26,7 @@ public class Customer implements Serializable {
     public Customer() {}
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
     
     @Column(name = "name", nullable = false)
