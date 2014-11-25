@@ -27,6 +27,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.verify;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -90,12 +91,19 @@ public class BookingManagerServiceImplTest {
      */
     @Test
     public void testGetAvailableRoomsOfHotelByDates() {
+        
         HotelDTO hotel = new HotelDTO();
+        hotel.setAddress("Brno");
+        hotel.setName("Hotel v Brně");
+        hotel.setPhoneNumber("2222");
+        hotelService.addHotel(hotel);
+        
         CustomerDTO customer = new CustomerDTO();
-        List<RoomDTO> rooms = new ArrayList();
+        customerService.addCustomer(customer);
+        
         RoomDTO room = new RoomDTO();
-        rooms.add(room);
-        hotel.setRooms(rooms);
+        roomService.addRoom(room);
+        
         bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
         List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
         assertTrue(availableRooms.isEmpty());

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class HotelServiceImpl implements HotelService {
 
     private HotelDTOConverter hotelConverter = new HotelDTOConverter();
+    
     @Autowired
     private HotelDAO hotelDAO;
 
@@ -41,9 +42,21 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Address is null");
         } else if (hotelDTO.getName() == null){
             throw new IllegalArgumentException("Name is null");
+        } else if (hotelDTO.getPhoneNumber() == null){
+            throw new IllegalArgumentException("Phone number is null");
         }
-
-        hotelDAO.persistHotel(hotelConverter.dtoToEntity(hotelDTO));
+        
+        Hotel hotel = hotelConverter.dtoToEntity(hotelDTO);
+        
+        if (hotel == null)
+            throw new IllegalArgumentException("converted hotel entity is null");
+        if (hotel.getRooms() == null)
+            throw new IllegalArgumentException("converted hotel entity has null room list");
+        
+        if (hotelDAO == null )
+            throw new IllegalArgumentException("hotelDAO is null");
+        
+        hotelDAO.persistHotel(hotel);
     }
 
     @Override
