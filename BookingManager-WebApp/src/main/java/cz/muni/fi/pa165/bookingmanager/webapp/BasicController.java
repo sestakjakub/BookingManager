@@ -17,4 +17,22 @@ public class BasicController {
         model.addAttribute("name", name);
         return "helloworld";
     }
+    
+    @RequestMapping("/hotels")
+    public String hotels(String name, Model model) {
+  
+        return "hotels";
+    }
+    
+    @RequestMapping("/hotel")
+    public String hotel(String name, Model model) {
+  
+        return "hotel";
+    }
+    
+    @RequestMapping("/room")
+    public String roomBooking(String name, Model model) {
+  
+        return "roomBooking";
+    }
 }

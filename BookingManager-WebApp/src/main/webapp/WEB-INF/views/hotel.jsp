@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- 
+    Document   : hotels
+    Created on : 27.11.2014, 23:23:27
+    Author     : Jakub
+--%>
 
-pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -41,8 +44,8 @@ pageEncoding="ISO-8859-1"%>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">Hotels</a></li>
+            <li ><a href="#">Home</a></li>
+            <li class="active"><a href="#about">Hotels</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -52,7 +55,38 @@ pageEncoding="ISO-8859-1"%>
     <div class="container">
 
       <div class="starter-template">
-        <h1>Hello: ${name}</h1>
+        <h1>Name of hotel</h1>
+        <h3>List of rooms:</h3>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Add room</button>
+            <button type="button" class="btn btn-default">Delete room</button>
+            <button type="button" class="btn btn-default">Edit room</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Room number</th>
+                    <th>Capacity</th>
+                    <th>Price per night</th>
+                    <th>Bookings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>4</td>
+                    <td>1000</td>
+                    <td><a>link to bookings</a></td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>2</td>
+                    <td>5000</td>
+                    <td><a>link to bookings</a></td>
+                </tr>
+                
+            </tbody>
+        </table>
       </div>
 
     </div><!-- /.container -->

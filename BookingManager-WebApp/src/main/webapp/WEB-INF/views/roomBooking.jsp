@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- 
+    Document   : hotels
+    Created on : 27.11.2014, 23:23:27
+    Author     : Jakub
+--%>
 
-pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -16,7 +19,7 @@ pageEncoding="ISO-8859-1"%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bookingManager.css" rel="stylesheet">
 
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -41,18 +44,45 @@ pageEncoding="ISO-8859-1"%>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">Hotels</a></li>
+            <li ><a href="#">Home</a></li>
+            <li class="active"><a href="#about">Hotels</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="container">
-
       <div class="starter-template">
-        <h1>Hello: ${name}</h1>
+        <h1>List bookings of room:</h1>
+        <h2>Name of hotel: Hotel1</h2>
+        <h3>Number of room: 101</h3>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Create new booking</button>
+            <button type="button" class="btn btn-default">Delete booking</button>
+            <button type="button" class="btn btn-default">Edit booking</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date from</th>
+                    <th>Date to</th>
+                    <th>Customer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.1.2015</td>
+                    <td>2.1.2015</td>
+                    <td>Josef Novak</td>
+                </tr>
+                <tr>
+                    <td>2.1.2015</td>
+                    <td>3.1.2015</td>
+                    <td>Franta Novak</td>
+                </tr>
+                
+            </tbody>
+        </table>
       </div>
 
     </div><!-- /.container -->

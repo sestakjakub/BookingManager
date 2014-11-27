@@ -1,7 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- 
+    Document   : hotels
+    Created on : 27.11.2014, 23:23:27
+    Author     : Jakub
+--%>
 
-pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -41,8 +44,8 @@ pageEncoding="ISO-8859-1"%>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">Hotels</a></li>
+            <li ><a href="#">Home</a></li>
+            <li class="active"><a href="#about">Hotels</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -52,7 +55,37 @@ pageEncoding="ISO-8859-1"%>
     <div class="container">
 
       <div class="starter-template">
-        <h1>Hello: ${name}</h1>
+        <h1>List of hotels:</h1>
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default">Create new hotel</button>
+            <button type="button" class="btn btn-default">Delete hotel</button>
+            <button type="button" class="btn btn-default">Edit hotel</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name of hotel</th>
+                    <th>Adress</th>
+                    <th>Phone number</th>
+                    <th>Rooms</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>hotel 1</td>
+                    <td>Botanicka, brno</td>
+                    <td>123456</td>
+                    <td><a>link</a></td>
+                </tr>
+                <tr>
+                    <td>hotel 2</td>
+                    <td>Botanicka, brno</td>
+                    <td>123456</td>
+                    <td><a>link</a></td>
+                </tr>
+                
+            </tbody>
+        </table>
       </div>
 
     </div><!-- /.container -->
