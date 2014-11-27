@@ -8,8 +8,10 @@
     <modules>
         <module>BookingManager-Backend</module>
         <module>BookingManager-API</module>
+        <module>BookingManager-WebApp</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <org.springframework.version>4.1.1.RELEASE</org.springframework.version>
     </properties>
 </project>
