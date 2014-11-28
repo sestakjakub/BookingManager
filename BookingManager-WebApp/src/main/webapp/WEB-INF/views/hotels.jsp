@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
@@ -28,19 +29,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <c:forEach items="${hotels}" var="hotel">
                         <tr>
                             <td>hotel 1</td>
                             <td>Botanicka, brno</td>
                             <td>123456</td>
                             <td><a href="${pageContext.request.contextPath}/hotel">link</a></td>
                         </tr>
-                        <tr>
-                            <td>hotel 2</td>
-                            <td>Botanicka, brno</td>
-                            <td>123456</td>
-                            <td><a href="${pageContext.request.contextPath}/hotel">link</a></td>
-                        </tr>
-
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
