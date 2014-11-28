@@ -15,7 +15,6 @@
         <h3>Number of room: 101</h3>
         <div class="btn-group" role="group">
             <a type="button" class="btn btn-default">Create new booking</a>
-            <a type="button" class="btn btn-default">Delete all bookings</a>
         </div>
         <table class="table">
             <thead>

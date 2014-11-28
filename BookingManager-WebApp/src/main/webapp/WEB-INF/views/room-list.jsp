@@ -13,8 +13,7 @@
         <h1>Name of hotel</h1>
         <h3>List of rooms:</h3>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default">Add room</a>
-            <a type="button" class="btn btn-default">Delete all rooms</a>
+            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/add-room">Add room</a>
         </div>
         <table class="table">
             <thead>
@@ -31,7 +30,7 @@
                         <td>${room.getRoomNumber()}</td>
                         <td>${room.getCapacity()}</td>
                         <td>${room.getPrice()}</td>
-                        <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
+                        <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room-booking/${room.getId()}">Show bookings</a></td>
                         <td><a class="btn btn-default" href="${pageContext.request.contextPath}/edit-room">Edit room</a></td>
                         <td><a class="btn btn-danger">Delete room</a></td>
                     </tr>

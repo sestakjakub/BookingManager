@@ -12,8 +12,7 @@
     <jsp:attribute name="body">
         <h1>List of hotels:</h1>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default">Create new hotel</a>
-            <a type="button" class="btn btn-default">Delete all hotels</a>
+            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/add-hotel">Create new hotel</a>
         </div>
         <table class="table">
             <thead>
@@ -30,9 +29,9 @@
                     <td>${hotel.getName()}</td>
                     <td>${hotel.getAddress()}</td>
                     <td>${hotel.getPhoneNumber()}</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms">Show rooms</a></td>
-                    <td><a class="btn btn-default" href="${pageContext.request.contextPath}/edit-hotel">Edit hotel</a></td>
-                    <td><a class="btn btn-danger">Delete hotel</a></td>
+                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show rooms</a></td>
+                    <td><a class="btn btn-default" href="${pageContext.request.contextPath}/hotel/${hotel.getId()}">Edit hotel</a></td>
+                    <td><a class="btn btn-danger" href="${pageContext.request.contextPath}/delete-hotel/${hotel.getId()}">Delete hotel</a></td>
                 </tr>
             </c:forEach>
             </tbody>

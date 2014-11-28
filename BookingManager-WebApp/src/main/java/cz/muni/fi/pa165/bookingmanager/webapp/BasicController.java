@@ -34,58 +34,66 @@ public class BasicController {
 //    @Autowired
 //    RoomService roomService;
     
-    @RequestMapping("/hotels")
+    //list hotel
+    @RequestMapping("/hotel")
     public String hotels(String name, Model model) {
 
-        return "hotels";
+        return "hotel-list";
     }
     
-//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-//    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
-//        log.debug("delete({})", id);
-//        Book book = bookService.getBook(id);
-//        bookService.deleteBook(book);
-//        redirectAttributes.addFlashAttribute(
-//                "message",
-//                messageSource.getMessage("book.delete.message", new Object[]{book.getTitle(), book.getAuthor(), book.getId()}, locale)
-//        );
-//        return "redirect:" + uriBuilder.path("/book/list").build();
-//    }
-
-    @RequestMapping(value = "/hotels/{id}", method = RequestMethod.GET)
+    //edit hotel
+    @RequestMapping(value = "/hotel/{id}", method = RequestMethod.GET)
     public String update_form(@PathVariable long id, Model model) {
         HotelDTO hotel1 = new HotelDTO();
         hotel1.setName("Testovací hotel");
         hotel1.setAddress("Ultimátní adresa");
         hotel1.setPhoneNumber("123 456 222");
         model.addAttribute("hotel", hotel1);
-        return "edit-hotel";
+        return "hotel-edit";
     }
     
-    @RequestMapping("/edit-hotel")
+    //new hotel
+    @RequestMapping("/add-hotel")
     public String editHotel(String name, Model model) {
         
-        return "edit-hotel";
+        return "hotel-edit";
+    }
+    
+    //delete hotel
+    @RequestMapping(value = "/delete-hotel/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
+//        Book book = bookService.getBook(id);
+//        bookService.deleteBook(book);
+//        redirectAttributes.addFlashAttribute(
+//                "message",
+//                messageSource.getMessage("book.delete.message", new Object[]{book.getTitle(), book.getAuthor(), book.getId()}, locale)
+//        );
+        return "redirect:" + uriBuilder.path("/hotel").build();
     }
 
-    @RequestMapping("/rooms")
+    
+    //list rooms
+    @RequestMapping("/room")
     public String rooms(String name, Model model) {
 
-        return "rooms";
+        return "room-list";
     }
 
-    @RequestMapping("/room")
+    
+    //new room
+    @RequestMapping("/add-room")
+    public String editRoom(String name, Model model) {
+        
+        return "room-edit";
+    }
+
+    //list bookings of room
+    @RequestMapping("/room-booking/{id}")
     public String roomBooking(String name, Model model) {
 
         return "roomBooking";
     }
     
-    @RequestMapping("/edit-room")
-    public String editRoom(String name, Model model) {
-        
-        return "edit-room";
-    }
-
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
