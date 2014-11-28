@@ -11,20 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Jakub Šesták, Jiří Kareš
  */
-@Component("hotelConvertor")
+@Component
 public class HotelDTOConverter {
 
+    @Autowired
     private Mapper mapper;
-
-    public HotelDTOConverter() {
-        mapper = new DozerBeanMapper();
-    }
 
     public HotelDTO entityToDto(Hotel entity) {
         if (entity == null) {

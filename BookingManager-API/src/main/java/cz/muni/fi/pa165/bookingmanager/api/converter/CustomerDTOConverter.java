@@ -6,20 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Jiří Kareš
  */
-@Component("customerConvertor")
+@Component
 public class CustomerDTOConverter {
 
+    @Autowired
     private Mapper mapper;
-
-    public CustomerDTOConverter() {
-        mapper = new DozerBeanMapper();
-    }
 
     public CustomerDTO entityToDto(Customer entity) {
         if (entity == null) {

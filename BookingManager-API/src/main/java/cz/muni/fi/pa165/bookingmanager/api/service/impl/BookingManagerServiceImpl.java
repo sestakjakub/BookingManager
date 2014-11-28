@@ -43,18 +43,15 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     @Autowired
     private BookingDAO bookingDAO;
     @Autowired
-    private RoomDTOConverter roomDTOConverter = new RoomDTOConverter();
+    private RoomDTOConverter roomDTOConverter;
     @Autowired
-    private CustomerDTOConverter customerDTOConverter = new CustomerDTOConverter();
+    private CustomerDTOConverter customerDTOConverter;
     @Autowired
-    private BookingDTOConverter bookingDTOConverter = new BookingDTOConverter();
+    private BookingDTOConverter bookingDTOConverter;
     @Autowired
-    private HotelDTOConverter hotelDTOConverter = new HotelDTOConverter();
+    private HotelDTOConverter hotelDTOConverter;
     @Autowired
     private RoomServiceImpl roomService;
-
-    public BookingManagerServiceImpl() {
-    }
 
     @Override
     public void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, Date from, Date to) {

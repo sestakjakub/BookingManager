@@ -26,55 +26,55 @@ import org.mockito.MockitoAnnotations;
  */
 public class BookingServiceImplTest {
     
-    public BookingServiceImplTest() {
-    }
-    
-    private BookingDTOConverter bookingDTOConverter;
-    
-    @InjectMocks
-    private BookingServiceImpl service;
-    
-    @Mock
-    private BookingDAOImpl bookingDAO;
-    
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        bookingDTOConverter = new BookingDTOConverter();
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of updateBooking method, of class BookingServiceImpl.
-     */
-    @Test
-    public void testUpdateBooking() {
-        
-    }
-
-    /**
-     * Test of addBooking method, of class BookingServiceImpl.
-     */
-    @Test
-    public void testAddBooking() {
-        
-    }
-
-    /**
-     * Test of deleteBooking method, of class BookingServiceImpl.
-     */
-    @Test
-    public void testDeleteBooking() {
-    }
-
-    /**
-     * Test of getAllBookings method, of class BookingServiceImpl.
-     */
-    @Test
-    public void testGetAllBookings() {
-    }
-    
+//    public BookingServiceImplTest() {
+//    }
+//    
+//    private BookingDTOConverter bookingDTOConverter;
+//    
+//    @InjectMocks
+//    private BookingServiceImpl service;
+//    
+//    @Mock
+//    private BookingDAOImpl bookingDAO;
+//    
+//    @Before
+//    public void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//        bookingDTOConverter = new BookingDTOConverter();
+//    }
+//    
+//    @After
+//    public void tearDown() {
+//    }
+//
+//    /**
+//     * Test of updateBooking method, of class BookingServiceImpl.
+//     */
+//    @Test
+//    public void testUpdateBooking() {
+//        
+//    }
+//
+//    /**
+//     * Test of addBooking method, of class BookingServiceImpl.
+//     */
+//    @Test
+//    public void testAddBooking() {
+//        
+//    }
+//
+//    /**
+//     * Test of deleteBooking method, of class BookingServiceImpl.
+//     */
+//    @Test
+//    public void testDeleteBooking() {
+//    }
+//
+//    /**
+//     * Test of getAllBookings method, of class BookingServiceImpl.
+//     */
+//    @Test
+//    public void testGetAllBookings() {
+//    }
+//    
 }

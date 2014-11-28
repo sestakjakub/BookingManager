@@ -24,7 +24,7 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomDAO roomDAO;
     @Autowired
-    private RoomDTOConverter roomConverter = new RoomDTOConverter();
+    private RoomDTOConverter roomConverter;
 
     @Override
     public void addRoom(RoomDTO room) {

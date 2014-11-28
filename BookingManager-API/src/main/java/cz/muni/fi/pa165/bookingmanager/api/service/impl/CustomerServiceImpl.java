@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerDAO customerDAO;
     @Autowired
-    private CustomerDTOConverter customerConverter = new CustomerDTOConverter();
+    private CustomerDTOConverter customerConverter;
 
     @Override
     public List<CustomerDTO> getAllCustomers() {

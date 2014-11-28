@@ -34,94 +34,94 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Jana, Jiří Kareš
  */
 public class BookingManagerServiceImplTest {
-    
-    public BookingManagerServiceImplTest() {
-    }
-    
-    private RoomDTOConverter roomDTOConverter;
-    private CustomerDTOConverter customerDTOConverter;
-    
-    @InjectMocks
-    private RoomServiceImpl roomService;
-    @InjectMocks
-    private CustomerServiceImpl customerService;
-    @InjectMocks
-    private HotelServiceImpl hotelService;
-    @InjectMocks
-    private BookingManagerServiceImpl bookingManagerService;
-    
-    
-    @Mock
-    private RoomDAOImpl roomDAO;
-    @Mock
-    private CustomerDAOImpl customerDAO;
-    @Mock
-    private BookingDAOImpl bookingDAO;
-    
-    
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
-        roomDTOConverter = new RoomDTOConverter();
-        customerDTOConverter = new CustomerDTOConverter();
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of reserveRoomToCustomer method, of class BookingManagerServiceImpl.
-     */
-    @Test
-    public void testReserveRoomToCustomer() {
-        RoomDTO roomDTO = TestUtils.newRoomDTO();
-        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
-        
-        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1),new Date(2013,2,15));
-        
-        verify(roomDAO, Mockito.times(1)).mergeRoom(roomDTOConverter.dtoToEntity(roomDTO));
-        verify(customerDAO, Mockito.times(1)).mergeCustomer(customerDTOConverter.dtoToEntity(customerDTO));
-        verify(bookingDAO, Mockito.times(1)).persistBooking(Mockito.any(Booking.class));
-        
-    }
-
-    /**
-     * Test of getAvailableRoomsOfHotel method, of class BookingManagerServiceImpl.
-     */
-    @Test
-    public void testGetAvailableRoomsOfHotelByDates() {
-        
+//    
+//    public BookingManagerServiceImplTest() {
+//    }
+//    
+//    private RoomDTOConverter roomDTOConverter;
+//    private CustomerDTOConverter customerDTOConverter;
+//    
+//    @InjectMocks
+//    private RoomServiceImpl roomService;
+//    @InjectMocks
+//    private CustomerServiceImpl customerService;
+//    @InjectMocks
+//    private HotelServiceImpl hotelService;
+//    @InjectMocks
+//    private BookingManagerServiceImpl bookingManagerService;
+//    
+//    
+//    @Mock
+//    private RoomDAOImpl roomDAO;
+//    @Mock
+//    private CustomerDAOImpl customerDAO;
+//    @Mock
+//    private BookingDAOImpl bookingDAO;
+//    
+//    
+//    @Before
+//    public void setUp() {
+//        MockitoAnnotations.initMocks(this);
+//        roomDTOConverter = new RoomDTOConverter();
+//        customerDTOConverter = new CustomerDTOConverter();
+//    }
+//    
+//    @After
+//    public void tearDown() {
+//    }
+//
+//    /**
+//     * Test of reserveRoomToCustomer method, of class BookingManagerServiceImpl.
+//     */
+//    @Test
+//    public void testReserveRoomToCustomer() {
+//        RoomDTO roomDTO = TestUtils.newRoomDTO();
+//        CustomerDTO customerDTO = TestUtils.newCustomerDTO();
+//        
+//        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1),new Date(2013,2,15));
+//        
+//        verify(roomDAO, Mockito.times(1)).mergeRoom(roomDTOConverter.dtoToEntity(roomDTO));
+//        verify(customerDAO, Mockito.times(1)).mergeCustomer(customerDTOConverter.dtoToEntity(customerDTO));
+//        verify(bookingDAO, Mockito.times(1)).persistBooking(Mockito.any(Booking.class));
+//        
+//    }
+//
+//    /**
+//     * Test of getAvailableRoomsOfHotel method, of class BookingManagerServiceImpl.
+//     */
+//    @Test
+//    public void testGetAvailableRoomsOfHotelByDates() {
+//        
+////        HotelDTO hotel = new HotelDTO();
+////        hotel.setAddress("Brno");
+////        hotel.setName("Hotel v Brně");
+////        hotel.setPhoneNumber("2222");
+////        hotelService.addHotel(hotel);
+////        
+////        CustomerDTO customer = new CustomerDTO();
+////        customerService.addCustomer(customer);
+////        
+////        RoomDTO room = new RoomDTO();
+////        roomService.addRoom(room);
+////        
+////        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
+////        List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
+////        assertTrue(availableRooms.isEmpty());
+//    }
+//
+//    /**
+//     * Test of getReservationsOfHotelByDates method, of class BookingManagerServiceImpl.
+//     */
+//    @Test
+//    public void testGetReservationsOfHotelByDates() {
 //        HotelDTO hotel = new HotelDTO();
-//        hotel.setAddress("Brno");
-//        hotel.setName("Hotel v Brně");
-//        hotel.setPhoneNumber("2222");
-//        hotelService.addHotel(hotel);
-//        
 //        CustomerDTO customer = new CustomerDTO();
-//        customerService.addCustomer(customer);
-//        
 //        RoomDTO room = new RoomDTO();
-//        roomService.addRoom(room);
-//        
+//        List<RoomDTO> rooms = new ArrayList();
+//        rooms.add(room);
+//        hotel.setRooms(rooms);
 //        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
-//        List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
-//        assertTrue(availableRooms.isEmpty());
-    }
-
-    /**
-     * Test of getReservationsOfHotelByDates method, of class BookingManagerServiceImpl.
-     */
-    @Test
-    public void testGetReservationsOfHotelByDates() {
-        HotelDTO hotel = new HotelDTO();
-        CustomerDTO customer = new CustomerDTO();
-        RoomDTO room = new RoomDTO();
-        List<RoomDTO> rooms = new ArrayList();
-        rooms.add(room);
-        hotel.setRooms(rooms);
-        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
-        List<BookingDTO> reservedRooms = bookingManagerService.getReservationsOfHotelByDates(hotel, new Date(500), new Date(1200));
-        assertFalse(reservedRooms.isEmpty());
-    }
+//        List<BookingDTO> reservedRooms = bookingManagerService.getReservationsOfHotelByDates(hotel, new Date(500), new Date(1200));
+//        assertFalse(reservedRooms.isEmpty());
+//    }
 }
