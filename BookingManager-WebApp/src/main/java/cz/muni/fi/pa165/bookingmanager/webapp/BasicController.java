@@ -73,9 +73,9 @@ public class BasicController {
 
     
     //list rooms of hotel with specific id
-    @RequestMapping("/rooms/{id}")
-    public String rooms(String name, Model model) {
-
+    @RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET)
+    public String rooms(@PathVariable long id, Model model) {
+        model.addAttribute("hotelId", id);
         return "room-list";
     }
 
