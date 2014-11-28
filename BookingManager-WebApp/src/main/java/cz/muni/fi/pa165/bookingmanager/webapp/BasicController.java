@@ -28,11 +28,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Controller
 public class BasicController {
 
-//    @Autowired
-//    HotelService hotelService;
+    @Autowired
+    HotelService hotelService;
     
-//    @Autowired
-//    RoomService roomService;
+    @Autowired
+   RoomService roomService;
     
     //list all hotels
     @RequestMapping("/hotels")
