@@ -9,12 +9,17 @@ import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -33,6 +38,28 @@ public class BasicController {
     public String hotels(String name, Model model) {
 
         return "hotels";
+    }
+    
+//    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+//    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
+//        log.debug("delete({})", id);
+//        Book book = bookService.getBook(id);
+//        bookService.deleteBook(book);
+//        redirectAttributes.addFlashAttribute(
+//                "message",
+//                messageSource.getMessage("book.delete.message", new Object[]{book.getTitle(), book.getAuthor(), book.getId()}, locale)
+//        );
+//        return "redirect:" + uriBuilder.path("/book/list").build();
+//    }
+
+    @RequestMapping(value = "/hotels/{id}", method = RequestMethod.GET)
+    public String update_form(@PathVariable long id, Model model) {
+        HotelDTO hotel1 = new HotelDTO();
+        hotel1.setName("Testovací hotel");
+        hotel1.setAddress("Ultimátní adresa");
+        hotel1.setPhoneNumber("123 456 222");
+        model.addAttribute("hotel", hotel1);
+        return "edit-hotel";
     }
     
     @RequestMapping("/edit-hotel")
