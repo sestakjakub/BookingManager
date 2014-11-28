@@ -121,6 +121,13 @@ public class BasicController {
         return "booking-edit";
     }
     
+    //delete booking with specific id
+    @RequestMapping("/room-booking/delete/{id}")
+    public String deleteBooking(String name, Model model) {
+
+        return "redirect:";
+    }
+    
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
