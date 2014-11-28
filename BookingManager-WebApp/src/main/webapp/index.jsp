@@ -3,6 +3,11 @@
 
 <tags:layout title="test">
     <jsp:attribute name="body">
-        <p>Welcome, welcome!</p>
+        <div class="jumbotron">
+            <h1>Welcome to BookingManger</h1>
+            <p>
+              <a class="btn btn-lg btn-primary" href="${pageContext.request.contextPath}/hotels" role="button">Go to list of hotels »</a>
+            </p>
+        </div>
     </jsp:attribute>
 </tags:layout>

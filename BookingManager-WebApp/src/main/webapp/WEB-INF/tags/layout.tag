@@ -43,15 +43,25 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                         <li><a href="${pageContext.request.contextPath}/hotels">Hotels</a></li>
-                        <li><a href="#contact">Contact</a></li>
-
+                      
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
 
         <div id="content">
-            <jsp:invoke fragment="body"/>
+            <div class="container">
+                <div class="starter-template">
+                    <jsp:invoke fragment="body"/>
+                </div>
+            </div><!-- /.container -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         </div>
     </body>
 </html>
