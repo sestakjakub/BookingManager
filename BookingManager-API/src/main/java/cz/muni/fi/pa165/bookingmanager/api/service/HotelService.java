@@ -20,6 +20,8 @@ public interface HotelService {
     
     public void updateHotel(HotelDTO hotelDTO);
     
+    public HotelDTO getHotelById(Long id);
+    
     public List<HotelDTO> getAllHotels();
     
 }
