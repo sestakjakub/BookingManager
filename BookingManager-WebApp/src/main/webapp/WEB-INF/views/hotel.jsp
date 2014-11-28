@@ -26,19 +26,16 @@
                 </tr>
             </thead>
             <tbody>
-                    <c:forEach items="${rooms}" var="room">
-                <tr>
-                            <td>${room.getRoomNumber()}</td>
-                            <td>${room.getCapacity()}</td>
-                            <td>${room.getPrice()}</td>
-                            <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
-                            <td><a class="btn btn-default">Edit room</a></td>
-                            <td><a class="btn btn-danger">Delete room</a></td>
-                            
-
-                </tr>
-
-                    </c:forEach>
+                <c:forEach items="${rooms}" var="room">
+                    <tr>
+                        <td>${room.getRoomNumber()}</td>
+                        <td>${room.getCapacity()}</td>
+                        <td>${room.getPrice()}</td>
+                        <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
+                        <td><a class="btn btn-default">Edit room</a></td>
+                        <td><a class="btn btn-danger">Delete room</a></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
 
