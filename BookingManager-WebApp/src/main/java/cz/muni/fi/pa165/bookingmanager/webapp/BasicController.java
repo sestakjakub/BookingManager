@@ -20,13 +20,7 @@ public class BasicController {
     
 //    @Autowired
 //    HotelService hotelService;
-
-    @RequestMapping("/hello")
-    public String hello(@RequestParam(value = "name", required = false, defaultValue = ">>>>>>>>co takhle: /?name=cokoliv") String name, Model model) {
-        model.addAttribute("name", name);
-        return "helloworld";
-    }
-    
+  
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
         
