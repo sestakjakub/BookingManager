@@ -8,6 +8,7 @@
 <%@ tag pageEncoding="utf-8" dynamic-attributes="dynattrs" trimDirectiveWhitespaces="true" %>
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="body" fragment="true" required="true" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -18,7 +19,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>BookingManager</title>
+        <title><fmt:message key="app.title"/></title>
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -37,12 +38,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="${pageContext.request.contextPath}/">BookingManager</a>
+                    <a class="navbar-brand" href="${pageContext.request.contextPath}/"><fmt:message key="booking.list.list"/></a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li><a href="${pageContext.request.contextPath}/hotels">Hotels</a></li>
+                        <li><a href="${pageContext.request.contextPath}/"><fmt:message key="menu.home"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/hotels"><fmt:message key="menu.hotels"/></a></li>
                       
                     </ul>
                 </div><!--/.nav-collapse -->

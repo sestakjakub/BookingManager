@@ -13,7 +13,7 @@
     <jsp:attribute name="body">
         <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/hotel/add">Create new hotel</a>
+            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/hotel/add"><fmt:message key="hotel.button.add"/></a>
         </div>
         <table class="table">
             <thead>

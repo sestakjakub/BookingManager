@@ -7,21 +7,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
-        <h1>List bookings of room:</h1>
-        <h2>Name of hotel: Hotel1</h2>
-        <h3>Number of room: 101</h3>
+        <h1><fmt:message key="booking.list.list"/></h1>
+        <h2><fmt:message key="hotel.list.name"/>: Hotel1</h2>
+        <h3><fmt:message key="room.list.number"/>: 101</h3>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/add/${room.getId()}">Create new booking</a>
+            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/add/${room.getId()}"><fmt:message key="booking.button.add"/></a>
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Date from</th>
-                    <th>Date to</th>
-                    <th>Customer</th>
+                    <th><fmt:message key="booking.list.datefrom"/></th>
+                    <th><fmt:message key="booking.list.dateto"/></th>
+                    <th><fmt:message key="booking.list.customer"/></th>
                 </tr>
             </thead>
             <tbody>
