@@ -31,17 +31,29 @@ public class BasicController {
 
         return "hotels";
     }
+    
+    @RequestMapping("/edit-hotel")
+    public String editHotel(String name, Model model) {
+        
+        return "edit-hotel";
+    }
 
-    @RequestMapping("/hotel")
-    public String hotel(String name, Model model) {
+    @RequestMapping("/rooms")
+    public String rooms(String name, Model model) {
 
-        return "hotel";
+        return "rooms";
     }
 
     @RequestMapping("/room")
     public String roomBooking(String name, Model model) {
 
         return "roomBooking";
+    }
+    
+    @RequestMapping("/edit-room")
+    public String editRoom(String name, Model model) {
+        
+        return "edit-room";
     }
 
     @ModelAttribute("hotels")

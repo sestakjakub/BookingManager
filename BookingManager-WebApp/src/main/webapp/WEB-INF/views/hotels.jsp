@@ -30,8 +30,8 @@
                     <td>${hotel.getName()}</td>
                     <td>${hotel.getAddress()}</td>
                     <td>${hotel.getPhoneNumber()}</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/hotel">Show rooms</a></td>
-                    <td><a class="btn btn-default">Edit hotel</a></td>
+                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms">Show rooms</a></td>
+                    <td><a class="btn btn-default" href="${pageContext.request.contextPath}/edit-hotel">Edit hotel</a></td>
                     <td><a class="btn btn-danger">Delete hotel</a></td>
                 </tr>
             </c:forEach>
