@@ -33,13 +33,13 @@
                             <td>101</td>
                             <td>4</td>
                             <td>1000</td>
-                            <td><a>link to bookings</a></td>
+                            <td><a href="${pageContext.request.contextPath}/room">link to bookings</a></td>
                         </tr>
                         <tr>
                             <td>102</td>
                             <td>2</td>
                             <td>5000</td>
-                            <td><a>link to bookings</a></td>
+                            <td><a href="${pageContext.request.contextPath}/room">link to bookings</a></td>
                         </tr>
 
                     </tbody>
