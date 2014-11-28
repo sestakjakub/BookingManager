@@ -12,7 +12,7 @@ http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx.xsd">
  
     <context:component-scan base-package="com.studytrails.tutorials.springhibernatejpa" />
-
+    
     <context:annotation-config />
     <tx:annotation-driven transaction-manager="transactionManager" />
  
@@ -20,7 +20,9 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     <bean id="dataSource"
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" />
-        <property name="url" value="jdbc:derby:memory:testdb;create=true" />
+        <property name="url" value="jdbc:derby://localhost:1527/pa165;create=true" />
+        <property name="username" value="pa165" />
+        <property name="password" value="pa165" />
     </bean>
 
     <bean id="entityManagerFactory"
