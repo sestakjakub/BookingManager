@@ -31,9 +31,9 @@
                     <tbody>
                     <c:forEach items="${hotels}" var="hotel">
                         <tr>
-                            <td>hotel 1</td>
-                            <td>Botanicka, brno</td>
-                            <td>123456</td>
+                            <td>${hotel.getName()}</td>
+                            <td>${hotel.getAddress()}</td>
+                            <td>${hotel.getPhoneNumber()}</td>
                             <td><a href="${pageContext.request.contextPath}/hotel">link</a></td>
                         </tr>
                     </c:forEach>

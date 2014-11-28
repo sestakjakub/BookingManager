@@ -49,14 +49,19 @@ public class BasicController {
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
         List<HotelDTO> hotels = new ArrayList<HotelDTO>();
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
-        hotels.add(new HotelDTO());
+        HotelDTO hotel1 = new HotelDTO();
+        hotel1.setName("Testovací hotel");
+        hotel1.setAddress("Ultimátní adresa");
+        hotel1.setPhoneNumber("123 456 222");
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        hotels.add(hotel1);
+        // TESTING TESTING TESTING TESTING TESTING
         return hotels;//hotelService.getAllHotels();
     }
 }
