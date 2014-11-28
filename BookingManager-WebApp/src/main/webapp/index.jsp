@@ -5,9 +5,9 @@
 <tags:layout title="test">
     <jsp:attribute name="body">
         <div class="jumbotron">
-            <h1><fmt:message key="index.welcome"/></h1>
+            <h1>Welcome to Booking Manager</h1>
             <p>
-              <a class="btn btn-lg btn-primary" href="${pageContext.request.contextPath}/hotels" role="button"><fmt:message key="index.goto"/></a>
+              <a class="btn btn-lg btn-primary" href="${pageContext.request.contextPath}/hotels" role="button">Go to list of hotels</a>
             </p>
         </div>
     </jsp:attribute>
