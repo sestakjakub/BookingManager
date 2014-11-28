@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
@@ -25,25 +26,21 @@
                 </tr>
             </thead>
             <tbody>
+                    <c:forEach items="${rooms}" var="room">
                 <tr>
-                    <td>101</td>
-                    <td>4</td>
-                    <td>1000</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
-                    <td><a class="btn btn-default">Edit room</a></td>
-                    <td><a class="btn btn-danger">Delete room</a></td>
-                </tr>
-                </tr>
-                <tr>
-                    <td>102</td>
-                    <td>2</td>
-                    <td>5000</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
-                    <td><a class="btn btn-default">Edit room</a></td>
-                    <td><a class="btn btn-danger">Delete room</a></td>
+                            <td>${room.getRoomNumber()}</td>
+                            <td>${room.getCapacity()}</td>
+                            <td>${room.getPrice()}</td>
+                            <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/room">Show bookings</a></td>
+                            <td><a class="btn btn-default">Edit room</a></td>
+                            <td><a class="btn btn-danger">Delete room</a></td>
+                            
+
                 </tr>
 
+                    </c:forEach>
             </tbody>
         </table>
+
     </jsp:attribute>
 </tags:layout>

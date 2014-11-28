@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.bookingmanager.webapp;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
+import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +19,31 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class BasicController {
-    
+
 //    @Autowired
 //    HotelService hotelService;
-  
+    
+//    @Autowired
+//    RoomService roomService;
+    
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
-        
+
         return "hotels";
     }
-    
+
     @RequestMapping("/hotel")
     public String hotel(String name, Model model) {
-  
+
         return "hotel";
     }
-    
+
     @RequestMapping("/room")
     public String roomBooking(String name, Model model) {
-  
+
         return "roomBooking";
     }
-    
+
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
@@ -57,5 +62,25 @@ public class BasicController {
         hotels.add(hotel1);
         // TESTING TESTING TESTING TESTING TESTING
         return hotels;//hotelService.getAllHotels();
+    }
+
+    @ModelAttribute("rooms")
+    public List<RoomDTO> allRooms() {
+        // TESTING TESTING TESTING TESTING TESTING
+        List<RoomDTO> rooms = new ArrayList<RoomDTO>();
+        RoomDTO room = new RoomDTO();
+        room.setCapacity(2);
+        room.setPrice(600);
+        room.setRoomNumber(303);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        rooms.add(room);
+        // TESTING TESTING TESTING TESTING TESTING
+        return rooms;//roomService.getAllRooms();
     }
 }
