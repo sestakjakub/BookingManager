@@ -26,7 +26,7 @@
         <!-- Custom styles for this template -->
         <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
     </head>
-    
+
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -41,14 +41,15 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li ><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="active"><a href="${pageContext.request.contextPath}/hotels">Hotels</a></li>
+                        <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+                        <li><a href="${pageContext.request.contextPath}/hotels">Hotels</a></li>
                         <li><a href="#contact">Contact</a></li>
+
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-        
+
         <div id="content">
             <jsp:invoke fragment="body"/>
         </div>
