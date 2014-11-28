@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.bookingmanager.webapp;
 
+import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
+import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -94,5 +97,24 @@ public class BasicController {
         rooms.add(room);
         // TESTING TESTING TESTING TESTING TESTING
         return rooms;//roomService.getAllRooms();
+    }
+    
+    @ModelAttribute("bookings")
+    public List<BookingDTO> allBookings() {
+        // TESTING TESTING TESTING TESTING TESTING
+        List<BookingDTO> bookings = new ArrayList<BookingDTO>();
+        BookingDTO booking = new BookingDTO();
+        booking.setDateFrom(new Date(1000));
+        booking.setDateTo(new Date(1200));
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        bookings.add(booking);
+        // TESTING TESTING TESTING TESTING TESTING
+        return bookings;//roomService.getAllRooms();
     }
 }
