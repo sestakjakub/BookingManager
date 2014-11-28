@@ -7,20 +7,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
-        <h1>List of hotels:</h1>
+        <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
             <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/hotel/add">Create new hotel</a>
         </div>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name of hotel</th>
-                    <th>Adress</th>
-                    <th>Phone number</th>
-                    <th>Rooms</th>
+                    <th><fmt:message key="hotel.list.name"/></th>
+                    <th><fmt:message key="hotel.list.address"/></th>
+                    <th><fmt:message key="hotel.list.phone"/></th>
+                    <th><fmt:message key="hotel.list.rooms"/></th>
                 </tr>
             </thead>
             <tbody>

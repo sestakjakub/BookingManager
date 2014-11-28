@@ -17,4 +17,12 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
             <value>.jsp</value>
         </property>
     </bean>
+    
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basename">
+                <value>Texts</value>
+        </property>
+    </bean>
+
 </beans>
