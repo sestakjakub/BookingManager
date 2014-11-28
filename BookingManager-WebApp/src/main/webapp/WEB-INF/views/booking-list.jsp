@@ -14,7 +14,7 @@
         <h2>Name of hotel: Hotel1</h2>
         <h3>Number of room: 101</h3>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default">Create new booking</a>
+            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/add">Create new booking</a>
         </div>
         <table class="table">
             <thead>
@@ -30,8 +30,8 @@
                         <td>${booking.getDateFrom()}</td>
                         <td>${booking.getDateTo()}</td>
                         <td>${booking.getCustomer()}</td>
-                        <td><a class="btn btn-default">Edit booking</a></td>
-                        <td><a class="btn btn-danger">Delete booking</a></td>
+                        <td><a class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/edit">Edit booking</a></td>
+                        <td><a class="btn btn-danger" href="${pageContext.request.contextPath}/room-booking/delete">Delete booking</a></td>
                     </tr>
                 </c:forEach>
             </tbody>

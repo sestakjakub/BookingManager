@@ -34,15 +34,15 @@ public class BasicController {
 //    @Autowired
 //    RoomService roomService;
     
-    //list hotel
-    @RequestMapping("/hotel")
+    //list all hotels
+    @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
 
         return "hotel-list";
     }
     
-    //edit hotel
-    @RequestMapping(value = "/hotel/{id}", method = RequestMethod.GET)
+    //edit hotel with specific id
+    @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
     public String update_form(@PathVariable long id, Model model) {
         HotelDTO hotel1 = new HotelDTO();
         hotel1.setName("Testovací hotel");
@@ -53,14 +53,14 @@ public class BasicController {
     }
     
     //new hotel
-    @RequestMapping("/add-hotel")
+    @RequestMapping("/hotel/add")
     public String editHotel(String name, Model model) {
         
         return "hotel-edit";
     }
     
-    //delete hotel
-    @RequestMapping(value = "/delete-hotel/{id}", method = RequestMethod.POST)
+    //delete hotel by id
+    @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
 //        Book book = bookService.getBook(id);
 //        bookService.deleteBook(book);
@@ -72,26 +72,53 @@ public class BasicController {
     }
 
     
-    //list rooms
-    @RequestMapping("/room")
+    //list rooms of hotel with specific id
+    @RequestMapping("/rooms/{id}")
     public String rooms(String name, Model model) {
 
         return "room-list";
     }
 
     
-    //new room
-    @RequestMapping("/add-room")
+    //new room to hotel with specific id
+    @RequestMapping("/room/add/{id}")
+    public String addRoom(String name, Model model) {
+        
+        return "room-edit";
+    }
+    
+    //edit room with specific id
+    @RequestMapping("/room/edit/{id}")
     public String editRoom(String name, Model model) {
         
         return "room-edit";
+    }
+    
+    //delete room with specific id
+    @RequestMapping("/room/delete/{id}")
+    public String deleteRoom(String name, Model model) {
+        return "redirect:";
     }
 
     //list bookings of room
     @RequestMapping("/room-booking/{id}")
     public String roomBooking(String name, Model model) {
 
-        return "roomBooking";
+        return "booking-list";
+    }
+    
+    //add booking to room with specific id
+    @RequestMapping("/room-booking/add/{id}")
+    public String addBooking(String name, Model model) {
+
+        return "booking-edit";
+    }
+    
+    //edit booking with specific id
+    @RequestMapping("/room-booking/edit/{id}")
+    public String editBooking(String name, Model model) {
+
+        return "booking-edit";
     }
     
     @ModelAttribute("hotels")
