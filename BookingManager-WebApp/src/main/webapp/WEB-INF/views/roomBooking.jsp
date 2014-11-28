@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
@@ -25,21 +26,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1.1.2015</td>
-                    <td>2.1.2015</td>
-                    <td>Josef Novak</td>
-                    <td><a class="btn btn-default">Edit booking</a></td>
-                    <td><a class="btn btn-danger">Delete booking</a></td>
-                </tr>
-                <tr>
-                    <td>2.1.2015</td>
-                    <td>3.1.2015</td>
-                    <td>Franta Novak</td>
-                    <td><a class="btn btn-default">Edit booking</a></td>
-                    <td><a class="btn btn-danger">Delete booking</a></td>
-                </tr>
-
+                <c:forEach items="${bookings}" var="booking">
+                    <tr>
+                        <td>${booking.getDateFrom()}</td>
+                        <td>${booking.getDateTo()}</td>
+                        <td>${booking.getCustomer()}</td>
+                        <td><a class="btn btn-default">Edit booking</a></td>
+                        <td><a class="btn btn-danger">Delete booking</a></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </jsp:attribute>
