@@ -50,6 +50,12 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>BookingManager-API</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
     </dependencies>
 
