@@ -39,24 +39,15 @@ public class CustomerServiceImplTest {
     public CustomerServiceImplTest() {
     }
     
-    private CustomerDTOConverter customerDTOConverter;
+    @Mock
+    private CustomerDTOConverter customerConverter;
     
     @InjectMocks
-    private CustomerServiceImpl service;
+    private CustomerServiceImpl customerService;
     
     @Mock
     private CustomerDAOImpl customerDAO;
     
-    @Before
-    public void setUp() {
-        //MockitoAnnotations.initMocks(this);
-        customerDTOConverter = new CustomerDTOConverter();
-        //service = new CustomerServiceImpl();
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of getAllCustomers method, of class CustomerServiceImpl.
@@ -67,8 +58,8 @@ public class CustomerServiceImplTest {
         
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
-        service.addCustomer(customerDTO);
-        service.getAllCustomers();
+        customerService.addCustomer(customerDTO);
+        customerService.getAllCustomers();
         
         verify(customerDAO, Mockito.times(1)).getAllCustomers();
     }
@@ -82,9 +73,9 @@ public class CustomerServiceImplTest {
         
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
-        service.addCustomer(customerDTO);
+        customerService.addCustomer(customerDTO);
         
-        verify(customerDAO, Mockito.times(1)).persistCustomer(customerDTOConverter.dtoToEntity(customerDTO));
+        verify(customerDAO, Mockito.times(1)).persistCustomer(customerConverter.dtoToEntity(customerDTO));
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -93,7 +84,7 @@ public class CustomerServiceImplTest {
         
         CustomerDTO customerDTO = null;
         
-        service.addCustomer(customerDTO);
+        customerService.addCustomer(customerDTO);
         
         verifyZeroInteractions(customerDTO);
     }
@@ -105,7 +96,7 @@ public class CustomerServiceImplTest {
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         customerDTO.setName(null);
         
-        service.addCustomer(customerDTO);
+        customerService.addCustomer(customerDTO);
         
         verifyZeroInteractions(customerDTO);
     }
@@ -118,7 +109,7 @@ public class CustomerServiceImplTest {
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         customerDTO.setAddress(null);
         
-        service.addCustomer(customerDTO);
+        customerService.addCustomer(customerDTO);
         
         verifyZeroInteractions(customerDTO);
     }
@@ -129,10 +120,10 @@ public class CustomerServiceImplTest {
         
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
-        service.addCustomer(customerDTO);
-        service.deleteCustomer(customerDTO);
+        customerService.addCustomer(customerDTO);
+        customerService.deleteCustomer(customerDTO);
         
-        verify(customerDAO, Mockito.times(1)).removeCustomer(customerDTOConverter.dtoToEntity(customerDTO));
+        verify(customerDAO, Mockito.times(1)).removeCustomer(customerConverter.dtoToEntity(customerDTO));
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -141,7 +132,7 @@ public class CustomerServiceImplTest {
         
         CustomerDTO customerDTO = null;
         
-        service.deleteCustomer(customerDTO);
+        customerService.deleteCustomer(customerDTO);
         
         verifyZeroInteractions(customerDTO);
     }
