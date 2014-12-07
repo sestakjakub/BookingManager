@@ -26,21 +26,18 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @author Jiří Kareš
  */
 @Controller
-public class BasicController {
+public class HotelController {
 
     @Autowired
     HotelService hotelService;
-    
-    @Autowired
-   RoomService roomService;
-    
+
     //list all hotels
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
 
         return "hotel-list";
     }
-    
+
     //edit hotel with specific id
     @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
     public String update_form(@PathVariable long id, Model model) {
@@ -51,14 +48,14 @@ public class BasicController {
         model.addAttribute("hotel", hotel1);
         return "hotel-edit";
     }
-    
+
     //new hotel
     @RequestMapping("/hotel/add")
     public String editHotel(String name, Model model) {
-        
+
         return "hotel-edit";
     }
-    
+
     //delete hotel by id
     @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
@@ -71,63 +68,6 @@ public class BasicController {
         return "redirect:" + uriBuilder.path("/hotel").build();
     }
 
-    
-    //list rooms of hotel with specific id
-    @RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET)
-    public String rooms(@PathVariable long id, Model model) {
-        model.addAttribute("hotelId", id);
-        return "room-list";
-    }
-
-    
-    //new room to hotel with specific id
-    @RequestMapping("/room/add/{id}")
-    public String addRoom(String name, Model model) {
-        
-        return "room-edit";
-    }
-    
-    //edit room with specific id
-    @RequestMapping("/room/edit/{id}")
-    public String editRoom(String name, Model model) {
-        
-        return "room-edit";
-    }
-    
-    //delete room with specific id
-    @RequestMapping("/room/delete/{id}")
-    public String deleteRoom(String name, Model model) {
-        return "redirect:";
-    }
-
-    //list bookings of room
-    @RequestMapping("/room-booking/{id}")
-    public String roomBooking(String name, Model model) {
-
-        return "booking-list";
-    }
-    
-    //add booking to room with specific id
-    @RequestMapping("/room-booking/add/{id}")
-    public String addBooking(String name, Model model) {
-
-        return "booking-edit";
-    }
-    
-    //edit booking with specific id
-    @RequestMapping("/room-booking/edit/{id}")
-    public String editBooking(String name, Model model) {
-
-        return "booking-edit";
-    }
-    
-    //delete booking with specific id
-    @RequestMapping("/room-booking/delete/{id}")
-    public String deleteBooking(String name, Model model) {
-
-        return "redirect:";
-    }
-    
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
@@ -146,44 +86,5 @@ public class BasicController {
         hotels.add(hotel1);
         // TESTING TESTING TESTING TESTING TESTING
         return hotels;//hotelService.getAllHotels();
-    }
-
-    @ModelAttribute("rooms")
-    public List<RoomDTO> allRooms() {
-        // TESTING TESTING TESTING TESTING TESTING
-        List<RoomDTO> rooms = new ArrayList<RoomDTO>();
-        RoomDTO room = new RoomDTO();
-        room.setCapacity(2);
-        room.setPrice(600);
-        room.setRoomNumber(303);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        // TESTING TESTING TESTING TESTING TESTING
-        return rooms;//roomService.getAllRooms();
-    }
-    
-    @ModelAttribute("bookings")
-    public List<BookingDTO> allBookings() {
-        // TESTING TESTING TESTING TESTING TESTING
-        List<BookingDTO> bookings = new ArrayList<BookingDTO>();
-        BookingDTO booking = new BookingDTO();
-        booking.setDateFrom(new Date(1000));
-        booking.setDateTo(new Date(1200));
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        // TESTING TESTING TESTING TESTING TESTING
-        return bookings;//roomService.getAllRooms();
     }
 }
