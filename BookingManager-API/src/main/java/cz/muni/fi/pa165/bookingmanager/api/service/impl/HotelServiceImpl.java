@@ -47,17 +47,7 @@ public class HotelServiceImpl implements HotelService {
             throw new IllegalArgumentException("Phone number is null");
         }
         
-        Hotel hotel = hotelConverter.dtoToEntity(hotelDTO);
-        
-        if (hotel == null)
-            throw new IllegalArgumentException("converted hotel entity is null");
-        if (hotel.getRooms() == null)
-            throw new IllegalArgumentException("converted hotel entity has null room list");
-        
-        if (hotelDAO == null )
-            throw new IllegalArgumentException("hotelDAO is null");
-        
-        hotelDAO.persistHotel(hotel);
+        hotelDAO.persistHotel(hotelConverter.dtoToEntity(hotelDTO));
     }
 
     @Override

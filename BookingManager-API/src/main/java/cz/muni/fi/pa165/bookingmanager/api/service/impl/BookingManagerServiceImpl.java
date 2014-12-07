@@ -21,6 +21,7 @@ import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.CustomerDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
+import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,13 +44,13 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     @Autowired
     private BookingDAO bookingDAO;
     @Autowired
-    private RoomDTOConverter roomDTOConverter;
+    private RoomDTOConverter roomConverter;
     @Autowired
-    private CustomerDTOConverter customerDTOConverter;
+    private CustomerDTOConverter customerConverter;
     @Autowired
-    private BookingDTOConverter bookingDTOConverter;
+    private BookingDTOConverter bookingConverter;
     @Autowired
-    private HotelDTOConverter hotelDTOConverter;
+    private HotelDTOConverter hotelConverter;
     @Autowired
     private RoomServiceImpl roomService;
 
@@ -82,9 +83,10 @@ public class BookingManagerServiceImpl implements BookingManagerService {
         room.addBooking(booking);
         customer.addBooking(booking);
 
-        roomDAO.mergeRoom(roomDTOConverter.dtoToEntity(room));
-        customerDAO.mergeCustomer(customerDTOConverter.dtoToEntity(customer));
-        bookingDAO.persistBooking(bookingDTOConverter.dtoToEntity(booking));
+        roomDAO.mergeRoom(roomConverter.dtoToEntity(room));
+        customerDAO.mergeCustomer(customerConverter.dtoToEntity(customer));
+        Booking bookingEntity = bookingConverter.dtoToEntity(booking);
+        bookingDAO.persistBooking(bookingEntity);
     }
 
     @Override
