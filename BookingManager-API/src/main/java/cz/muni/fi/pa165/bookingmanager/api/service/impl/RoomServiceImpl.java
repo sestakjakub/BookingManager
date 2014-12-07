@@ -41,6 +41,12 @@ public class RoomServiceImpl implements RoomService {
         if (room.getRoomNumber()<0)
             throw new IllegalArgumentException("Room number is negative");
         
+        if (roomDAO == null)
+            throw new IllegalArgumentException("roomDAO is null");
+        
+        if (roomConverter == null)
+            throw new IllegalArgumentException("roomConverter is null");
+        
         roomDAO.persistRoom(roomConverter.dtoToEntity(room));
     }
 
