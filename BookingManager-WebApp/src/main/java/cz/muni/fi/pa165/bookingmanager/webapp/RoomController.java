@@ -61,21 +61,6 @@ public class RoomController {
 
     @ModelAttribute("rooms")
     public List<RoomDTO> allRooms() {
-        // TESTING TESTING TESTING TESTING TESTING
-        List<RoomDTO> rooms = new ArrayList<RoomDTO>();
-        RoomDTO room = new RoomDTO();
-        room.setCapacity(2);
-        room.setPrice(600);
-        room.setRoomNumber(303);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        rooms.add(room);
-        // TESTING TESTING TESTING TESTING TESTING
-        return rooms;//roomService.getAllRooms();
+        return roomService.getAllRooms();
     }
 }
