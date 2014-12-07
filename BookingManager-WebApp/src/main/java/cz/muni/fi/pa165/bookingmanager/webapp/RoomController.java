@@ -58,7 +58,6 @@ public class RoomController {
         return "redirect:";
     }
 
-
     @ModelAttribute("rooms")
     public List<RoomDTO> allRooms() {
         return roomService.getAllRooms();
