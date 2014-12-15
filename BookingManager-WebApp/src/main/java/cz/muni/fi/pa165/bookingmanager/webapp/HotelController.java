@@ -32,22 +32,19 @@ public class HotelController {
     @Autowired
     HotelService hotelService;
 
-    //list all hotels
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
 
         return "hotel-list";
     }
 
-    //edit existing hotel
     @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
-    public String update_form(@PathVariable long id, Model model) {
+    public String editHotel(@PathVariable long id, Model model) {
         HotelDTO hotel = hotelService.getHotelById(id);
         model.addAttribute("hotel", hotel);
         return "hotel-edit";
     }
 
-    //create new hotel
     @RequestMapping(value = "/hotel/edit", method = RequestMethod.GET)
     public String editHotel(Model model) {
         HotelDTO hotel = new HotelDTO();
@@ -55,15 +52,19 @@ public class HotelController {
         return "hotel-edit";
     }
     
-    @RequestMapping(value = "/hotel/add", method = RequestMethod.POST)
-    public String editHotel(@ModelAttribute HotelDTO hotel, UriComponentsBuilder uriBuilder) {
-        hotelService.addHotel(hotel);
+    @RequestMapping(value = "/hotel/edit/submit", method = RequestMethod.POST)
+    public String submitHotel(@ModelAttribute HotelDTO hotel, UriComponentsBuilder uriBuilder) {
+        
+        if(hotel.getId() == 0)
+            hotelService.addHotel(hotel);
+        else
+            hotelService.updateHotel(hotel);
+        
         return "redirect:" + uriBuilder.path("/hotels").build();
     }
 
-    //delete hotel by id
     @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder) {
+    public String deleteHotel(@PathVariable long id, UriComponentsBuilder uriBuilder) {
         
         HotelDTO hotel = hotelService.getHotelById(id);
         hotelService.deleteHotel(hotel);

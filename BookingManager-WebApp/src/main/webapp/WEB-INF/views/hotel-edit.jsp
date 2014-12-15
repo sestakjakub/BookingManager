@@ -1,17 +1,18 @@
 <%-- 
     Document   : edit-hotel
     Created on : 28.11.2014, 18:42:53
-    Author     : Jakub
+    Author     : Jakub, Jiří Kareš
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
-        <form:form method="post" action="${pageContext.request.contextPath}/hotel/add" modelAttribute="hotel">
+        <form:form method="post" action="${pageContext.request.contextPath}/hotel/edit/submit" modelAttribute="hotel">
+            <form:hidden path="id"/>
             <form:label path="name"><fmt:message key="hotel.list.name"/></form:label>
             <form:input path="name" class="form-control"/>
             <form:label path="address"><fmt:message key="hotel.list.address"/></form:label>
