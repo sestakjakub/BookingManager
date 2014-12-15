@@ -13,35 +13,35 @@
     <jsp:attribute name="body">
         <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
-            <form method="post" action="${pageContext.request.contextPath}/hotel/edit">
-                <input class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.add"/>">
+            <form action="${pageContext.request.contextPath}/hotel/edit">
+                <input formmethod="get" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.add"/>">
             </form>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th><fmt:message key="hotel.list.name"/></th>
-                    <th><fmt:message key="hotel.list.address"/></th>
-                    <th><fmt:message key="hotel.list.phone"/></th>
-                    <th><fmt:message key="hotel.list.rooms"/></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${hotels}" var="hotel">
+        <form>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>${hotel.getName()}</td>
-                        <td>${hotel.getAddress()}</td>
-                        <td>${hotel.getPhoneNumber()}</td>
-                        <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms/${hotel.getId()}">Show rooms</a></td>
-                        <td><a class="btn btn-default" href="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}">Edit hotel</a></td>
-                        <td>
-                            <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}">
-                                <input class="btn btn-danger" type="submit" value="Delete hotel">
-                            </form>
-                        </td>
+                        <th><fmt:message key="hotel.list.name"/></th>
+                        <th><fmt:message key="hotel.list.address"/></th>
+                        <th><fmt:message key="hotel.list.phone"/></th>
+                        <th><fmt:message key="hotel.list.rooms"/></th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${hotels}" var="hotel">
+                        <tr>
+                            <td align="left">${hotel.getName()}</td>
+                            <td align="left">${hotel.getAddress()}</td>
+                            <td align="left">${hotel.getPhoneNumber()}</td>
+                            <td align="left">
+                                <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${hotel.getId()}" class="btn btn-primary" type="submit" value="Rooms">
+                                <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}" class="btn btn-default" type="submit" value="Edit">
+                                <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}" class="btn btn-danger" type="submit" value="Delete">
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </form>
     </jsp:attribute>
 </tags:layout>

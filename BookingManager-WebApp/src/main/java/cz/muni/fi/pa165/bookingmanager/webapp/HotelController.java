@@ -39,24 +39,18 @@ public class HotelController {
         return "hotel-list";
     }
 
-    //edit hotel with specific id
+    //edit existing hotel
     @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
     public String update_form(@PathVariable long id, Model model) {
-        HotelDTO hotel1 = new HotelDTO();
-        hotel1.setName("Testovací hotel");
-        hotel1.setAddress("Ultimátní adresa");
-        hotel1.setPhoneNumber("123 456 222");
-        model.addAttribute("hotel", hotel1);
+        HotelDTO hotel = hotelService.getHotelById(id);
+        model.addAttribute("hotel", hotel);
         return "hotel-edit";
     }
 
-    //new hotel
-    @RequestMapping(value = "/hotel/edit", method = RequestMethod.POST)
+    //create new hotel
+    @RequestMapping(value = "/hotel/edit", method = RequestMethod.GET)
     public String editHotel(Model model) {
         HotelDTO hotel = new HotelDTO();
-        hotel.setAddress("Adresa");
-        hotel.setPhoneNumber("Telefonní číslo");
-        hotel.setName("Název hotelu");
         model.addAttribute("hotel", hotel);
         return "hotel-edit";
     }
