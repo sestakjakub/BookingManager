@@ -11,7 +11,7 @@
 
 <tags:layout title="test">
     <jsp:attribute name="body">
-        <form:form method="post" action="${pageContext.request.contextPath}/hotel/edit/submit" modelAttribute="hotel">
+        <form:form modelAttribute="hotel">
             <form:hidden path="id"/>
             <form:label path="name"><fmt:message key="hotel.list.name"/></form:label>
             <form:input path="name" class="form-control"/>
@@ -19,7 +19,8 @@
             <form:input path="address" class="form-control"/>
             <form:label path="phoneNumber"><fmt:message key="hotel.list.phone"/></form:label>
             <form:input path="phoneNumber" class="form-control"/>
-            <button type="submit" class="btn btn-default"><fmt:message key="button.submit"/></button>
+            <input type="submit" formmethod="post" formaction="${pageContext.request.contextPath}/hotel/edit/submit" class="btn btn-default" value="<fmt:message key="button.submit"/>"/>
+            <input type="submit" formmethod="get" formaction="${pageContext.request.contextPath}/hotels" class="btn btn-default" value="<fmt:message key="button.cancel"/>"/>
         </form:form>
     </jsp:attribute>
 </tags:layout>

@@ -14,7 +14,7 @@
         <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
             <form action="${pageContext.request.contextPath}/hotel/edit">
-                <input formmethod="get" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.create"/>">
+                <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.create"/>">
             </form>
         </div>
         <form>
@@ -34,7 +34,7 @@
                             <td align="left">${hotel.getAddress()}</td>
                             <td align="left">${hotel.getPhoneNumber()}</td>
                             <td align="right">
-                                <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${hotel.getId()}" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.rooms"/>">
+                                <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.rooms"/>">
                                 <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
                                 <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
                             </td>
