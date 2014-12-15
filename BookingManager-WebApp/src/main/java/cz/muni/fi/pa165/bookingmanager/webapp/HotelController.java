@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +31,7 @@ public class HotelController {
 
     @Autowired
     HotelService hotelService;
-
+    
     //list all hotels
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
@@ -71,20 +72,13 @@ public class HotelController {
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
         // TESTING TESTING TESTING TESTING TESTING
-        List<HotelDTO> hotels = new ArrayList<HotelDTO>();
         HotelDTO hotel1 = new HotelDTO();
         hotel1.setName("Testovací hotel");
         hotel1.setAddress("Ultimátní adresa");
         hotel1.setPhoneNumber("123 456 222");
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        hotels.add(hotel1);
-        // TESTING TESTING TESTING TESTING TESTING
-        return hotels;//hotelService.getAllHotels();
+
+        hotelService.addHotel(hotel1);
+        
+        return hotelService.getAllHotels();
     }
 }
