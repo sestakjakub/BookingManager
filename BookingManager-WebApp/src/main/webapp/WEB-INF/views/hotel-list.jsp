@@ -13,7 +13,9 @@
     <jsp:attribute name="body">
         <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/hotel/add"><fmt:message key="hotel.button.add"/></a>
+            <form method="post" action="${pageContext.request.contextPath}/hotel/edit">
+                <input class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.add"/>">
+            </form>
         </div>
         <table class="table">
             <thead>
@@ -25,16 +27,20 @@
                 </tr>
             </thead>
             <tbody>
-            <c:forEach items="${hotels}" var="hotel">
-                <tr>
-                    <td>${hotel.getName()}</td>
-                    <td>${hotel.getAddress()}</td>
-                    <td>${hotel.getPhoneNumber()}</td>
-                    <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms/${hotel.getId()}">Show rooms</a></td>
-                    <td><a class="btn btn-default" href="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}">Edit hotel</a></td>
-                    <td><a class="btn btn-danger" href="${pageContext.request.contextPath}/delete-hotel/${hotel.getId()}">Delete hotel</a></td>
-                </tr>
-            </c:forEach>
+                <c:forEach items="${hotels}" var="hotel">
+                    <tr>
+                        <td>${hotel.getName()}</td>
+                        <td>${hotel.getAddress()}</td>
+                        <td>${hotel.getPhoneNumber()}</td>
+                        <td><a class="btn btn-primary" href="${pageContext.request.contextPath}/rooms/${hotel.getId()}">Show rooms</a></td>
+                        <td><a class="btn btn-default" href="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}">Edit hotel</a></td>
+                        <td>
+                            <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}">
+                                <input class="btn btn-danger" type="submit" value="Delete hotel">
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </jsp:attribute>

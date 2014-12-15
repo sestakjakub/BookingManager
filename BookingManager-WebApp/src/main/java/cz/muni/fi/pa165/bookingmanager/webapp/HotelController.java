@@ -31,7 +31,7 @@ public class HotelController {
 
     @Autowired
     HotelService hotelService;
-    
+
     //list all hotels
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
@@ -51,34 +51,33 @@ public class HotelController {
     }
 
     //new hotel
-    @RequestMapping("/hotel/add")
-    public String editHotel(String name, Model model) {
-
+    @RequestMapping(value = "/hotel/edit", method = RequestMethod.POST)
+    public String editHotel(Model model) {
+        HotelDTO hotel = new HotelDTO();
+        hotel.setAddress("Adresa");
+        hotel.setPhoneNumber("Telefonní číslo");
+        hotel.setName("Název hotelu");
+        model.addAttribute("hotel", hotel);
         return "hotel-edit";
+    }
+    
+    @RequestMapping(value = "/hotel/add", method = RequestMethod.POST)
+    public String editHotel(@ModelAttribute HotelDTO hotel, UriComponentsBuilder uriBuilder) {
+        hotelService.addHotel(hotel);
+        return "redirect:" + uriBuilder.path("/hotels").build();
     }
 
     //delete hotel by id
     @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes, Locale locale, UriComponentsBuilder uriBuilder) {
-//        Book book = bookService.getBook(id);
-//        bookService.deleteBook(book);
-//        redirectAttributes.addFlashAttribute(
-//                "message",
-//                messageSource.getMessage("book.delete.message", new Object[]{book.getTitle(), book.getAuthor(), book.getId()}, locale)
-//        );
-        return "redirect:" + uriBuilder.path("/hotel").build();
+    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder) {
+        
+        HotelDTO hotel = hotelService.getHotelById(id);
+        hotelService.deleteHotel(hotel);
+        return "redirect:" + uriBuilder.path("/hotels").build();
     }
 
     @ModelAttribute("hotels")
     public List<HotelDTO> allHotels() {
-        // TESTING TESTING TESTING TESTING TESTING
-        HotelDTO hotel1 = new HotelDTO();
-        hotel1.setName("Testovací hotel");
-        hotel1.setAddress("Ultimátní adresa");
-        hotel1.setPhoneNumber("123 456 222");
-
-        hotelService.addHotel(hotel1);
-        
         return hotelService.getAllHotels();
     }
 }
