@@ -31,7 +31,13 @@ public class HotelController {
 
     @Autowired
     HotelService hotelService;
+    
+    @RequestMapping("/")
+    public String index() {
 
+        return "index";
+    }
+    
     @RequestMapping("/hotels")
     public String hotels(String name, Model model) {
 
