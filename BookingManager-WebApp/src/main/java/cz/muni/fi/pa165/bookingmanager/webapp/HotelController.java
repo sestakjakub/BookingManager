@@ -39,7 +39,7 @@ public class HotelController {
     }
     
     @RequestMapping("/hotels")
-    public String hotels(String name, Model model) {
+    public String hotels() {
 
         return "hotel-list";
     }

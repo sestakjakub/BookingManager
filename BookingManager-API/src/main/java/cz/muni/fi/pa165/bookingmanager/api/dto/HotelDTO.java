@@ -32,6 +32,10 @@ public class HotelDTO {
         this.rooms = rooms;
     }
     
+    public void addRoom(RoomDTO room) {
+        this.rooms.add(room);
+    }
+    
     public void setId(long id) {
         this.id = id;
     }
