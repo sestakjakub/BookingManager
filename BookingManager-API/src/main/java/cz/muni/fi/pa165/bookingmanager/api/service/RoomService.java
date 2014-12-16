@@ -22,5 +22,7 @@ public interface RoomService {
     
     List<RoomDTO> getAllRooms();
     
+    RoomDTO find(long id);
+    
     boolean isAvailable(Date from, Date to, RoomDTO room);
 }

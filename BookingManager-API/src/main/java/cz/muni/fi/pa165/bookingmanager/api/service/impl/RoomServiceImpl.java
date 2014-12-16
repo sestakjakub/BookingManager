@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoomServiceImpl implements RoomService {
-    
+
     @Autowired
     private RoomDAO roomDAO;
     @Autowired
@@ -28,52 +28,62 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void addRoom(RoomDTO room) {
-        if (room == null){
+        if (room == null) {
             throw new IllegalArgumentException("null parameter");
         }
-        
-        if (room.getCapacity()<0)
+
+        if (room.getCapacity() < 0) {
             throw new IllegalArgumentException("Room capacity is negative");
-        if (room.getHotel()==null)
+        }
+        if (room.getHotel() == null) {
             throw new IllegalArgumentException("Room is not assigned to hotel");
-        if (room.getPrice()<0)
+        }
+        if (room.getPrice() < 0) {
             throw new IllegalArgumentException("Room price is negative");
-        if (room.getRoomNumber()<0)
+        }
+        if (room.getRoomNumber() < 0) {
             throw new IllegalArgumentException("Room number is negative");
-        
-        if (roomDAO == null)
+        }
+
+        if (roomDAO == null) {
             throw new IllegalArgumentException("roomDAO is null");
-        
-        if (roomConverter == null)
+        }
+
+        if (roomConverter == null) {
             throw new IllegalArgumentException("roomConverter is null");
+        }
         
         roomDAO.persistRoom(roomConverter.dtoToEntity(room));
     }
 
     @Override
     public void deleteRoom(RoomDTO room) {
-        if (room == null){
+        if (room == null) {
             throw new IllegalArgumentException("null parameter");
         }
-        
+
         roomDAO.removeRoom(roomConverter.dtoToEntity(room));
     }
 
     @Override
     public void updateRoom(RoomDTO room) {
-        if (room == null){
+        if (room == null) {
             throw new IllegalArgumentException("null parameter");
         }
-        
-        if (room.getCapacity()<0)
+
+        if (room.getCapacity() < 0) {
             throw new IllegalArgumentException("Room capacity is negative");
-        if (room.getHotel()==null)
+        }
+        if (room.getHotel() == null) {
             throw new IllegalArgumentException("Room is not assigned to hotel");
-        if (room.getPrice()<0)
+        }
+        if (room.getPrice() < 0) {
             throw new IllegalArgumentException("Room price is negative");
-        if (room.getRoomNumber()<0)
+        }
+        if (room.getRoomNumber() < 0) {
             throw new IllegalArgumentException("Room number is negative");
-        
+        }
+
         roomDAO.mergeRoom(roomConverter.dtoToEntity(room));
     }
 
@@ -84,17 +94,20 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public boolean isAvailable(Date from, Date to, RoomDTO room) {
-        for(BookingDTO booking : room.getBookings())
-        {
-            if ((from.before(booking.getDateFrom()) && to.after(booking.getDateFrom())) ||
-                    (booking.getDateFrom().before(from) && booking.getDateTo().after(from)) ||
-                    (booking.getDateFrom().before(from) && booking.getDateTo().after(to)) ||
-                    (from.before(booking.getDateFrom()) && to.after(booking.getDateTo())))
+        for (BookingDTO booking : room.getBookings()) {
+            if ((from.before(booking.getDateFrom()) && to.after(booking.getDateFrom()))
+                    || (booking.getDateFrom().before(from) && booking.getDateTo().after(from))
+                    || (booking.getDateFrom().before(from) && booking.getDateTo().after(to))
+                    || (from.before(booking.getDateFrom()) && to.after(booking.getDateTo()))) {
                 return false;
+            }
         }
-        
+
         return true;
     }
 
-    
+    @Override
+    public RoomDTO find(long id) {
+        return roomConverter.entityToDto(roomDAO.getRoomById(id));
+    }
 }
