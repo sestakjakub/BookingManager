@@ -59,8 +59,9 @@ public class HotelDAOImpl implements HotelDAO {
     public Hotel getHotelById(long id) {
         Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
         query.setParameter("id", id);
-
-        return (Hotel) query.getSingleResult();
+        Hotel hotel = (Hotel) query.getSingleResult();
+        Hibernate.initialize(hotel.getRooms());
+        return hotel;
     }
 
     @Override
