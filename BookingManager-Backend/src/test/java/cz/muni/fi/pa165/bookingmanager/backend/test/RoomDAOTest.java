@@ -16,8 +16,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -25,12 +27,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:testing/applicationContext-testing.xml"})
+@Transactional
 public class RoomDAOTest {
     
     @Autowired
     private RoomDAO roomDAO;
     
     @Test
+    @Rollback(true)
     public void removeRoomTest()
     {
         Room room = TestUtils.createRoom( 11, 1, 100);
@@ -49,11 +53,10 @@ public class RoomDAOTest {
         assertEquals("Entity: " + room2.toString() +
                 "was disturbed while removing entity: " + room.toString(), room2, roomDB);
         
-        roomDAO.removeRoom(room2);
-        
     }
     
     @Test
+    @Rollback(true)
     public void getAllRoomsTest(){
         
         Room room = TestUtils.createRoom(11, 1, 100);
@@ -76,13 +79,10 @@ public class RoomDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
         
-        
-        roomDAO.removeRoom(room);
-        roomDAO.removeRoom(room2);
-        roomDAO.removeRoom(room3);
     }
     
     @Test
+    @Rollback(true)
     public void persistRoomTest()
     {
         Room room = TestUtils.createRoom(11, 1, 100);
@@ -94,10 +94,10 @@ public class RoomDAOTest {
         assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), room, room2);
         
-        roomDAO.removeRoom(room);
     }
     
     @Test
+    @Rollback(true)
     public void mergeRoomTest()
     {
         Room room = TestUtils.createRoom(11, 1, 100);
@@ -118,10 +118,10 @@ public class RoomDAOTest {
         assertEquals("Managed entity: " + roomManaged.toString() + "does not equal to entity extracted from DB: " +
                 room2.toString(), roomManaged, room2);
         
-        roomDAO.removeRoom(roomManaged);
     }
     
     @Test
+    @Rollback(true)
     public void updateRoomTest()
     {
         Room room = TestUtils.createRoom( 11, 1, 100);
@@ -144,8 +144,6 @@ public class RoomDAOTest {
         assertEquals("Entity: " + room2 + "was disturbed in DB while updating entity: " +
                 room, room2, roomDB2);
         
-        roomDAO.removeRoom(roomDB);
-        roomDAO.removeRoom(roomDB2);
     }
     
     

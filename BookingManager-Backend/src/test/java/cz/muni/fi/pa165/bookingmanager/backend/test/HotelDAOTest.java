@@ -15,8 +15,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,12 +26,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:testing/applicationContext-testing.xml"})
+@Transactional
 public class HotelDAOTest {
         
     @Autowired
     private HotelDAO hotelDAO;
     
     @Test
+    @Rollback(true)
     public void persistHotelTest()
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
@@ -41,10 +45,10 @@ public class HotelDAOTest {
         assertEquals("Persisted entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
         
-        hotelDAO.removeHotel(hotel);
     }
     
     @Test
+    @Rollback(true)
     public void getAllHotelsTest(){
         
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
@@ -67,12 +71,10 @@ public class HotelDAOTest {
         
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", hotels, hotelsExtracted);
         
-        hotelDAO.removeHotel(hotel);
-        hotelDAO.removeHotel(hotel2);
-        hotelDAO.removeHotel(hotel3);
     }
     
     @Test
+    @Rollback(true)
     public void mergeHotelTest()
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
@@ -93,10 +95,10 @@ public class HotelDAOTest {
         assertEquals("Managed entity: " + hotelManaged.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotelManaged, hotel2);
         
-        hotelDAO.removeHotel(hotel);
     }
     
     @Test
+    @Rollback(true)
     public void updateHotelTest()
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
@@ -118,11 +120,10 @@ public class HotelDAOTest {
         assertEquals("Entity: " + hotel2 + "was disturbed in DB while updating entity: " +
                 hotel, hotel2, hotelDB2);
         
-        hotelDAO.removeHotel(hotel);
-        hotelDAO.removeHotel(hotel2);
     }
     
     @Test
+    @Rollback(true)
     public void removeHotelTest()
     {
         Hotel hotel = createHotel("Ritz", "Ukrajinska 4", "123456");
@@ -141,7 +142,6 @@ public class HotelDAOTest {
         assertEquals("Entity: " + hotel2.toString() +
                 "was disturbed while removing entity: " + hotel.toString(), hotel2, hotelDB);
         
-        hotelDAO.removeHotel(hotel2);
     }
     
     

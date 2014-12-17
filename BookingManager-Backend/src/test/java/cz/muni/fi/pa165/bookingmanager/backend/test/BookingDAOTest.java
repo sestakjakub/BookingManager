@@ -16,8 +16,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -25,12 +27,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:testing/applicationContext-testing.xml"})
+@Transactional
 public class BookingDAOTest {
 
     @Autowired
     private BookingDAO bookingDAO;
     
     @Test
+    @Rollback(true)
     public void persistBookingTest() {
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
@@ -42,10 +46,10 @@ public class BookingDAOTest {
         assertEquals("Persisted entity: " + booking.toString() + "does not equal to entity extracted from DB: "
                 + booking2.toString(), booking, booking2);
 
-        bookingDAO.removeBooking(booking2);
     }
 
     @Test
+    @Rollback(true)
     public void getAllBookingsTest() {
 
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
@@ -69,13 +73,10 @@ public class BookingDAOTest {
 
         assertEquals("List of entities extracted from DB does not match to list od entities persisted", bookings, bookingsExtracted);
 
-        bookingDAO.removeBooking(booking);
-        bookingDAO.removeBooking(booking2);
-        bookingDAO.removeBooking(booking3);
-
     }
 
     @Test
+    @Rollback(true)
     public void mergeBookingTest() {
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));
 
@@ -92,10 +93,10 @@ public class BookingDAOTest {
         booking2 = bookingDAO.getBookingById(bookingManaged.getId());
         assertEquals("Managed entity: " + bookingManaged.toString() + "does not equal to entity extracted from DB: "
                 + booking2.toString(), bookingManaged, booking2);
-        bookingDAO.removeBooking(booking2);
     }
 
     @Test
+    @Rollback(true)
     public void updateBookingTest() {
 
         Booking booking = TestUtils.createBooking(new Date(2013, 10, 14), new Date(2014, 10, 14));
@@ -114,11 +115,10 @@ public class BookingDAOTest {
         assertEquals("Entity: " + booking2 + "was disturbed in DB while updating entity: "
                 + booking, booking2, bookingDB2);
 
-        bookingDAO.removeBooking(booking);
-        bookingDAO.removeBooking(booking2);
     }
 
     @Test
+    @Rollback(true)
     public void removeBookingTest() {
 
         Booking booking = TestUtils.createBooking(new Date(2014, 10, 14), new Date(2014, 10, 15));

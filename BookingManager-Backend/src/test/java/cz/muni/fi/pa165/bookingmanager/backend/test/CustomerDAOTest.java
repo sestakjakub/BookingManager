@@ -15,8 +15,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,12 +26,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:testing/applicationContext-testing.xml"})
+@Transactional
 public class CustomerDAOTest {
     
     @Autowired
     CustomerDAO customerDAO;
     
     @Test
+    @Rollback(true)
     public void persistCustomerTest()
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
@@ -45,6 +49,7 @@ public class CustomerDAOTest {
     }
     
     @Test
+    @Rollback(true)
     public void getAllCustomersTest(){
         
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
@@ -73,6 +78,7 @@ public class CustomerDAOTest {
     }
     
     @Test
+    @Rollback(true)
     public void mergeCustomerTest()
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
@@ -97,6 +103,7 @@ public class CustomerDAOTest {
     }
     
     @Test
+    @Rollback(true)
     public void updateCustomerTest()
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
@@ -123,6 +130,7 @@ public class CustomerDAOTest {
     }
     
     @Test
+    @Rollback(true)
     public void removeCustomerTest()
     {
         Customer customer = createCustomer("Petr Adamek", "Botanicka 68");
