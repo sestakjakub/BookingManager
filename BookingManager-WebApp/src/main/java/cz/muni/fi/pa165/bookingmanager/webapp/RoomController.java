@@ -30,36 +30,53 @@ public class RoomController {
 
     @Autowired
     RoomService roomService;
+    @Autowired
+    HotelService hotelService;
 
-    //list rooms of hotel with specific id
-    @RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET)
-    public String rooms(@PathVariable long id, Model model) {
-        model.addAttribute("hotelId", id);
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    public String rooms(@RequestParam long hotelId, Model model) {
+        model.addAttribute("hotel", hotelService.getHotelById(hotelId));
         return "room-list";
     }
 
-    //new room to hotel with specific id
-    @RequestMapping("/room/add/{id}")
-    public String addRoom(String name, Model model) {
+    @RequestMapping(value = "/room/edit", method = RequestMethod.GET)
+    public String edit(@RequestParam long hotelId, @RequestParam long roomId, Model model) {
 
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("hotelId", hotelId);
         return "room-edit";
     }
 
-    //edit room with specific id
-    @RequestMapping("/room/edit/{id}")
-    public String editRoom(String name, Model model) {
+//    @RequestMapping(value = "/room/edit/submit", method = RequestMethod.POST)
+//    public String submit(@RequestParam long roomId, @RequestParam long hotelId,
+//            @RequestParam int roomNumber, @RequestParam int capacity,
+//            @RequestParam float price, UriComponentsBuilder uriBuilder) {
+//        
+//        RoomDTO room = new RoomDTO();
+//        room.setId(roomId);
+//        room.setCapacity(capacity);
+//        room.setPrice(price);
+//        room.setRoomNumber(roomNumber);
+//        room.setHotel(hotelService.getHotelById(hotelId));
+//        
+//        System.out.println("Creating room: " + room);
+//        System.out.println("Current hotel has: " + hotelService.getHotelById(hotelId).getRooms().size() + " rooms.");
+//        System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
+//        
+//        if (roomId == 0) {
+//            roomService.addRoom(room);
+//        } else {
+//            roomService.updateRoom(room);
+//        }
+//        
+//        System.out.println("Hotel " + hotelId +  " has: " + hotelService.getHotelById(hotelId).getRooms().size() + "rooms.");
+//
+//        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
+//    }
 
-        return "room-edit";
-    }
-
-    //delete room with specific id
-    @RequestMapping("/room/delete/{id}")
-    public String deleteRoom(String name, Model model) {
-        return "redirect:";
-    }
-
-    @ModelAttribute("rooms")
-    public List<RoomDTO> allRooms() {
-        return roomService.getAllRooms();
+    @RequestMapping(value = "/room/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder) {
+        roomService.deleteRoom(roomService.find(id));
+        return "redirect:" + uriBuilder.path("/rooms").build();
     }
 }

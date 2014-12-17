@@ -17,31 +17,32 @@
                 <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.create"/>">
             </form>
         </div>
-        <form>
-            <table class="table">
-                <thead>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><fmt:message key="hotel.list.name"/></th>
+                    <th><fmt:message key="hotel.list.address"/></th>
+                    <th><fmt:message key="hotel.list.phone"/></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${hotels}" var="hotel">
+                <form>
                     <tr>
-                        <th><fmt:message key="hotel.list.name"/></th>
-                        <th><fmt:message key="hotel.list.address"/></th>
-                        <th><fmt:message key="hotel.list.phone"/></th>
-                        <th></th>
+                        <td align="left">${hotel.getName()}</td>
+                        <td align="left">${hotel.getAddress()}</td>
+                        <td align="left">${hotel.getPhoneNumber()}</td>
+                        <td align="right">
+                            <input type="hidden" name="hotelId" value="${hotel.getId()}">
+                            <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.rooms"/>">
+                            <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
+                            <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${hotels}" var="hotel">
-                        <tr>
-                            <td align="left">${hotel.getName()}</td>
-                            <td align="left">${hotel.getAddress()}</td>
-                            <td align="left">${hotel.getPhoneNumber()}</td>
-                            <td align="right">
-                                <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.rooms"/>">
-                                <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
-                                <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </form>
-    </jsp:attribute>
+                </form>
+            </c:forEach>
+        </tbody>
+    </table>
+</jsp:attribute>
 </tags:layout>
