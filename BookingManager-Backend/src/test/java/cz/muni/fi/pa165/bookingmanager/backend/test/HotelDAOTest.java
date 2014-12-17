@@ -40,7 +40,7 @@ public class HotelDAOTest {
         
         hotelDAO.persistHotel(hotel);
         
-        Hotel hotel2 = hotelDAO.getHotelById(hotel.getId());
+        Hotel hotel2 = hotelDAO.findHotel(hotel.getId());
         
         assertEquals("Persisted entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
@@ -85,13 +85,13 @@ public class HotelDAOTest {
         
         Hotel hotelManaged = hotelDAO.mergeHotel(hotel);
         
-        Hotel hotel2 = hotelDAO.getHotelById(hotel.getId());
+        Hotel hotel2 = hotelDAO.findHotel(hotel.getId());
         assertEquals("Merged entity: " + hotel.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotel, hotel2);
         
         hotelManaged.setAddress("Malinovskeho namesti");
         
-        hotel2 = hotelDAO.getHotelById(hotelManaged.getId());
+        hotel2 = hotelDAO.findHotel(hotelManaged.getId());
         assertEquals("Managed entity: " + hotelManaged.toString() + "does not equal to entity extracted from DB: " +
                 hotel2.toString(), hotelManaged, hotel2);
         
@@ -110,12 +110,12 @@ public class HotelDAOTest {
         hotel.setName("Martin Kuba");
         hotel.setAddress("Kotlarska 45");
         
-        Hotel hotelDB = hotelDAO.getHotelById(hotel.getId());
+        Hotel hotelDB = hotelDAO.findHotel(hotel.getId());
                 
         assertEquals("Entity: " + hotel + "was not correctly updated in DB, actual entity: " + 
                 hotelDB, hotel, hotelDB);
         
-        Hotel hotelDB2 = hotelDAO.getHotelById(hotel2.getId());
+        Hotel hotelDB2 = hotelDAO.findHotel(hotel2.getId());
         
         assertEquals("Entity: " + hotel2 + "was disturbed in DB while updating entity: " +
                 hotel, hotel2, hotelDB2);
@@ -137,7 +137,7 @@ public class HotelDAOTest {
         assertEquals("Entity: " + hotel.toString() + 
                 "was not correctly removed from DB", hotelDAO.getAllHotels().size(), 1);
         
-        Hotel hotelDB = hotelDAO.getHotelById(hotel2.getId());
+        Hotel hotelDB = hotelDAO.findHotel(hotel2.getId());
         
         assertEquals("Entity: " + hotel2.toString() +
                 "was disturbed while removing entity: " + hotel.toString(), hotel2, hotelDB);

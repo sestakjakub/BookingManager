@@ -46,7 +46,7 @@ public class HotelController {
 
     @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
     public String editHotel(@PathVariable long id, Model model) {
-        HotelDTO hotel = hotelService.getHotelById(id);
+        HotelDTO hotel = hotelService.findHotel(id);
         model.addAttribute("hotel", hotel);
         return "hotel-edit";
     }
@@ -72,7 +72,7 @@ public class HotelController {
     @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
     public String deleteHotel(@PathVariable long id, UriComponentsBuilder uriBuilder) {
         
-        HotelDTO hotel = hotelService.getHotelById(id);
+        HotelDTO hotel = hotelService.findHotel(id);
         hotelService.deleteHotel(hotel);
         return "redirect:" + uriBuilder.path("/hotels").build();
     }

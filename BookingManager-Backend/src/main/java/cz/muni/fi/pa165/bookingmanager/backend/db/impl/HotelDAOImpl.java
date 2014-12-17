@@ -56,7 +56,7 @@ public class HotelDAOImpl implements HotelDAO {
 
     @Override
     @Transactional
-    public Hotel getHotelById(long id) {
+    public Hotel findHotel(long id) {
         Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
         query.setParameter("id", id);
         Hotel hotel = (Hotel) query.getSingleResult();

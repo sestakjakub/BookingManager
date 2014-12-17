@@ -35,7 +35,7 @@ public class RoomController {
 
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
     public String rooms(@RequestParam long hotelId, Model model) {
-        model.addAttribute("hotel", hotelService.getHotelById(hotelId));
+        model.addAttribute("hotel", hotelService.findHotel(hotelId));
         return "room-list";
     }
 
@@ -57,10 +57,10 @@ public class RoomController {
         room.setCapacity(capacity);
         room.setPrice(price);
         room.setRoomNumber(roomNumber);
-        room.setHotel(hotelService.getHotelById(hotelId));
+        room.setHotel(hotelService.findHotel(hotelId));
         
         System.out.println("Creating room: " + room);
-        System.out.println("Current hotel has: " + hotelService.getHotelById(hotelId).getRooms().size() + " rooms.");
+        System.out.println("Current hotel has: " + hotelService.findHotel(hotelId).getRooms().size() + " rooms.");
         if (roomService.getAllRooms() != null)
             System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
         else

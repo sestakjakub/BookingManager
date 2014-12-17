@@ -30,7 +30,7 @@ public interface HotelDAO {
      * @param id hotel id
      * @return hotel
      */
-    public Hotel getHotelById(long id);
+    public Hotel findHotel(long id);
 
     /**
      * Merges hotel

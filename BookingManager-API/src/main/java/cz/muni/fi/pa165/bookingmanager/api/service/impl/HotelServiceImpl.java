@@ -61,8 +61,8 @@ public class HotelServiceImpl implements HotelService {
     }
     
     @Override
-    public HotelDTO getHotelById(Long id) {
-        return hotelConverter.entityToDto(hotelDAO.getHotelById(id));
+    public HotelDTO findHotel(long id) {
+        return hotelConverter.entityToDto(hotelDAO.find(id));
     }
 
     @Override
