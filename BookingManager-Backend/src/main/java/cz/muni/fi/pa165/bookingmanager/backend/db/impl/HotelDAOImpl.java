@@ -3,14 +3,12 @@ package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.utils.EntityManagerSingleton;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,16 +34,8 @@ public class HotelDAOImpl implements HotelDAO {
     @Override
     @Transactional
     public List<Hotel> getAllHotels() {
-        
-        List<Hotel> hotels = entityManager.createNativeQuery("select * from hotel", Hotel.class).getResultList();
-        
-        for(Iterator iter = hotels.iterator(); iter.hasNext(); )
-        {
-            Hotel hotel = (Hotel)iter.next();
-            Hibernate.initialize(hotel.getRooms());
-        }
-        
-        return hotels;
+        Query query = entityManager.createNativeQuery("select * from hotel", Hotel.class);
+        return query.getResultList();
     }
 
     @Override

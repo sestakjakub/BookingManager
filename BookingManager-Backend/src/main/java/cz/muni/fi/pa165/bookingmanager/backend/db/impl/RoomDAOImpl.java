@@ -2,20 +2,18 @@ package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
-import java.util.Iterator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class RoomDAOImpl
- *
+ * 
  * @author JiĹ™Ă­ KareĹˇ
  */
 @Repository
@@ -35,15 +33,9 @@ public class RoomDAOImpl implements RoomDAO {
     @Override
     @Transactional
     public List<Room> getAllRooms() {
-
-        List<Room> rooms = entityManager.createNativeQuery("select * from room", Room.class).getResultList();
-
-        for (Iterator iter = rooms.iterator(); iter.hasNext();) {
-            Room room = (Room) iter.next();
-            Hibernate.initialize(room.getBookings());
-        }
+        Query query = entityManager.createNativeQuery("select * from room", Room.class);
         
-        return rooms;
+        return query.getResultList();
     }
 
     @Override
@@ -57,7 +49,7 @@ public class RoomDAOImpl implements RoomDAO {
     public Room getRoomById(long id) {
         Query query = entityManager.createNativeQuery("select * from room where id = :id", Room.class);
         query.setParameter("id", id);
-
+        
         return (Room) query.getSingleResult();
     }
 
@@ -74,4 +66,5 @@ public class RoomDAOImpl implements RoomDAO {
         Room mergedRoom = this.mergeRoom(room);
         entityManager.remove(mergedRoom);
     }
+
 }
