@@ -72,7 +72,7 @@ public class RoomController {
             roomService.updateRoom(room);
         }
         
-        System.out.println("Hotel " + hotelId +  " has: " + hotelService.getHotelById(hotelId).getRooms().size() + "rooms.");
+        System.out.println("Hotel " + hotelId +  " has: " + hotelService.findHotel(hotelId).getRooms().size() + "rooms.");
 
         return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
     }
