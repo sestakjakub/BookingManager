@@ -32,7 +32,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Jana
  */
 
-@ContextConfiguration(locations = {"classpath:springApplicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:springApplicationContext-testing.xml"})
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceImplTest {
     
