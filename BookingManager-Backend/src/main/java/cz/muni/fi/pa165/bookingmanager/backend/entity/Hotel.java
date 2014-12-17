@@ -33,7 +33,7 @@ public class Hotel implements Serializable {
     @Column
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<Room> rooms;
 
     public Hotel() {

@@ -47,32 +47,32 @@ public class RoomController {
         return "room-edit";
     }
 
-//    @RequestMapping(value = "/room/edit/submit", method = RequestMethod.POST)
-//    public String submit(@RequestParam long roomId, @RequestParam long hotelId,
-//            @RequestParam int roomNumber, @RequestParam int capacity,
-//            @RequestParam float price, UriComponentsBuilder uriBuilder) {
-//        
-//        RoomDTO room = new RoomDTO();
-//        room.setId(roomId);
-//        room.setCapacity(capacity);
-//        room.setPrice(price);
-//        room.setRoomNumber(roomNumber);
-//        room.setHotel(hotelService.getHotelById(hotelId));
-//        
-//        System.out.println("Creating room: " + room);
-//        System.out.println("Current hotel has: " + hotelService.getHotelById(hotelId).getRooms().size() + " rooms.");
-//        System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
-//        
-//        if (roomId == 0) {
-//            roomService.addRoom(room);
-//        } else {
-//            roomService.updateRoom(room);
-//        }
-//        
-//        System.out.println("Hotel " + hotelId +  " has: " + hotelService.getHotelById(hotelId).getRooms().size() + "rooms.");
-//
-//        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
-//    }
+    @RequestMapping(value = "/room/edit/submit", method = RequestMethod.POST)
+    public String submit(@RequestParam long roomId, @RequestParam long hotelId,
+            @RequestParam int roomNumber, @RequestParam int capacity,
+            @RequestParam float price, UriComponentsBuilder uriBuilder) {
+        
+        RoomDTO room = new RoomDTO();
+        room.setId(roomId);
+        room.setCapacity(capacity);
+        room.setPrice(price);
+        room.setRoomNumber(roomNumber);
+        room.setHotel(hotelService.getHotelById(hotelId));
+        
+        System.out.println("Creating room: " + room);
+        System.out.println("Current hotel has: " + hotelService.getHotelById(hotelId).getRooms().size() + " rooms.");
+        System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
+        
+        if (roomId == 0) {
+            roomService.addRoom(room);
+        } else {
+            roomService.updateRoom(room);
+        }
+        
+        System.out.println("Hotel " + hotelId +  " has: " + hotelService.getHotelById(hotelId).getRooms().size() + "rooms.");
+
+        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
+    }
 
     @RequestMapping(value = "/room/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder) {
