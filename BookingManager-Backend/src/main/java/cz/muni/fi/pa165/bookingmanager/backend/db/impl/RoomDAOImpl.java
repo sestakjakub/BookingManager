@@ -57,9 +57,8 @@ public class RoomDAOImpl implements RoomDAO {
     public Room getRoomById(long id) {
         Query query = entityManager.createNativeQuery("select * from room where id = :id", Room.class);
         query.setParameter("id", id);
-        Room room = (Room) query.getSingleResult();
-        Hibernate.initialize(room.getBookings());
-        return room;
+
+        return (Room) query.getSingleResult();
     }
 
     @Override

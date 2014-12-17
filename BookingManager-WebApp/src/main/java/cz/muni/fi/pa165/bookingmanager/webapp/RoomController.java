@@ -61,10 +61,7 @@ public class RoomController {
         
         System.out.println("Creating room: " + room);
         System.out.println("Current hotel has: " + hotelService.findHotel(hotelId).getRooms().size() + " rooms.");
-        if (roomService.getAllRooms() != null)
-            System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
-        else
-            System.out.println("Current room service has no rooms");
+        System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
         
         if (roomId == 0) {
             roomService.addRoom(room);
