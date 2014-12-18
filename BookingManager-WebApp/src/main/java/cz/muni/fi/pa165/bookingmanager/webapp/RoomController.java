@@ -59,18 +59,12 @@ public class RoomController {
         room.setRoomNumber(roomNumber);
         room.setHotel(hotelService.findHotel(hotelId));
         
-        System.out.println("Creating room: " + room);
-        System.out.println("Current hotel has: " + hotelService.findHotel(hotelId).getRooms().size() + " rooms.");
-        System.out.println("Current room service contains: " + roomService.getAllRooms().size() + " rooms.");
-        
         if (roomId == 0) {
             roomService.addRoom(room);
         } else {
             roomService.updateRoom(room);
         }
         
-        System.out.println("Hotel " + hotelId +  " has: " + hotelService.findHotel(hotelId).getRooms().size() + "rooms.");
-
         return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
     }
 

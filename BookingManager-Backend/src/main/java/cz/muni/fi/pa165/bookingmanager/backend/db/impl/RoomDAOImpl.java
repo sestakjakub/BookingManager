@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
+import cz.muni.fi.pa165.bookingmanager.backend.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,6 +43,21 @@ public class RoomDAOImpl implements RoomDAO {
     @Override
     @Transactional
     public void persistRoom(Room room) {
+        if (room.getHotel() != null){
+            Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
+            query.setParameter("id", room.getHotel().getId());
+
+            Hotel hotel =  (Hotel) query.getSingleResult();
+            if (hotel.getRooms() == null){
+                List<Room> roomList = new ArrayList<Room>();
+                
+                roomList.add(room);
+                hotel.setRooms(roomList);
+            } else {
+                hotel.getRooms().add(room);
+            }
+            room.setHotel(hotel);
+        }
         entityManager.persist(room);
     }
 

@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Class for room entity
@@ -27,7 +30,7 @@ public class Room implements Serializable {
     @Column
     private int roomNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Hotel hotel;
 
     @Column
@@ -36,7 +39,8 @@ public class Room implements Serializable {
     @Column
     private float price;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "room")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Booking> bookings;
 
     public Room() {

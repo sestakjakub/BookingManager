@@ -7,6 +7,7 @@ package cz.muni.fi.pa165.bookingmanager.backend.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +27,9 @@ public class Booking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Room room;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
     @Temporal(TemporalType.DATE)
     private Date dateFrom;

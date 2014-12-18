@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * Class for Hotel entity.
@@ -33,7 +35,8 @@ public class Hotel implements Serializable {
     @Column
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Room> rooms;
 
     public Hotel() {
