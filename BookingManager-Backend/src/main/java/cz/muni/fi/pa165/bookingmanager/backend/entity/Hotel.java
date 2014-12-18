@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bookingmanager.backend.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Hotel implements Serializable {
     @Column
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "hotel")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Room> rooms;
 
