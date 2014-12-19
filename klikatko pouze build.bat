@@ -1,1 +1,1 @@
-mvn clean install -Dmaven.test.skip=true
+cmd /K mvn install
