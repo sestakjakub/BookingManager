@@ -44,7 +44,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/"><fmt:message key="menu.home"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/hotels"><fmt:message key="menu.hotels"/></a></li>
-                      
+                        <li><a href="${pageContext.request.contextPath}/customers"><fmt:message key="menu.customers"/></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
