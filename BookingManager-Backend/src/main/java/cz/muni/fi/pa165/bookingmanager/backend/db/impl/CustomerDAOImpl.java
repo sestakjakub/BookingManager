@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.bookingmanager.utils.EntityManagerSingleton;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -41,14 +42,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         entityManager.persist(customer);
     }
 
-    
     @Override
     @Transactional
     public Customer getCustomerById(long id) {
         Query query = entityManager.createNativeQuery("select * from customer where id = :id", Customer.class);
         query.setParameter("id", id);
 
-        Customer customer = (Customer) query.getSingleResult();
+        Customer customer;
+        try {
+            customer = (Customer) query.getSingleResult();
+        } catch (NoResultException ex) {
+            customer = null;
+        }
+        
         return customer;
     }
 
