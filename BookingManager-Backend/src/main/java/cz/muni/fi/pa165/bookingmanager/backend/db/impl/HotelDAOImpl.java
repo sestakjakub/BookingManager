@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.bookingmanager.utils.EntityManagerSingleton;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class HotelDAOImpl
- * 
+ *
  * @author JiĹ™Ă­ KareĹˇ
  */
 @Repository
@@ -30,7 +31,7 @@ public class HotelDAOImpl implements HotelDAO {
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-    
+
     @Override
     @Transactional
     public List<Hotel> getAllHotels() {
@@ -50,7 +51,14 @@ public class HotelDAOImpl implements HotelDAO {
         Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
         query.setParameter("id", id);
 
-        return (Hotel) query.getSingleResult();
+        Hotel hotel;
+        try {
+            hotel = (Hotel) query.getSingleResult();
+        } catch (NoResultException ex) {
+            hotel = null;
+        }
+
+        return hotel;
     }
 
     @Override
@@ -67,5 +75,4 @@ public class HotelDAOImpl implements HotelDAO {
         Hotel mergedHotel = this.mergeHotel(hotel);
         entityManager.remove(mergedHotel);
     }
-
 }

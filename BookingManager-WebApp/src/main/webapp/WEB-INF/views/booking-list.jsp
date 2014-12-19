@@ -12,8 +12,8 @@
 <tags:layout title="test">
     <jsp:attribute name="body">
         <h1><fmt:message key="booking.list.list"/></h1>
-        <h2><fmt:message key="hotel.list.name"/>: Hotel1</h2>
-        <h3><fmt:message key="room.list.number"/>: 101</h3>
+        <h2><fmt:message key="hotel.list.name"/>: ${room.getHotel().getName()}</h2>
+        <h3><fmt:message key="room.list.number"/>: ${room.getRoomNumber()}</h3>
         <div class="btn-group" role="group">
             <form>
                 <input type="hidden" name="roomId" value="${room.getId()}">
@@ -30,16 +30,22 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${bookings}" var="booking">
+                <c:forEach items="${room.getBookings()}" var="booking">
+                <form>
                     <tr>
                         <td>${booking.getDateFrom()}</td>
                         <td>${booking.getDateTo()}</td>
-                        <td>${booking.getCustomer()}</td>
-                        <td><a class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/edit/${booking.getId()}">Edit booking</a></td>
-                        <td><a class="btn btn-danger" href="${pageContext.request.contextPath}/room-booking/delete/${booking.getId()}">Delete booking</a></td>
+                        <td>${booking.getCustomer().getName()}</td>
+                        <td>
+                            <input type="hidden" name="roomId" value="${room.getId()}">
+                            <input type="hidden" name="bookingId" value="${booking.getId()}">
+                            <input formmethod="get" formaction="${pageContext.request.contextPath}/booking/edit" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
+                            <input formmethod="post" formaction="${pageContext.request.contextPath}/booking/delete/${booking.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
+                        </td>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </jsp:attribute>
+                </form>
+            </c:forEach>
+        </tbody>
+    </table>
+</jsp:attribute>
 </tags:layout>

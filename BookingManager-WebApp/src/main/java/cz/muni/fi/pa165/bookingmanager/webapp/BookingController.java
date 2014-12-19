@@ -38,7 +38,7 @@ public class BookingController {
     CustomerService customerService;
 
     @RequestMapping("/bookings")
-    public String roomBooking(@RequestParam long roomId, Model model) {
+    public String bookings(@RequestParam long roomId, Model model) {
         model.addAttribute("room", roomService.find(roomId));
         return "booking-list";
     }
@@ -73,8 +73,19 @@ public class BookingController {
     }
 
     @RequestMapping("/booking/delete/{id}")
-    public String deleteBooking(String name, Model model) {
-
-        return "redirect:";
+    public String deleteBooking(@PathVariable long id, UriComponentsBuilder uriBuilder, Model model) {
+        System.out.println("Deleting booking with id: " + id);
+        BookingDTO booking = bookingService.findBooking(id);
+        
+        if (booking != null)
+            System.out.println("Booking found");
+        
+        RoomDTO room = booking.getRoom();
+        
+        if (room != null)
+            System.out.println("Corresponding room found with id: " + room.getId());
+        
+        bookingService.deleteBooking(booking);
+        return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", room.getId()).build();
     }
 }

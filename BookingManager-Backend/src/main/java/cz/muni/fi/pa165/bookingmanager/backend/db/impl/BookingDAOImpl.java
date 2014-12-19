@@ -2,8 +2,10 @@ package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 
 import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
+import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,13 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     @Transactional
     public void persistBooking(Booking booking) {
+        
+        if (booking.getRoom() == null) {
+            return;
+        }
+
+        Room room = booking.getRoom();
+        room.getBookings().add(booking);
         entityManager.persist(booking);
     }
 
@@ -39,7 +48,13 @@ public class BookingDAOImpl implements BookingDAO {
         Query query = entityManager.createNativeQuery("select * from booking where id = :id", Booking.class);
         query.setParameter("id", id);
 
-        Booking booking = (Booking) query.getSingleResult();
+        Booking booking;
+        try {
+            booking = (Booking) query.getSingleResult();
+        } catch (NoResultException ex) {
+            booking = null;
+        }
+        
         return booking;
     }
 
@@ -54,6 +69,10 @@ public class BookingDAOImpl implements BookingDAO {
     @Override
     @Transactional
     public void removeBooking(Booking booking) {
+        
+        Room room = booking.getRoom();
+        room.getBookings().remove(booking);
+        entityManager.merge(room);
         Booking mergedBooking = this.mergeBooking(booking);
         entityManager.remove(mergedBooking);
     }

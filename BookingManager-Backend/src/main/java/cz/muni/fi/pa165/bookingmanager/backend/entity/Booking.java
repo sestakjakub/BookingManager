@@ -27,12 +27,16 @@ public class Booking implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Room room;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
+    
     @Temporal(TemporalType.DATE)
     private Date dateFrom;
+    
     @Temporal(TemporalType.DATE)
     private Date dateTo;
 

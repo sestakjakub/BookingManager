@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -15,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Class RoomDAOImpl
- * 
- * @author JiĹ™Ă­ KareĹˇ
+ *
+ * @author Jiří Kareš
  */
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -36,28 +37,20 @@ public class RoomDAOImpl implements RoomDAO {
     @Transactional
     public List<Room> getAllRooms() {
         Query query = entityManager.createNativeQuery("select * from room", Room.class);
-        
+
         return query.getResultList();
     }
 
     @Override
     @Transactional
     public void persistRoom(Room room) {
-        if (room.getHotel() != null){
-            Query query = entityManager.createNativeQuery("select * from hotel where id = :id", Hotel.class);
-            query.setParameter("id", room.getHotel().getId());
 
-            Hotel hotel =  (Hotel) query.getSingleResult();
-            if (hotel.getRooms() == null){
-                List<Room> roomList = new ArrayList<Room>();
-                
-                roomList.add(room);
-                hotel.setRooms(roomList);
-            } else {
-                hotel.getRooms().add(room);
-            }
-            room.setHotel(hotel);
+        if (room.getHotel() == null) {
+            return;
         }
+
+        Hotel hotel = room.getHotel();
+        hotel.getRooms().add(room);
         entityManager.persist(room);
     }
 
@@ -66,8 +59,16 @@ public class RoomDAOImpl implements RoomDAO {
     public Room getRoomById(long id) {
         Query query = entityManager.createNativeQuery("select * from room where id = :id", Room.class);
         query.setParameter("id", id);
-        
-        return (Room) query.getSingleResult();
+
+        Room room;
+
+        try {
+            room = (Room) query.getSingleResult();
+        } catch (NoResultException ex) {
+            room = null;
+        }
+
+        return room;
     }
 
     @Override
@@ -83,5 +84,4 @@ public class RoomDAOImpl implements RoomDAO {
         Room mergedRoom = this.mergeRoom(room);
         entityManager.remove(mergedRoom);
     }
-
 }
