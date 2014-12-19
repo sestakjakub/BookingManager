@@ -20,7 +20,7 @@
             <label for="price"><fmt:message key="room.form.price"/></label>
             <input name="price" class="form-control">
             <input type="submit" formmethod="post" formaction="${pageContext.request.contextPath}/room/edit/submit" class="btn btn-default" value="<fmt:message key="button.submit"/>">
-            <input type="submit" formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${room.getHotel().getId()}" class="btn btn-default" value="<fmt:message key="button.cancel"/>">
+            <input type="submit" formmethod="get" formaction="${pageContext.request.contextPath}/rooms/${hotelId}" class="btn btn-default" value="<fmt:message key="button.cancel"/>">
         </form>
     </jsp:attribute>
 </tags:layout>

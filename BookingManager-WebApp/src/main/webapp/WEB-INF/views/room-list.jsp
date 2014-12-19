@@ -40,15 +40,15 @@
                         <td align="right">
                             <input type="hidden" name="hotelId" value="${hotel.getId()}">
                             <input type="hidden" name="roomId" value="${room.getId()}">
-                            <input formmethod="get" formaction="${pageContext.request.contextPath}/room-booking/${room.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="room.button.bookings"/>">
+                            <input formmethod="get" formaction="${pageContext.request.contextPath}/bookings" class="btn btn-default" type="submit" value="<fmt:message key="room.button.bookings"/>">
                             <input formmethod="get" formaction="${pageContext.request.contextPath}/room/edit/${room.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
                             <input formmethod="post" formaction="${pageContext.request.contextPath}/room/delete/${room.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
                         </td>
+                    </tr>
                 </form>
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
+            </c:forEach>
+        </tbody>
+    </table>
 
 </jsp:attribute>
 </tags:layout>

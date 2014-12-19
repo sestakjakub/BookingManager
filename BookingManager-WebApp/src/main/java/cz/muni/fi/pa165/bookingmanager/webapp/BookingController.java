@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.BookingService;
+import cz.muni.fi.pa165.bookingmanager.api.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import java.util.ArrayList;
@@ -31,51 +32,49 @@ public class BookingController {
 
     @Autowired
     BookingService bookingService;
+    @Autowired
+    RoomService roomService;
+    @Autowired
+    CustomerService customerService;
 
-    //list bookings of room
-    @RequestMapping("/room-booking/{id}")
-    public String roomBooking(String name, Model model) {
-
+    @RequestMapping("/bookings")
+    public String roomBooking(@RequestParam long roomId, Model model) {
+        model.addAttribute("room", roomService.find(roomId));
         return "booking-list";
     }
 
-    //add booking to room with specific id
-    @RequestMapping("/room-booking/add/{id}")
-    public String addBooking(String name, Model model) {
-
+    @RequestMapping("/booking/edit")
+    public String editBooking(@RequestParam long roomId, @RequestParam long bookingId, Model model) {
+        
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("bookingId", bookingId);
         return "booking-edit";
     }
 
-    //edit booking with specific id
-    @RequestMapping("/room-booking/edit/{id}")
-    public String editBooking(String name, Model model) {
+    @RequestMapping(value = "/booking/edit/submit", method = RequestMethod.POST)
+    public String submitBooking(@RequestParam long bookingId, @RequestParam long roomId,
+            @RequestParam long customerId, @RequestParam int dateFrom,
+            @RequestParam int dateTo, UriComponentsBuilder uriBuilder) {
 
-        return "booking-edit";
+        BookingDTO booking = new BookingDTO();
+        booking.setId(bookingId);
+        booking.setRoom(roomService.find(roomId));
+        booking.setCustomer(customerService.findCustomer(customerId));
+        booking.setDateFrom(new Date(dateFrom));
+        booking.setDateTo(new Date(dateTo));
+
+        if (bookingId == 0) {
+            bookingService.addBooking(booking);
+        } else {
+            bookingService.updateBooking(booking);
+        }
+
+        return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", roomId).build();
     }
 
-    //delete booking with specific id
-    @RequestMapping("/room-booking/delete/{id}")
+    @RequestMapping("/booking/delete/{id}")
     public String deleteBooking(String name, Model model) {
 
         return "redirect:";
-    }
-    
-    @ModelAttribute("bookings")
-    public List<BookingDTO> allBookings() {
-        // TESTING TESTING TESTING TESTING TESTING
-        List<BookingDTO> bookings = new ArrayList<BookingDTO>();
-        BookingDTO booking = new BookingDTO();
-        booking.setDateFrom(new Date(1000));
-        booking.setDateTo(new Date(1200));
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        bookings.add(booking);
-        // TESTING TESTING TESTING TESTING TESTING
-        return bookings;//roomService.getAllRooms();
     }
 }

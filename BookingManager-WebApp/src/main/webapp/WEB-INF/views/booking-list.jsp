@@ -15,7 +15,11 @@
         <h2><fmt:message key="hotel.list.name"/>: Hotel1</h2>
         <h3><fmt:message key="room.list.number"/>: 101</h3>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/room-booking/add/${room.getId()}"><fmt:message key="booking.button.add"/></a>
+            <form>
+                <input type="hidden" name="roomId" value="${room.getId()}">
+                <input type="hidden" name="bookingId" value="0">
+                <input formmethod="get" type="submit" class="btn btn-default" formaction="${pageContext.request.contextPath}/booking/edit" value="<fmt:message key="booking.button.create"/>">
+            </form>
         </div>
         <table class="table">
             <thead>

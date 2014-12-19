@@ -56,7 +56,7 @@ public class RoomController {
             roomService.updateRoom(room);
         }
         
-        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", room.getHotel().getId()).build();
+        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", hotelId).build();
     }
 
     @RequestMapping(value = "/room/delete/{id}", method = RequestMethod.POST)
