@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://muni.cz/pa165/soa" xmlns:ns1="http://muni.cz/pa165/soa">
+  <xs:element name="GetAllHotelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:Hotels"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Hotels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ns1:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Hotel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:Id"/>
+        <xs:element ref="ns1:Name"/>
+        <xs:element ref="ns1:Address"/>
+        <xs:element ref="ns1:PhoneNumber"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAllHotelRequest">
+    <xs:complexType/>
+  </xs:element>
+
+  <xs:element name="AddHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="EditHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="RemoveHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ns1:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Id" type="xs:integer"/>
+  <xs:element name="Name" type="xs:string"/>
+  <xs:element name="Address" type="xs:string"/>
+  <xs:element name="PhoneNumber" type="xs:string"/>
+</xs:schema>
