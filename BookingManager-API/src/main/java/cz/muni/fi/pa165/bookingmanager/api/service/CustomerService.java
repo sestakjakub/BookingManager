@@ -15,6 +15,8 @@ public interface CustomerService {
     
     List<CustomerDTO> getAllCustomers();
     
+    CustomerDTO findCustomer(long id);
+    
     void addCustomer(CustomerDTO customer);
     
     void deleteCustomer(CustomerDTO customer);

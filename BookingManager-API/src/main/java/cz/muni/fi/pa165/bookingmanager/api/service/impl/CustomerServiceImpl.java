@@ -28,6 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDTO> getAllCustomers() {
         return customerConverter.entityListToDtoList(customerDAO.getAllCustomers());
     }
+    
+    @Override
+    public CustomerDTO findCustomer(long id) {
+        return customerConverter.entityToDto(customerDAO.getCustomerById(id));
+    }
 
     @Override
     public void addCustomer(CustomerDTO customer) {
