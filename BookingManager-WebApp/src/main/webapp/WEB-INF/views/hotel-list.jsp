@@ -36,8 +36,8 @@
                         <td align="right">
                             <input type="hidden" name="hotelId" value="${hotel.getId()}">
                             <input formmethod="get" formaction="${pageContext.request.contextPath}/rooms" class="btn btn-default" type="submit" value="<fmt:message key="hotel.button.rooms"/>">
-                            <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit/${hotel.getId()}" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
-                            <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete/${hotel.getId()}" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
+                            <input formmethod="get" formaction="${pageContext.request.contextPath}/hotel/edit" class="btn btn-default" type="submit" value="<fmt:message key="button.edit"/>">
+                            <input formmethod="post" formaction="${pageContext.request.contextPath}/hotel/delete" class="btn btn-danger" type="submit" value="<fmt:message key="button.delete"/>">
                         </td>
                     </tr>
                 </form>

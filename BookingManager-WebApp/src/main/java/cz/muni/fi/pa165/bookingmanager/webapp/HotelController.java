@@ -44,16 +44,13 @@ public class HotelController {
         return "hotel-list";
     }
 
-    @RequestMapping(value = "/hotel/edit/{id}", method = RequestMethod.GET)
-    public String editHotel(@PathVariable long id, Model model) {
-        HotelDTO hotel = hotelService.findHotel(id);
-        model.addAttribute("hotel", hotel);
-        return "hotel-edit";
-    }
-
     @RequestMapping(value = "/hotel/edit", method = RequestMethod.GET)
-    public String editHotel(Model model) {
-        HotelDTO hotel = new HotelDTO();
+    public String editHotel(@RequestParam(required = false) Long hotelId, Model model) {
+        HotelDTO hotel;
+        if (hotelId==null)
+            hotel = new HotelDTO();
+        else
+            hotel = hotelService.findHotel(hotelId);
         model.addAttribute("hotel", hotel);
         return "hotel-edit";
     }
@@ -69,10 +66,10 @@ public class HotelController {
         return "redirect:" + uriBuilder.path("/hotels").build();
     }
 
-    @RequestMapping(value = "/hotel/delete/{id}", method = RequestMethod.POST)
-    public String deleteHotel(@PathVariable long id, UriComponentsBuilder uriBuilder) {
+    @RequestMapping(value = "/hotel/delete", method = RequestMethod.POST)
+    public String deleteHotel(@RequestParam long hotelId, UriComponentsBuilder uriBuilder) {
         
-        HotelDTO hotel = hotelService.findHotel(id);
+        HotelDTO hotel = hotelService.findHotel(hotelId);
         hotelService.deleteHotel(hotel);
         return "redirect:" + uriBuilder.path("/hotels").build();
     }
