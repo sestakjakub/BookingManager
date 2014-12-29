@@ -37,24 +37,24 @@ public class RoomDAOTest {
     @Rollback(true)
     public void removeRoomTest()
     {
-//        Room room = TestUtils.createRoom( 11, 1, 100);
-//        Room room2 = TestUtils.createRoom(12, 2, 200);
+//       Room room = TestUtils.createRoom( 11, 1, 100);
+//       Room room2 = TestUtils.createRoom(12, 2, 200);
+//       
+//       roomDAO.persistRoom(room);
+//       roomDAO.persistRoom(room2);
+//       
+//       roomDAO.removeRoom(room);
+//       
+//       assertEquals("Entity: " + room.toString() + 
+//               "was not correctly removed from DB", roomDAO.getAllRooms().size(), 1);
+//       
+//       Room roomDB = roomDAO.getRoomById(room2.getId());
+//       
+//       assertEquals("Entity: " + room2.toString() +
+//               "was disturbed while removing entity: " + room.toString(), room2, roomDB);
 //        
-//        roomDAO.persistRoom(room);
-//        roomDAO.persistRoom(room2);
-//        
-//        roomDAO.removeRoom(room);
-//        
-//        assertEquals("Entity: " + room.toString() + 
-//                "was not correctly removed from DB", roomDAO.getAllRooms().size(), 1);
-//        
-//        Room roomDB = roomDAO.getRoomById(room2.getId());
-//        
-//        assertEquals("Entity: " + room2.toString() +
-//                "was disturbed while removing entity: " + room.toString(), room2, roomDB);
-        
     }
-    
+//    
 //    @Test
 //    @Rollback(true)
 //    public void getAllRoomsTest(){
@@ -86,10 +86,13 @@ public class RoomDAOTest {
 //    public void persistRoomTest()
 //    {
 //        Room room = TestUtils.createRoom(11, 1, 100);
+//        assertNotNull("Error: TestUtils.createRoom returns null Room", room);
 //        
 //        roomDAO.persistRoom(room);
 //        
 //        Room room2 = roomDAO.getRoomById(room.getId());
+//        
+//        assertNotNull("Error: roomDAO.getRoomById returns null Room", room2);
 //        
 //        assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
 //                room2.toString(), room, room2);
@@ -149,7 +152,7 @@ public class RoomDAOTest {
 //    
 //    
 //    
-    
+//    
     private static Comparator<Room> idComparator = new Comparator<Room>() {
         @Override
         public int compare(Room r1, Room r2) {

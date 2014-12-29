@@ -9,6 +9,7 @@
 <%@ attribute name="title" required="true" %>
 <%@ attribute name="body" fragment="true" required="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -53,6 +54,9 @@
         <div id="content">
             <div class="container">
                 <div class="starter-template">
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-success"><c:out value="${message}"/></div>
+                    </c:if>
                     <jsp:invoke fragment="body"/>
                 </div>
             </div><!-- /.container -->

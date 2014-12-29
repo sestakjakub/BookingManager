@@ -21,6 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+import javax.validation.Valid;
+import org.springframework.context.MessageSource;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import validators.HotelValidator;
 
 /**
  *
@@ -30,7 +36,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class HotelController {
 
     @Autowired
-    HotelService hotelService;
+    private HotelService hotelService;
+        
+    @Autowired
+    private MessageSource messageSource;
+    
+    @InitBinder("hotelDTO")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new HotelValidator());
+    }
     
     @RequestMapping("/")
     public String index() {
@@ -56,12 +70,29 @@ public class HotelController {
     }
     
     @RequestMapping(value = "/hotel/edit/submit", method = RequestMethod.POST)
-    public String submitHotel(@ModelAttribute HotelDTO hotel, UriComponentsBuilder uriBuilder) {
+    public String submitHotel(@Valid @ModelAttribute HotelDTO hotel, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
+        
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("hotel", hotel);
+            return "hotel-edit";
+        }
         
         if(hotel.getId() == 0)
+        {
             hotelService.addHotel(hotel);
+            redirectAttributes.addFlashAttribute(
+                "message",
+                messageSource.getMessage("hotel.add.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
+            );
+        }
         else
+        {
             hotelService.updateHotel(hotel);
+            redirectAttributes.addFlashAttribute(
+                "message",
+                messageSource.getMessage("hotel.update.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
+            );
+        }
         
         return "redirect:" + uriBuilder.path("/hotels").build();
     }

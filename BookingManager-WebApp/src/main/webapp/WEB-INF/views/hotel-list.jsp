@@ -14,7 +14,7 @@
         <h1><fmt:message key="hotel.list.list"/></h1>
         <div class="btn-group" role="group">
             <form action="${pageContext.request.contextPath}/hotel/edit">
-                <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.create"/>">
+                <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.add"/>">
             </form>
         </div>
         <table class="table">
