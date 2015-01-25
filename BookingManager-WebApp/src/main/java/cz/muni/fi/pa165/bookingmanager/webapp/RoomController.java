@@ -62,7 +62,6 @@ public class RoomController {
         System.out.println(room.getId());
         model.addAttribute("hotelId", room.getHotel().getId());
         roomService.deleteRoom(room);
-        System.out.println(roomService.getAllRooms().size());
         return "redirect:" + uriBuilder.path("/rooms").build();
     }
 }

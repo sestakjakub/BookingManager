@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pa165.bookingmanager.backend.test;
 
+import cz.muni.fi.pa165.bookingmanager.backend.db.HotelDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.db.RoomDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
@@ -26,148 +27,175 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Jana
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 @Transactional
 public class RoomDAOTest {
-    
+
     @Autowired
     private RoomDAO roomDAO;
+
+    @Autowired
+    HotelDAO hotelDAO;
+
+    @Test
+    @Rollback(true)
+    public void removeRoomTest() {
+        Hotel hotel = TestUtils.createHotel("sdad", "dsaf", "dsad");
+        hotelDAO.persistHotel(hotel);
+
+        Room room = TestUtils.createRoom(11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
+        room.setHotel(hotel);
+        room2.setHotel(hotel);
+
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
+
+        roomDAO.removeRoom(room);
+
+        assertEquals("Entity: " + room.toString()
+                + "was not correctly removed from DB", roomDAO.getAllRooms().size(), 1);
+
+        Room roomDB = roomDAO.getRoomById(room2.getId());
+
+        assertEquals("Entity: " + room2.toString()
+                + "was disturbed while removing entity: " + room.toString(), room2, roomDB);
+
+    }
     
     @Test
     @Rollback(true)
-    public void removeRoomTest()
-    {
-//       Room room = TestUtils.createRoom( 11, 1, 100);
-//       Room room2 = TestUtils.createRoom(12, 2, 200);
-//       
-//       roomDAO.persistRoom(room);
-//       roomDAO.persistRoom(room2);
-//       
-//       roomDAO.removeRoom(room);
-//       
-//       assertEquals("Entity: " + room.toString() + 
-//               "was not correctly removed from DB", roomDAO.getAllRooms().size(), 1);
-//       
-//       Room roomDB = roomDAO.getRoomById(room2.getId());
-//       
-//       assertEquals("Entity: " + room2.toString() +
-//               "was disturbed while removing entity: " + room.toString(), room2, roomDB);
-//        
+    public void getAllRoomsTest(){
+        Hotel hotel = TestUtils.createHotel("sdad", "dsaf", "dsad");
+        hotelDAO.persistHotel(hotel);
+        
+        Room room = TestUtils.createRoom(11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
+        Room room3 = TestUtils.createRoom(13, 3, 300);
+        
+        room.setHotel(hotel);
+        room2.setHotel(hotel);
+        room3.setHotel(hotel);
+        
+        List<Room> rooms = Arrays.asList(room, room2, room3);
+        
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
+        roomDAO.persistRoom(room3);
+        
+        List<Room> roomsExtracted = roomDAO.getAllRooms();
+        
+        Collections.sort(rooms, idComparator);
+        Collections.sort(roomsExtracted, idComparator);
+        
+        assertEquals("Number of persisted entities does not match to " + 
+                "number of entities extracted from DB", rooms.size(), roomsExtracted.size());
+        
+        assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
+        
     }
-//    
-//    @Test
-//    @Rollback(true)
-//    public void getAllRoomsTest(){
-//        
-//        Room room = TestUtils.createRoom(11, 1, 100);
-//        Room room2 = TestUtils.createRoom(12, 2, 200);
-//        Room room3 = TestUtils.createRoom(13, 3, 300);
-//        
-//        List<Room> rooms = Arrays.asList(room, room2, room3);
-//        
-//        roomDAO.persistRoom(room);
-//        roomDAO.persistRoom(room2);
-//        roomDAO.persistRoom(room3);
-//        
-//        List<Room> roomsExtracted = roomDAO.getAllRooms();
-//        
-//        Collections.sort(rooms, idComparator);
-//        Collections.sort(roomsExtracted, idComparator);
-//        
-//        assertEquals("Number of persisted entities does not match to " + 
-//                "number of entities extracted from DB", rooms.size(), roomsExtracted.size());
-//        
-//        assertEquals("List of entities extracted from DB does not match to list od entities persisted", rooms, roomsExtracted);
-//        
-//    }
-//    
-//    @Test
-//    @Rollback(true)
-//    public void persistRoomTest()
-//    {
-//        Room room = TestUtils.createRoom(11, 1, 100);
-//        assertNotNull("Error: TestUtils.createRoom returns null Room", room);
-//        
-//        roomDAO.persistRoom(room);
-//        
-//        Room room2 = roomDAO.getRoomById(room.getId());
-//        
-//        assertNotNull("Error: roomDAO.getRoomById returns null Room", room2);
-//        
-//        assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: " +
-//                room2.toString(), room, room2);
-//        
-//    }
-//    
-//    @Test
-//    @Rollback(true)
-//    public void mergeRoomTest()
-//    {
-//        Room room = TestUtils.createRoom(11, 1, 100);
-//        
-//        roomDAO.persistRoom(room);
-//        
-//        room.setCapacity(10);
-//        
-//        Room roomManaged = roomDAO.mergeRoom(room);
-//        
-//        Room room2 = roomDAO.getRoomById(room.getId());
-//        assertEquals("Merged entity: " + room.toString() + "does not equal to entity extracted from DB: " +
-//                room2.toString(), room, room2);
-//        
-//        roomManaged.setCapacity(12);
-//        
-//        room2 = roomDAO.getRoomById(roomManaged.getId());
-//        assertEquals("Managed entity: " + roomManaged.toString() + "does not equal to entity extracted from DB: " +
-//                room2.toString(), roomManaged, room2);
-//        
-//    }
-//    
-//    @Test
-//    @Rollback(true)
-//    public void updateRoomTest()
-//    {
-//        Room room = TestUtils.createRoom( 11, 1, 100);
-//        Room room2 = TestUtils.createRoom(12, 2, 200);
-//        
-//        roomDAO.persistRoom(room);
-//        roomDAO.persistRoom(room2);
-//        
-//        room.setCapacity(10);
-//        room.setPrice(200);
-//        room.setRoomNumber(12);
-//        
-//        Room roomDB = roomDAO.getRoomById(room.getId());
-//                
-//        assertEquals("Entity: " + room + "was not correctly updated in DB, actual entity: " + 
-//                roomDB, room, roomDB);
-//        
-//        Room roomDB2 = roomDAO.getRoomById(room2.getId());
-//        
-//        assertEquals("Entity: " + room2 + "was disturbed in DB while updating entity: " +
-//                room, room2, roomDB2);
-//        
-//    }
-//    
-//    
-//    
-//    
-//    
+    
+
+    @Test
+    @Rollback(true)
+    public void persistRoomTest() {
+        Hotel hotel = TestUtils.createHotel("sdad", "dsaf", "dsad");
+        hotelDAO.persistHotel(hotel);
+
+        Room room = TestUtils.createRoom(11, 1, 100);
+        room.setHotel(hotel);
+        assertNotNull("Error: TestUtils.createRoom returns null Room", room);
+
+        roomDAO.persistRoom(room);
+
+        Room room2 = roomDAO.getRoomById(room.getId());
+
+        assertNotNull("Error: roomDAO.getRoomById returns null Room", room2);
+
+        assertEquals("Persisted entity: " + room.toString() + "does not equal to entity extracted from DB: "
+                + room2.toString(), room, room2);
+
+    }
+    
+    @Test
+    @Rollback(true)
+    public void mergeRoomTest()
+    {
+        Hotel hotel = TestUtils.createHotel("sdad", "dsaf", "dsad");
+        hotelDAO.persistHotel(hotel);
+        
+        Room room = TestUtils.createRoom(11, 1, 100);
+        room.setHotel(hotel);
+        
+        roomDAO.persistRoom(room);
+        
+        room.setCapacity(10);
+        
+        Room roomManaged = roomDAO.mergeRoom(room);
+        
+        Room room2 = roomDAO.getRoomById(room.getId());
+        assertEquals("Merged entity: " + room.toString() + "does not equal to entity extracted from DB: " +
+                room2.toString(), room, room2);
+        
+        roomManaged.setCapacity(12);
+        
+        room2 = roomDAO.getRoomById(roomManaged.getId());
+        assertEquals("Managed entity: " + roomManaged.toString() + "does not equal to entity extracted from DB: " +
+                room2.toString(), roomManaged, room2);
+        
+    }
+    
+    @Test
+    @Rollback(true)
+    public void updateRoomTest()
+    {
+        Hotel hotel = TestUtils.createHotel("sdad", "dsaf", "dsad");
+        hotelDAO.persistHotel(hotel);
+        
+        Room room = TestUtils.createRoom( 11, 1, 100);
+        Room room2 = TestUtils.createRoom(12, 2, 200);
+        
+        room.setHotel(hotel);
+        room2.setHotel(hotel);
+        
+        roomDAO.persistRoom(room);
+        roomDAO.persistRoom(room2);
+        
+        room.setCapacity(10);
+        room.setPrice(200);
+        room.setRoomNumber(12);
+        
+        Room roomDB = roomDAO.getRoomById(room.getId());
+                
+        assertEquals("Entity: " + room + "was not correctly updated in DB, actual entity: " + 
+                roomDB, room, roomDB);
+        
+        Room roomDB2 = roomDAO.getRoomById(room2.getId());
+        
+        assertEquals("Entity: " + room2 + "was disturbed in DB while updating entity: " +
+                room, room2, roomDB2);
+        
+    }
+    
+    
+    
+    
+    
     private static Comparator<Room> idComparator = new Comparator<Room>() {
         @Override
         public int compare(Room r1, Room r2) {
             return Long.valueOf(r1.getId()).compareTo(Long.valueOf(r2.getId()));
         }
     };
-    
-    private Room createRoom(int roomNumber, Hotel hotel, int capacity, int price){
+
+    private Room createRoom(int roomNumber, Hotel hotel, int capacity, int price) {
         Room room = new Room();
         room.setRoomNumber(roomNumber);
         room.setHotel(hotel);
         room.setCapacity(capacity);
         room.setPrice(price);
-        
+
         return room;
-        
+
     }
 }

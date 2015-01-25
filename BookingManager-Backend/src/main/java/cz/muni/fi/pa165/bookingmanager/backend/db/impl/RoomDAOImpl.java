@@ -50,7 +50,14 @@ public class RoomDAOImpl implements RoomDAO {
         }
 
         Hotel hotel = room.getHotel();
-        hotel.getRooms().add(room);
+        
+        if (hotel.getRooms() == null){
+            List<Room> roomList = new ArrayList<>();
+            hotel.setRooms(roomList);
+        } else {
+            hotel.getRooms().add(room);
+        }
+        
         entityManager.persist(room);
     }
 
@@ -82,7 +89,7 @@ public class RoomDAOImpl implements RoomDAO {
     @Transactional
     public void removeRoom(Room room) {
         Room mergedRoom = this.mergeRoom(room);
-        System.out.println("Merged room to delete: " + room.getId());
+        System.out.println("Merged room to delete: " + mergedRoom.getId());
         entityManager.remove(mergedRoom);
     }
 }
