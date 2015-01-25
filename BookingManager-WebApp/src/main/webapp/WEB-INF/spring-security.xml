@@ -13,7 +13,7 @@
                 <intercept-url pattern="/rooms" access="hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')" />
                 <intercept-url pattern="/room/**" access="hasRole('ROLE_ADMIN')" />
                 <intercept-url pattern="/customers" access="hasRole('ROLE_ADMIN')" />
-                <intercept-url pattern="/customer/**" access="hasRole('ROLE_ADMIN')" />
+                
                 <form-login login-page="/login" default-target-url="/" 
                     authentication-failure-url="/login?error"
                     username-parameter="username"
@@ -23,10 +23,13 @@
 
 	<authentication-manager>
 		<authentication-provider>
-			<user-service>
-				<user name="admin" password="admin" authorities="ROLE_ADMIN" />
-                                <user name="user" password="user" authorities="ROLE_USER" />
-			</user-service>
+                    <!--user-service>
+                            <user name="admin" password="admin" authorities="ROLE_ADMIN" />
+                            <user name="user" password="user" authorities="ROLE_USER" />
+                    </user-service-->
+                    <jdbc-user-service data-source-ref="dataSource"
+                                       users-by-username-query="select username, password, enabled from customer where username =?"
+                                       authorities-by-username-query="select username, role from customer where username =?" />
 		</authentication-provider>
 	</authentication-manager>
 

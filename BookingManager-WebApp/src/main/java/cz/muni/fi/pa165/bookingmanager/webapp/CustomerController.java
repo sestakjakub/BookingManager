@@ -38,6 +38,13 @@ public class CustomerController {
 
         return "customer-list";
     }
+    
+    @RequestMapping(value = "/customer/register", method = RequestMethod.GET)
+    public String registerCustomer(@RequestParam long customerId, Model model) {
+        CustomerFormular customerForm = new CustomerFormular();
+        model.addAttribute("customerForm", customerForm);
+        return "customer-edit";
+    }
 
     @RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
     public String editCustomer(@RequestParam long customerId, Model model) {
@@ -47,22 +54,24 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/customer/edit/submit", method = RequestMethod.POST)
-    public String submitCustomer(@RequestParam long customerId,
-            @RequestParam String customerName, @RequestParam String customerAddress,
+    public String submitCustomer(@ModelAttribute CustomerFormular customerForm,
             UriComponentsBuilder uriBuilder) {
-
-        CustomerDTO customer = customerService.findCustomer(customerId);
-
+        CustomerDTO customer = customerService.findCustomer(customerForm.getId());
         if (customer == null) {
             customer = new CustomerDTO();
-            customer.setName(customerName);
-            customer.setAddress(customerAddress);
+            customer.setEnabled(true);
+            if (customerService.getAllCustomers() == null)
+                customer.setRole("ROLE_ADMIN");
+            else
+                customer.setRole("ROLE_USER");
+            customerForm.modifyDTO(customer);
             customerService.addCustomer(customer);
         } else {
+            customerForm.modifyDTO(customer);
             customerService.updateCustomer(customer);
         }
         
-        return "redirect:" + uriBuilder.path("/customers").build();
+        return "redirect:" + uriBuilder.path("/").build();
     }
 
     @RequestMapping(value = "/customer/delete/{id}", method = RequestMethod.POST)

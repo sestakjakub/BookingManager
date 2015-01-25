@@ -29,7 +29,7 @@
                     </tr>
                 </table>
             </form>
-            <p><fmt:message key="login.dontuhaveacc"/> <a href="${pageContext.request.contextPath}/register"><fmt:message key="login.register"/></a></p>
+            <p><fmt:message key="login.dontuhaveacc"/> <a href ="<c:url value="/customer/register"><c:param name="customerId" value="0"/></c:url>"><fmt:message key="login.register"/></a></p>
         </div>
     </jsp:attribute>
 </tags:layout>    
