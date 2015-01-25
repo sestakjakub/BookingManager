@@ -92,5 +92,7 @@ public class RoomDAOImpl implements RoomDAO {
         Hotel hotel = mergedRoom.getHotel();
         
         hotel.getRooms().remove(mergedRoom);
+        
+        entityManager.remove(mergedRoom);
     }
 }
