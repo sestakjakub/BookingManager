@@ -40,7 +40,7 @@ public class Room implements Serializable {
     @Column
     private float price;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "room")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "room", orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Booking> bookings;
 

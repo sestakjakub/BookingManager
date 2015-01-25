@@ -36,7 +36,7 @@ public class Hotel implements Serializable {
     @Column
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "hotel")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}, mappedBy = "hotel", orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Room> rooms;
 
