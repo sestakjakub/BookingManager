@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,31 +33,27 @@ public class RoomController {
 
     @RequestMapping(value = "/room/edit", method = RequestMethod.GET)
     public String edit(@RequestParam long hotelId, @RequestParam long roomId, Model model) {
-
-        model.addAttribute("roomId", roomId);
-        model.addAttribute("hotelId", hotelId);
+        RoomFormular roomForm = new RoomFormular();
+        roomForm.setId(roomId);
+        roomForm.setHotelId(hotelId);
+        model.addAttribute("roomForm", roomForm);
         return "room-edit";
     }
 
     @RequestMapping(value = "/room/edit/submit", method = RequestMethod.POST)
-    public String submit(@RequestParam long roomId, @RequestParam long hotelId,
-            @RequestParam int roomNumber, @RequestParam int capacity,
-            @RequestParam float price, UriComponentsBuilder uriBuilder) {
-        
-        RoomDTO room = new RoomDTO();
-        room.setId(roomId);
-        room.setCapacity(capacity);
-        room.setPrice(price);
-        room.setRoomNumber(roomNumber);
-        room.setHotel(hotelService.findHotel(hotelId));
-        
-        if (roomId == 0) {
+    public String submit(@ModelAttribute RoomFormular roomForm, UriComponentsBuilder uriBuilder) {
+        if (roomForm.getId() == 0) {
+            RoomDTO room = new RoomDTO();
+            room.setHotel(hotelService.findHotel(roomForm.getHotelId()));
+            roomForm.modifyDTO(room);
             roomService.addRoom(room);
         } else {
+            RoomDTO room = roomService.find(roomForm.getId());
+            roomForm.modifyDTO(room);
             roomService.updateRoom(room);
         }
         
-        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", hotelId).build();
+        return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", roomForm.getHotelId()).build();
     }
 
     @RequestMapping(value = "/room/delete/{id}", method = RequestMethod.POST)
