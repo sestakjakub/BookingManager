@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <tags:layout title="test">
     <jsp:attribute name="body">
@@ -16,6 +17,7 @@
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <div class="btn-group" role="group">
                 <form action="${pageContext.request.contextPath}/hotel/edit">
+                    <input type="hidden" name="hotelId" value="0">
                     <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="hotel.button.add"/>">
                 </form>
             </div>

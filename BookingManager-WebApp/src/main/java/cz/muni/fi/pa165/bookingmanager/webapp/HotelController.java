@@ -38,28 +38,28 @@ public class HotelController {
 
     @Autowired
     private HotelService hotelService;
-        
+
     @Autowired
     private MessageSource messageSource;
-    
+
     @InitBinder("hotelDTO")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new HotelValidator());
     }
-    
+
     @RequestMapping("/")
     public String index() {
 
         return "index";
     }
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView model = new ModelAndView();
         model.setViewName("login");
         return model;
     }
-    
+
     @RequestMapping("/hotels")
     public String hotels() {
 
@@ -67,47 +67,49 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/hotel/edit", method = RequestMethod.GET)
-    public String editHotel(@RequestParam(required = false) Long hotelId, Model model) {
-        HotelDTO hotel;
-        if (hotelId==null)
-            hotel = new HotelDTO();
-        else
-            hotel = hotelService.findHotel(hotelId);
-        model.addAttribute("hotel", hotel);
+    public String editHotel(@RequestParam long hotelId, Model model) {
+        HotelFormular hotelForm;
+        if (hotelId == 0) {
+            hotelForm = new HotelFormular();
+        } else {
+            hotelForm = new HotelFormular(hotelService.findHotel(hotelId));
+        }
+
+        model.addAttribute("hotelForm", hotelForm);
         return "hotel-edit";
     }
-    
+
     @RequestMapping(value = "/hotel/edit/submit", method = RequestMethod.POST)
-    public String submitHotel(@Valid @ModelAttribute HotelDTO hotel, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
-        
+    public String submitHotel(@ModelAttribute HotelFormular hotelForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("hotel", hotel);
+            model.addAttribute("hotelForm", hotelForm);
             return "hotel-edit";
         }
-        
-        if(hotel.getId() == 0)
-        {
+        if (hotelForm.getId() == 0) {
+            HotelDTO hotel = new HotelDTO();
+            hotelForm.modifyDTO(hotel);
             hotelService.addHotel(hotel);
             redirectAttributes.addFlashAttribute(
-                "message",
-                messageSource.getMessage("hotel.add.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
+                    "message",
+                    messageSource.getMessage("hotel.add.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
             );
-        }
-        else
-        {
+        } else {
+            HotelDTO hotel = hotelService.findHotel(hotelForm.getId());
+            hotelForm.modifyDTO(hotel);
             hotelService.updateHotel(hotel);
             redirectAttributes.addFlashAttribute(
-                "message",
-                messageSource.getMessage("hotel.update.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
+                    "message",
+                    messageSource.getMessage("hotel.update.message", new Object[]{hotel.getId(), hotel.getAddress(), hotel.getName(), hotel.getPhoneNumber()}, Locale.US)
             );
         }
-        
+
         return "redirect:" + uriBuilder.path("/hotels").build();
     }
 
     @RequestMapping(value = "/hotel/delete", method = RequestMethod.POST)
     public String deleteHotel(@RequestParam long hotelId, UriComponentsBuilder uriBuilder) {
-        
+
         HotelDTO hotel = hotelService.findHotel(hotelId);
         hotelService.deleteHotel(hotel);
         return "redirect:" + uriBuilder.path("/hotels").build();

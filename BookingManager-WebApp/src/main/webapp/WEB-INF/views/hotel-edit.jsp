@@ -12,7 +12,7 @@
 <tags:layout title="test">
     <jsp:attribute name="body">        
         <form:errors path="*" cssClass="alert alert-danger"/>
-        <form:form modelAttribute="hotel" commandName = "hotel">
+        <form:form modelAttribute="hotelForm" commandName = "hotelForm">
             <form:hidden path="id"/>
             <form:label path="name"><fmt:message key="hotel.list.name"/></form:label>
             <form:input path="name" class="form-control"/>
