@@ -56,9 +56,13 @@ public class RoomController {
         return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", roomForm.getHotelId()).build();
     }
 
-    @RequestMapping(value = "/room/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder) {
-        roomService.deleteRoom(roomService.find(id));
+    @RequestMapping(value = "/room/delete", method = RequestMethod.POST)
+    public String delete(@RequestParam long roomId, UriComponentsBuilder uriBuilder, Model model) {
+        RoomDTO room = roomService.find(roomId);
+        System.out.println(room.getId());
+        model.addAttribute("hotelId", room.getHotel().getId());
+        roomService.deleteRoom(room);
+        System.out.println(roomService.getAllRooms().size());
         return "redirect:" + uriBuilder.path("/rooms").build();
     }
 }

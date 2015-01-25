@@ -82,6 +82,7 @@ public class RoomDAOImpl implements RoomDAO {
     @Transactional
     public void removeRoom(Room room) {
         Room mergedRoom = this.mergeRoom(room);
+        System.out.println("Merged room to delete: " + room.getId());
         entityManager.remove(mergedRoom);
     }
 }
