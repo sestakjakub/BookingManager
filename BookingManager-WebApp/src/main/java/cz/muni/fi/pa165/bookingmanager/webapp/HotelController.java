@@ -26,6 +26,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.servlet.ModelAndView;
 import validators.HotelValidator;
 
 /**
@@ -50,6 +51,13 @@ public class HotelController {
     public String index() {
 
         return "index";
+    }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("login");
+        return model;
     }
     
     @RequestMapping("/hotels")

@@ -10,6 +10,7 @@
 <%@ attribute name="body" fragment="true" required="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -43,9 +44,16 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/"><fmt:message key="menu.home"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/hotels"><fmt:message key="menu.hotels"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/customers"><fmt:message key="menu.customers"/></a></li>
+                        <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
+                            <li><a href="${pageContext.request.contextPath}/"><fmt:message key="menu.home"/></a></li>
+                            <li><a href="${pageContext.request.contextPath}/hotels"><fmt:message key="menu.hotels"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <li><a href="${pageContext.request.contextPath}/customers"><fmt:message key="menu.customers"/></a></li>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')">
+                        <li><a href="<c:url value="/j_spring_security_logout" />"><fmt:message key="menu.logout"/>(<sec:authentication property="principal.username"/>)</a></li>
+                        </sec:authorize>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
