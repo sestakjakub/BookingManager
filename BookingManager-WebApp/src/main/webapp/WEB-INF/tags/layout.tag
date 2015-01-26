@@ -65,6 +65,9 @@
                     <c:if test="${not empty message}">
                         <div class="alert alert-success"><c:out value="${message}"/></div>
                     </c:if>
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger"><c:out value="${error}"/></div>
+                    </c:if>
                     <jsp:invoke fragment="body"/>
                 </div>
             </div><!-- /.container -->

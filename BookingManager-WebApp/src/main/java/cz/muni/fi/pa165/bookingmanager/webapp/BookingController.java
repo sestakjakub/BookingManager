@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,8 @@ public class BookingController {
     RoomService roomService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("/bookings")
     public String bookings(@RequestParam long roomId, Model model) {
@@ -65,16 +68,28 @@ public class BookingController {
     }
 
     @RequestMapping(value = "/booking/edit/submit", method = RequestMethod.POST)
-    public String submitBooking(@Valid @ModelAttribute BookingFormular bookingForm, UriComponentsBuilder uriBuilder) {
+    public String submitBooking(@Valid @ModelAttribute BookingFormular bookingForm, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         BookingDTO bookingDTO;
         if (bookingForm.getId() == 0) {
             bookingDTO = new BookingDTO();
             bookingForm.modifyDTO(bookingDTO, roomService, customerService);
-            bookingService.addBooking(bookingDTO);
+            if (roomService.isAvailable(bookingDTO.getDateFrom(), bookingDTO.getDateTo(), bookingDTO.getRoom()))
+            {
+                bookingService.addBooking(bookingDTO);
+                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("booking.add.message", new Object[]{}, Locale.US));
+            }
+            else
+                redirectAttributes.addFlashAttribute("error", messageSource.getMessage("booking.add.error", new Object[]{}, Locale.US));
         } else {
             bookingDTO = bookingService.findBooking(bookingForm.getId());
             bookingForm.modifyDTO(bookingDTO, roomService, customerService);
-            bookingService.updateBooking(bookingDTO);
+            if (roomService.isAvailable(bookingDTO.getDateFrom(), bookingDTO.getDateTo(), bookingDTO.getRoom()))
+            {
+                bookingService.updateBooking(bookingDTO);
+                redirectAttributes.addFlashAttribute("message", messageSource.getMessage("booking.add.message", new Object[]{}, Locale.US));
+            }
+            else
+                redirectAttributes.addFlashAttribute("error", messageSource.getMessage("booking.add.error", new Object[]{}, Locale.US));
         }
 
         return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", bookingForm.getRoomId()).build();
@@ -82,19 +97,8 @@ public class BookingController {
 
     @RequestMapping("/booking/delete/{id}")
     public String deleteBooking(@PathVariable long id, UriComponentsBuilder uriBuilder, Model model) {
-        System.out.println("Deleting booking with id: " + id);
         BookingDTO booking = bookingService.findBooking(id);
-
-        if (booking != null) {
-            System.out.println("Booking found");
-        }
-
         RoomDTO room = booking.getRoom();
-
-        if (room != null) {
-            System.out.println("Corresponding room found with id: " + room.getId());
-        }
-
         bookingService.deleteBooking(booking);
         return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", room.getId()).build();
     }
