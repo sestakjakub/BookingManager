@@ -180,8 +180,8 @@ public class RoomServiceImplTest {
         roomService.addRoom(roomDTO);
         customerService.addCustomer(customerDTO);
         
-        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1), new Date(2013,3,1));
-        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,5,1), new Date(2013,7,1));
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, 10000, 20000);
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, 1600000000, 1700000000);
 //        
 //        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,4,1), roomDTO));
 //        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,6,1), roomDTO));
@@ -190,8 +190,8 @@ public class RoomServiceImplTest {
 //        assertFalse(service.isAvailable(new Date(2013,2,1), new Date(2013,2,12), roomDTO));
 //        
         
-        assertTrue(roomService.isAvailable(new Date(2013,4,1), new Date(2013,4,12), roomDTO));
-        assertTrue(roomService.isAvailable(new Date(2013,8,1), new Date(2013,8,12), roomDTO));
+        assertTrue(roomService.isAvailable(100, 200, roomDTO));
+        assertTrue(roomService.isAvailable(150000, 160000, roomDTO));
     }
 
     

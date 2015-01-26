@@ -59,7 +59,7 @@ public class TestUtils {
     }
     
     // to be deleted
-    public static BookingDTO newBookingDTO(CustomerDTO customer, RoomDTO room, Date from, Date to){
+    public static BookingDTO newBookingDTO(CustomerDTO customer, RoomDTO room, long from, long to){
         BookingDTO booking = new BookingDTO();
         
         booking.setCustomer(customer);
@@ -75,8 +75,8 @@ public class TestUtils {
         
         booking.setCustomer(customer);
         booking.setRoom(room);
-        booking.setDateFrom(new Date(2014,1,1));
-        booking.setDateTo(new Date(2014,2,1));
+        booking.setDateFrom(1000);
+        booking.setDateTo(20000);
         
         return booking;
     }

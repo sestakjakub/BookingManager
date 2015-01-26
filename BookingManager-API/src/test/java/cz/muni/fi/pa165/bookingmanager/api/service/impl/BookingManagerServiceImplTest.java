@@ -78,7 +78,7 @@ public class BookingManagerServiceImplTest {
         RoomDTO roomDTO = TestUtils.newRoomDTO();
         CustomerDTO customerDTO = TestUtils.newCustomerDTO();
         
-        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, new Date(2013,1,1),new Date(2013,2,15));
+        bookingManagerService.reserveRoomToCustomer(roomDTO, customerDTO, 1451606400,1454284800);
         
         verify(roomDAO, Mockito.times(1)).mergeRoom(roomConverter.dtoToEntity(roomDTO));
         verify(customerDAO, Mockito.times(1)).mergeCustomer(customerConverter.dtoToEntity(customerDTO));
@@ -104,8 +104,8 @@ public class BookingManagerServiceImplTest {
         RoomDTO room = TestUtils.newRoomDTO();
         roomService.addRoom(room);
         
-        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
-        List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, new Date(1000), new Date(1100));
+        bookingManagerService.reserveRoomToCustomer(room, customer, 1451606400, 1454284800);
+        List<RoomDTO> availableRooms = bookingManagerService.getAvailableRoomsOfHotelByDates(hotel, 1451606400, 1454284800);
         assertTrue(availableRooms.isEmpty());
         
     }
@@ -121,8 +121,8 @@ public class BookingManagerServiceImplTest {
         List<RoomDTO> rooms = new ArrayList();
         rooms.add(room);
         hotel.setRooms(rooms);
-        bookingManagerService.reserveRoomToCustomer(room, customer, new Date(1000), new Date(1100));
-        List<BookingDTO> reservedRooms = bookingManagerService.getReservationsOfHotelByDates(hotel, new Date(500), new Date(1200));
+        bookingManagerService.reserveRoomToCustomer(room, customer, 1451606400, 1454284800);
+        List<BookingDTO> reservedRooms = bookingManagerService.getReservationsOfHotelByDates(hotel, 10, 1554284800);
         assertFalse(reservedRooms.isEmpty());
     }
 }
