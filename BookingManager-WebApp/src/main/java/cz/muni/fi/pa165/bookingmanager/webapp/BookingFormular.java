@@ -8,7 +8,12 @@ package cz.muni.fi.pa165.bookingmanager.webapp;
 import cz.muni.fi.pa165.bookingmanager.api.dto.BookingDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.api.service.RoomService;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -20,8 +25,8 @@ public class BookingFormular {
     private long id;
     private long roomId;
     private long customerId;
-    private long dateFrom;
-    private long dateTo;
+    private String dateFrom;
+    private String dateTo;
 
     BookingFormular() {
         id = 0;
@@ -31,8 +36,8 @@ public class BookingFormular {
         id = bookingDTO.getId();
         roomId = bookingDTO.getRoom().getId();
         customerId = bookingDTO.getCustomer().getId();
-        dateFrom = bookingDTO.getDateFrom();
-        dateTo = bookingDTO.getDateTo();
+        dateFrom = new Date(bookingDTO.getDateFrom()).toString();
+        dateTo = new Date(bookingDTO.getDateTo()).toString();
     }
 
     public void setId(long id) {
@@ -43,14 +48,24 @@ public class BookingFormular {
         return id;
     }
 
-    public void modifyDTO(BookingDTO original, RoomService roomService, CustomerService customerService) {
+    public void modifyDTO(BookingDTO original, RoomService roomService, CustomerService customerService){
+        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
         original.setId(id);
         original.setRoom(roomService.find(roomId));
         original.setCustomer(customerService.findCustomer(customerId));
-        System.out.println("From: " + new Date(dateFrom));
-        System.out.println("To: " + new Date(dateTo));
-        original.setDateFrom(dateFrom);
-        original.setDateTo(dateTo);
+        System.out.println("From: " + dateFrom);
+        System.out.println("To: " + dateTo);
+        try {
+            System.out.println("From: " + df.parse(dateFrom).getTime());
+            System.out.println("To: " + df.parse(dateTo).getTime());
+            original.setDateFrom(df.parse(dateFrom).getTime());
+            original.setDateTo(df.parse(dateTo).getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(BookingFormular.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
 
     public long getRoomId() {
@@ -69,19 +84,19 @@ public class BookingFormular {
         this.customerId = customerId;
     }
 
-    public long getDateFrom() {
+    public String getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(long dateFrom) {
+    public void setDateFrom(String dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public long getDateTo() {
+    public String getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(long dateTo) {
+    public void setDateTo(String dateTo) {
         this.dateTo = dateTo;
     }
 }

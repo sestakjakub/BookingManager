@@ -19,11 +19,11 @@
                 <form:hidden path="customerId"/>
                 <div class="form-group">
                     <form:label path="dateFrom"><fmt:message key="booking.form.from"/></form:label>
-                    <form:input path="dateFrom" class="form-control"/>
+                    <form:input path="dateFrom" type="date" class="form-control"/>
                 </div>
                 <div class="form-group">
                     <form:label path="dateTo"><fmt:message key="booking.form.to"/></form:label>
-                    <form:input path="dateTo" class="form-control"/>
+                    <form:input path="dateTo" type="date" class="form-control"/>
                 </div>
                 <input type="submit" formmethod="post" formaction="${pageContext.request.contextPath}/booking/edit/submit" class="btn btn-default" value="<fmt:message key="button.submit"/>">
                 <input type="submit" formmethod="get" formaction="${pageContext.request.contextPath}/bookings/${roomId}" class="btn btn-default" value="<fmt:message key="button.cancel"/>">
