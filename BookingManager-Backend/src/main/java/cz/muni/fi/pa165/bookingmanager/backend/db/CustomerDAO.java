@@ -28,6 +28,8 @@ public interface CustomerDAO {
      */
     public Customer getCustomerById(long id);
     
+    public Customer getCustomer(String username);
+    
     /**
      * Merges customer.
      * 

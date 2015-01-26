@@ -57,6 +57,22 @@ public class CustomerDAOImpl implements CustomerDAO {
         
         return customer;
     }
+    
+    @Override
+    @Transactional
+    public Customer getCustomer(String username) {
+        Query query = entityManager.createNativeQuery("select * from customer where username = :username", Customer.class);
+        query.setParameter("username", username);
+
+        Customer customer;
+        try {
+            customer = (Customer) query.getSingleResult();
+        } catch (NoResultException ex) {
+            customer = null;
+        }
+        
+        return customer;
+    }
 
     @Override
     @Transactional

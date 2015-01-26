@@ -33,6 +33,11 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO findCustomer(long id) {
         return customerConverter.entityToDto(customerDAO.getCustomerById(id));
     }
+    
+    @Override
+    public CustomerDTO findCustomer(String username) {
+        return customerConverter.entityToDto(customerDAO.getCustomer(username));
+    }
 
     @Override
     public void addCustomer(CustomerDTO customer) {
