@@ -6,6 +6,7 @@
 package cz.muni.fi.pa165.bookingmanager.webapp;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.CustomerDTO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 /**
@@ -77,6 +78,7 @@ public class CustomerFormular {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();  
+        this.password = passwordEncoder.encode(password);
     }
 }
