@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.bookingmanager.backend.db.impl;
 import cz.muni.fi.pa165.bookingmanager.backend.db.BookingDAO;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Booking;
 import cz.muni.fi.pa165.bookingmanager.backend.entity.Room;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -38,7 +39,14 @@ public class BookingDAOImpl implements BookingDAO {
         }
 
         Room room = booking.getRoom();
-        room.getBookings().add(booking);
+        
+        if (room.getBookings() == null){
+            List<Booking> bookingList = new ArrayList<>();
+            room.setBookings(bookingList);
+        } else {
+            room.getBookings().add(booking);
+        }
+        
         entityManager.persist(booking);
     }
 
