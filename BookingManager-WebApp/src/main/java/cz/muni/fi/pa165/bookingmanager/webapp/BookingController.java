@@ -12,7 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,46 +48,53 @@ public class BookingController {
 
     @RequestMapping("/booking/edit")
     public String editBooking(@RequestParam long roomId, @RequestParam long bookingId, Model model) {
-        
-        model.addAttribute("roomId", roomId);
-        model.addAttribute("bookingId", bookingId);
+        BookingFormular bookingForm;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomerDTO customerDTO = customerService.findCustomer(auth.getName());
+        if (bookingId == 0) {
+            bookingForm = new BookingFormular();
+            bookingForm.setRoomId(roomId);
+            bookingForm.setCustomerId(customerDTO.getId());
+        }
+        else
+        {
+            bookingForm = new BookingFormular(bookingService.findBooking(bookingId));
+        }
+        model.addAttribute("bookingForm", bookingForm);
         return "booking-edit";
     }
 
     @RequestMapping(value = "/booking/edit/submit", method = RequestMethod.POST)
-    public String submitBooking(@RequestParam long bookingId, @RequestParam long roomId,
-            @RequestParam long customerId, @RequestParam int dateFrom,
-            @RequestParam int dateTo, UriComponentsBuilder uriBuilder) {
-
-        BookingDTO booking = new BookingDTO();
-        booking.setId(bookingId);
-        booking.setRoom(roomService.find(roomId));
-        booking.setCustomer(customerService.findCustomer(customerId));
-        booking.setDateFrom(new Date(dateFrom));
-        booking.setDateTo(new Date(dateTo));
-
-        if (bookingId == 0) {
-            bookingService.addBooking(booking);
+    public String submitBooking(@Valid @ModelAttribute BookingFormular bookingForm, UriComponentsBuilder uriBuilder) {
+        BookingDTO bookingDTO;
+        if (bookingForm.getId() == 0) {
+            bookingDTO = new BookingDTO();
+            bookingForm.modifyDTO(bookingDTO, roomService, customerService);
+            bookingService.addBooking(bookingDTO);
         } else {
-            bookingService.updateBooking(booking);
+            bookingDTO = bookingService.findBooking(bookingForm.getId());
+            bookingForm.modifyDTO(bookingDTO, roomService, customerService);
+            bookingService.updateBooking(bookingDTO);
         }
 
-        return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", roomId).build();
+        return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", bookingForm.getRoomId()).build();
     }
 
     @RequestMapping("/booking/delete/{id}")
     public String deleteBooking(@PathVariable long id, UriComponentsBuilder uriBuilder, Model model) {
         System.out.println("Deleting booking with id: " + id);
         BookingDTO booking = bookingService.findBooking(id);
-        
-        if (booking != null)
+
+        if (booking != null) {
             System.out.println("Booking found");
-        
+        }
+
         RoomDTO room = booking.getRoom();
-        
-        if (room != null)
+
+        if (room != null) {
             System.out.println("Corresponding room found with id: " + room.getId());
-        
+        }
+
         bookingService.deleteBooking(booking);
         return "redirect:" + uriBuilder.path("/bookings").queryParam("roomId", room.getId()).build();
     }
