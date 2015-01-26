@@ -94,14 +94,14 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public boolean isAvailable(long from, long to, RoomDTO room) {
-//        for (BookingDTO booking : room.getBookings()) {
-//            if ((from.before(booking.getDateFrom()) && to.after(booking.getDateFrom()))
-//                    || (booking.getDateFrom().before(from) && booking.getDateTo().after(from))
-//                    || (booking.getDateFrom().before(from) && booking.getDateTo().after(to))
-//                    || (from.before(booking.getDateFrom()) && to.after(booking.getDateTo()))) {
-//                return false;
-//            }
-//        } FIX THIS
+        for (BookingDTO booking : room.getBookings()) {
+            if ((from < booking.getDateFrom() && to > booking.getDateFrom())
+                    || (booking.getDateFrom() < from && booking.getDateTo() > from)
+                    || (booking.getDateFrom() < from && booking.getDateTo() > to)
+                    || (from < booking.getDateFrom() && to > booking.getDateTo())) {
+                return false;
+            }
+        }
 
         return true;
     }
