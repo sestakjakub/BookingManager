@@ -34,7 +34,7 @@ public class EditCustomerFrame extends javax.swing.JFrame {
         this.customerNameTextField.setText(name);
         this.customerAddressTextField.setText(address);
         
-        this.setTitle("Edit Hotel");
+        this.setTitle("Edit Customer");
         
         mainFrame.setVisible(false);
     }
