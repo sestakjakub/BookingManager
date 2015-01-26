@@ -13,4 +13,9 @@ Running application
  - Clean and build whole project - mvn clean install -Dmaven.test.skip=true
  - Run tomcat - mvn tomcat7:run
 
+User registration
+=================
+ - First registred user is administrator
+ - Other users are clients
+
 project wiki: https://github.com/sestakjakub/BookingManager/wiki
