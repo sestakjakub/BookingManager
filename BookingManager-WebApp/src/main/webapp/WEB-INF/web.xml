@@ -13,7 +13,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/applicationContext.xml,
+            /WEB-INF/webApplicationContext.xml,
             /WEB-INF/spring-security.xml
         </param-value>
     </context-param>
@@ -34,7 +34,7 @@
     
     <servlet-mapping>
         <servlet-name>spring-ws</servlet-name>
-        <url-pattern>*.wsdl</url-pattern>
+        <url-pattern>/hotelService</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -45,7 +45,7 @@
  
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
     
     <filter>

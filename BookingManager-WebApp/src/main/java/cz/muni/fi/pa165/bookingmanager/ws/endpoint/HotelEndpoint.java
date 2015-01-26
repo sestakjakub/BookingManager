@@ -6,6 +6,7 @@ package cz.muni.fi.pa165.bookingmanager.ws.endpoint;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.api.service.HotelService;
+import cz.muni.fi.pa165.bookingmanager.api.service.impl.HotelServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.ws.generated.AddHotelRequest;
 import cz.muni.fi.pa165.bookingmanager.ws.generated.EditHotelRequest;
 import cz.muni.fi.pa165.bookingmanager.ws.generated.GetAllHotelRequest;
@@ -34,68 +35,52 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class HotelEndpoint {
 
-    private static final String NAMESPACE_URI = "http://muni.cz/pa165/soa";
-    private XPath hotelsExpression;
-    private XPath hotelExpression;
-    private XPath hotelIdExpression;
-    private XPath hotelNameExpression;
-    private XPath hotelAddressExpression;
-    private XPath hotelPhoneNumberExpression;
+    private static final String NAMESPACE_URI = "myTargetNamespace";
+    
     @Autowired
     HotelService hotelService;
 
-    public HotelEndpoint()
-            throws JDOMException {
-
-        Namespace namespace = Namespace.getNamespace("ns1", NAMESPACE_URI);
-
-        hotelsExpression = XPath.newInstance("ns1:Hotels");
-        hotelsExpression.addNamespace(namespace);
-
-        hotelExpression = XPath.newInstance(hotelsExpression.getXPath() + "/Hotel");
-        hotelExpression.addNamespace(namespace);
-
-        hotelIdExpression = XPath.newInstance(hotelExpression.getXPath() + "/Id");
-        hotelIdExpression.addNamespace(namespace);
-
-        hotelNameExpression = XPath.newInstance(hotelExpression.getXPath() + "/Name");
-        hotelNameExpression.addNamespace(namespace);
-
-        hotelAddressExpression = XPath.newInstance(hotelExpression.getXPath() + "/Address");
-        hotelAddressExpression.addNamespace(namespace);
-
-        hotelPhoneNumberExpression = XPath.newInstance(hotelExpression.getXPath() + "/PhoneNumber");
-        hotelPhoneNumberExpression.addNamespace(namespace);
-
+    public HotelService getHotelService() {
+        return hotelService;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "addHotelRequest")
-    public void handleAddHotelRequest(@RequestPayload AddHotelRequest addHotelRequest)
-            throws JDOMException {
+    public void setHotelService(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
 
-        String hotelName = hotelNameExpression.valueOf(addHotelRequest);
-        String hotelAddress = hotelAddressExpression.valueOf(addHotelRequest);
-        String hotelPhoneNumber = hotelPhoneNumberExpression.valueOf(addHotelRequest);
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "AddHotelRequest")
+    public void handleAddHotelRequest(@RequestPayload AddHotelRequest addHotelRequest){
+        
+        System.out.println("Processing handle add hotel request");
+        
+        Hotel hotel = addHotelRequest.getHotel();
+        
+        String hotelName = hotel.getName();
+        String hotelAddress = hotel.getAddress();
+        String hotelPhoneNumber = hotel.getPhoneNumber();
 
-        HotelDTO hotel = new HotelDTO();
-        hotel.setName(hotelName);
-        hotel.setAddress(hotelAddress);
-        hotel.setPhoneNumber(hotelPhoneNumber);
-
-        hotelService.addHotel(hotel);
+        HotelDTO hotelDTO = new HotelDTO();
+        hotelDTO.setName(hotelName);
+        hotelDTO.setAddress(hotelAddress);
+        hotelDTO.setPhoneNumber(hotelPhoneNumber);
+        
+        if (hotelService == null){
+            System.out.println("Hotel service is null");
+        } else {
+        
+            System.out.println("Hotel service isn't null");
+        }
+        hotelService.addHotel(hotelDTO);
     }
     
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotels")
-    @ResponsePayload
-    public GetAllHotelResponse handleGetAllHotels(@RequestPayload GetAllHotelRequest getAllHotelsRequest)
-            throws JDOMException {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetAllHotelRequest")
+    public @ResponsePayload GetAllHotelResponse handleGetAllHotels(@RequestPayload GetAllHotelRequest getAllHotelsRequest){
 
         List<HotelDTO> hotelDTOList = hotelService.getAllHotels();
 
         Hotels hotels = new Hotels();
         
         for (HotelDTO hotelDTO: hotelDTOList){
-            List<Hotel> hotelList = new ArrayList<>();
             
             Hotel hotel = new Hotel();
             hotel.setId(BigInteger.valueOf(hotelDTO.getId()));
@@ -111,17 +96,19 @@ public class HotelEndpoint {
         return getAllHotelResponse;
     }
     
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "editHotelRequest")
-    public void handleEditHotelRequest(@RequestPayload EditHotelRequest editHotelRequest)
-            throws JDOMException {
+    
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "EditHotelRequest")
+    public void handleEditHotelRequest(@RequestPayload EditHotelRequest editHotelRequest){
 
-        long hotelId = Long.parseLong(hotelIdExpression.valueOf(editHotelRequest));
+        long hotelId = editHotelRequest.getHotel().getId().longValue();
         
         HotelDTO hotelDTO = hotelService.findHotel(hotelId);
         
-        String hotelName = hotelNameExpression.valueOf(editHotelRequest);
-        String hotelAddress = hotelNameExpression.valueOf(editHotelRequest);
-        String hotelPhoneNumber = hotelNameExpression.valueOf(editHotelRequest);
+        Hotel hotel = editHotelRequest.getHotel();
+        
+        String hotelName = hotel.getName();
+        String hotelAddress = hotel.getAddress();
+        String hotelPhoneNumber = hotel.getPhoneNumber();
 
         hotelDTO.setName(hotelName);
         hotelDTO.setAddress(hotelAddress);
@@ -130,14 +117,15 @@ public class HotelEndpoint {
         hotelService.updateHotel(hotelDTO);
     }
     
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "removeHotelRequest")
-    public void handleDeleteHotelRequest(@RequestPayload RemoveHotelRequest removeHotelRequest)
-            throws JDOMException {
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "RemoveHotelRequest")
+    public void handleDeleteHotelRequest(@RequestPayload RemoveHotelRequest removeHotelRequest){
 
-        long hotelId = Long.parseLong(hotelIdExpression.valueOf(removeHotelRequest));
+        long hotelId = removeHotelRequest.getHotel().getId().longValue();
         
-        HotelDTO hotelDTO = hotelService.findHotel(hotelId);
+        HotelDTO hotelDTO = new HotelDTO();
+        hotelDTO.setId(hotelId);
         
         hotelService.deleteHotel(hotelDTO);
     }
+    
 }
