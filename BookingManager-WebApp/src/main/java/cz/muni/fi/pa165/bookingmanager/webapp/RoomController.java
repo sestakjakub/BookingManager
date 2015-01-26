@@ -33,9 +33,15 @@ public class RoomController {
 
     @RequestMapping(value = "/room/edit", method = RequestMethod.GET)
     public String edit(@RequestParam long hotelId, @RequestParam long roomId, Model model) {
-        RoomFormular roomForm = new RoomFormular();
-        roomForm.setId(roomId);
-        roomForm.setHotelId(hotelId);
+        RoomDTO room = roomService.find(roomId);
+        RoomFormular roomForm;
+        if (room == null) {
+            roomForm = new RoomFormular();
+            roomForm.setId(roomId);
+            roomForm.setHotelId(hotelId);
+        } else {
+            roomForm = new RoomFormular(room);
+        }
         model.addAttribute("roomForm", roomForm);
         return "room-edit";
     }
@@ -52,7 +58,7 @@ public class RoomController {
             roomForm.modifyDTO(room);
             roomService.updateRoom(room);
         }
-        
+
         return "redirect:" + uriBuilder.path("/rooms").queryParam("hotelId", roomForm.getHotelId()).build();
     }
 

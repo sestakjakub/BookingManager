@@ -14,22 +14,26 @@
                 <div class="msg">${msg}</div>
             </c:if>
 
-            <form name='loginForm' action="<c:url value='j_spring_security_check' />" method='POST'>
-                <table>
-                    <tr>
-                        <td><fmt:message key="login.username"/></td>
-                        <td><input type='text' name='username' value=''></td>
-                    </tr>
-                    <tr>
-                        <td><fmt:message key="login.password"/></td>
-                        <td><input type='password' name='password' /></td>
-                    </tr>
-                    <tr>
-                        <td colspan='2'><input name="submit" type="submit" value="submit" /></td>
-                    </tr>
-                </table>
+            <form class="form-horizontal" name='loginForm' action="<c:url value='j_spring_security_check' />" method='POST'">
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="username"><fmt:message key="login.username"/></label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="text" name="username" id="username" placeholder="Enter username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4" for="password"><fmt:message key="login.password"/></label>
+                    <div class="col-sm-4">
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Enter password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+
+
             </form>
             <p><fmt:message key="login.dontuhaveacc"/> <a href ="<c:url value="/customer/register"><c:param name="customerId" value="0"/></c:url>"><fmt:message key="login.register"/></a></p>
-        </div>
+            </div>
     </jsp:attribute>
 </tags:layout>    
