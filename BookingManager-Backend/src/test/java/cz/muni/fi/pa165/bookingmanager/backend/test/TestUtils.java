@@ -24,7 +24,7 @@ public class TestUtils {
         return room;
     }
     
-    public static Booking createBooking(Date dateFrom, Date dateTo){
+    public static Booking createBooking(long dateFrom, long dateTo){
         Booking booking = new Booking();
         booking.setDateFrom(dateFrom);
         booking.setDateTo(dateTo);

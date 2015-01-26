@@ -20,9 +20,9 @@ public class BookingDTO {
     
     private CustomerDTO customer;
     
-    private Date dateFrom;
+    private long dateFrom;
     
-    private Date dateTo;
+    private long dateTo;
     
     public BookingDTO(){
     }
@@ -51,19 +51,19 @@ public class BookingDTO {
         this.customer = customer;
     }
 
-    public Date getDateFrom() {
+    public long getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(Date dateFrom) {
+    public void setDateFrom(long dateFrom) {
         this.dateFrom = dateFrom;
     }
 
-    public Date getDateTo() {
+    public long getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(Date dateTo) {
+    public void setDateTo(long dateTo) {
         this.dateTo = dateTo;
     }
 
@@ -91,7 +91,7 @@ public class BookingDTO {
     
     @Override
     public String toString() {
-        return "Booking[ id=" + id + " from: " + dateFrom.toString() + " to:" +dateTo.toString() + " ]";
+        return "Booking[ id=" + id + " from: " + new Date(dateFrom) + " to:" + new Date(dateTo) + " ]";
     }
 
 }

@@ -17,10 +17,10 @@ import java.util.List;
  */
 public interface BookingManagerService {
     
-    void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, Date from, Date to);
+    void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, long from, long to);
     
-    List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, Date from, Date to);
+    List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, long from, long to);
     
-    List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, Date from, Date to);
+    List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, long from, long to);
     
 }

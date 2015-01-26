@@ -55,9 +55,9 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     private RoomServiceImpl roomService;
 
     @Override
-    public void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, Date from, Date to) {
+    public void reserveRoomToCustomer(RoomDTO room, CustomerDTO customer, long from, long to) {
 
-        if (to.before(from)) {
+        if (to < from) {
             throw new IllegalArgumentException("Date from is after date to");
         }
 
@@ -90,7 +90,7 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     }
 
     @Override
-    public List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, Date from, Date to) {
+    public List<RoomDTO> getAvailableRoomsOfHotelByDates(HotelDTO hotel, long from, long to) {
         if (hotel == null){
             throw new IllegalArgumentException("Hotel is null");
         }
@@ -108,13 +108,13 @@ public class BookingManagerServiceImpl implements BookingManagerService {
     }
 
     @Override
-    public List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, Date from, Date to) {
+    public List<BookingDTO> getReservationsOfHotelByDates(HotelDTO hotel, long from, long to) {
         
         if (hotel == null){
             throw new IllegalArgumentException("Hotel is null");
         }
         
-        if (from.after(to)){
+        if (from > to){
             throw new IllegalArgumentException("From date is after to");
         }
         

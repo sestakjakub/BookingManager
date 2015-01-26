@@ -31,8 +31,8 @@ public class BookingFormular {
         id = bookingDTO.getId();
         roomId = bookingDTO.getRoom().getId();
         customerId = bookingDTO.getCustomer().getId();
-        dateFrom = bookingDTO.getDateFrom().getTime();
-        dateTo = bookingDTO.getDateTo().getTime();
+        dateFrom = bookingDTO.getDateFrom();
+        dateTo = bookingDTO.getDateTo();
     }
 
     public void setId(long id) {
@@ -47,8 +47,10 @@ public class BookingFormular {
         original.setId(id);
         original.setRoom(roomService.find(roomId));
         original.setCustomer(customerService.findCustomer(customerId));
-        original.setDateFrom(new Date(dateFrom));
-        original.setDateTo(new Date(dateTo));
+        System.out.println("From: " + new Date(dateFrom));
+        System.out.println("To: " + new Date(dateTo));
+        original.setDateFrom(dateFrom);
+        original.setDateTo(dateTo);
     }
 
     public long getRoomId() {

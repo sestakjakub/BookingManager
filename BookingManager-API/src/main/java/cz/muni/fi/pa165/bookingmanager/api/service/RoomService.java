@@ -24,5 +24,5 @@ public interface RoomService {
     
     RoomDTO find(long id);
     
-    boolean isAvailable(Date from, Date to, RoomDTO room);
+    boolean isAvailable(long from, long to, RoomDTO room);
 }
