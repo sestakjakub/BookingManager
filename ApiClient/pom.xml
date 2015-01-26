@@ -69,7 +69,7 @@
                 <configuration>
                     <outputDirectory>target/generated-sources/jaxb</outputDirectory>
                     <packageName>cz.muni.fi.pa165.bookingmanager.ws.generated</packageName>
-                    <schemaDirectory>src\main\webapp\WEB-INF</schemaDirectory>
+                    <schemaDirectory>src\main\Resources\</schemaDirectory>
                 </configuration>
             </plugin>
             
