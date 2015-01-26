@@ -33,8 +33,8 @@
                 <c:forEach items="${room.getBookings()}" var="booking">
                 <form>
                     <tr>
-                        <td>${booking.getDateFrom()}</td>
-                        <td>${booking.getDateTo()}</td>
+                        <td>${booking.getStrDateFrom()}</td>
+                        <td>${booking.getStrDateTo()}</td>
                         <td>${booking.getCustomer().getName()}</td>
                         <td>
                             <input type="hidden" name="roomId" value="${room.getId()}">

@@ -49,23 +49,16 @@ public class BookingFormular {
     }
 
     public void modifyDTO(BookingDTO original, RoomService roomService, CustomerService customerService){
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         original.setId(id);
         original.setRoom(roomService.find(roomId));
         original.setCustomer(customerService.findCustomer(customerId));
-        System.out.println("From: " + dateFrom);
-        System.out.println("To: " + dateTo);
         try {
-            System.out.println("From: " + df.parse(dateFrom).getTime());
-            System.out.println("To: " + df.parse(dateTo).getTime());
             original.setDateFrom(df.parse(dateFrom).getTime());
             original.setDateTo(df.parse(dateTo).getTime());
         } catch (ParseException ex) {
             Logger.getLogger(BookingFormular.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
     }
 
     public long getRoomId() {

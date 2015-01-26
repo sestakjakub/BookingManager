@@ -50,7 +50,11 @@ public class BookingDTO {
     public void setCustomer(CustomerDTO customer) {
         this.customer = customer;
     }
-
+    
+    public String getStrDateFrom() {
+        return new Date(dateFrom).toString();
+    }
+    
     public long getDateFrom() {
         return dateFrom;
     }
@@ -59,6 +63,10 @@ public class BookingDTO {
         this.dateFrom = dateFrom;
     }
 
+    public String getStrDateTo() {
+        return new Date(dateTo).toString();
+    }
+    
     public long getDateTo() {
         return dateTo;
     }
