@@ -1,3 +1,13 @@
+
+import cz.muni.fi.pa165.bookingmanager.ws.generated.Customer;
+import cz.muni.fi.pa165.bookingmanager.ws.generated.Hotel;
+import java.math.BigInteger;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import webServiceClient.WebServiceClient;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,12 +19,17 @@
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    WebServiceClient webServiceClient;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         this.setTitle("Booking manager");
+        
+        ApplicationContext context = new ClassPathXmlApplicationContext ( "clientApplicationContext.xml" );
+        webServiceClient = ( WebServiceClient ) context.getBean ( "webServiceClient" );
     }
 
     /**
@@ -45,6 +60,11 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         loadHotelsButton.setText("Load Hotels");
+        loadHotelsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadHotelsButtonActionPerformed(evt);
+            }
+        });
 
         addHotelButton.setText("Add Hotel");
         addHotelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +81,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         deleteHotelButton.setText("Delete Hotel");
+        deleteHotelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteHotelButtonActionPerformed(evt);
+            }
+        });
 
         hotelList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,6 +136,11 @@ public class MainFrame extends javax.swing.JFrame {
         jTabbedPane4.addTab("Hotels", jPanel1);
 
         loadCustomersButton.setText("Load Customers");
+        loadCustomersButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadCustomersButtonActionPerformed(evt);
+            }
+        });
 
         addCustomerButton.setText("Add Customer");
         addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -187,14 +217,14 @@ public class MainFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                .addComponent(jTabbedPane4)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addComponent(jTabbedPane4)
                 .addContainerGap())
         );
 
@@ -204,19 +234,41 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-        // TODO add your handling code here:
+        AddCustomerFrame addCustomerFrame = new AddCustomerFrame(this, webServiceClient);
+        addCustomerFrame.setVisible(true);
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
-        // TODO add your handling code here:
+        if (customerList.getSelectedRowCount() != 1){
+            TableSelectErrorDialog tableSelectErrorDialog = new TableSelectErrorDialog(this, false);
+            tableSelectErrorDialog.setVisible(true);
+        } else {
+            int index = customerList.getSelectedRow();
+            
+            BigInteger id = (BigInteger) customerList.getValueAt(index, 0);
+            String name = (String) customerList.getValueAt(index, 1);
+            String address = (String) customerList.getValueAt(index, 2);
+            
+            EditCustomerFrame editCustomerFrame = new EditCustomerFrame(this, id, name, address, webServiceClient);
+            editCustomerFrame.setVisible(true);
+        }
+        
     }//GEN-LAST:event_editCustomerButtonActionPerformed
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
-        // TODO add your handling code here:
+        if (customerList.getSelectedRowCount() != 1){
+            TableSelectErrorDialog tableSelectErrorDialog = new TableSelectErrorDialog(this, false);
+            tableSelectErrorDialog.setVisible(true);
+        } else {
+            int index = customerList.getSelectedRow();
+            BigInteger id = (BigInteger) customerList.getValueAt(index, 0);
+            
+            webServiceClient.sendCustomerRemoveRequest(id);
+        }
     }//GEN-LAST:event_deleteCustomerButtonActionPerformed
 
     private void addHotelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHotelButtonActionPerformed
-        AddHotelFrame addHotelFrame = new AddHotelFrame(this);
+        AddHotelFrame addHotelFrame = new AddHotelFrame(this, webServiceClient);
         addHotelFrame.setVisible(true);
     }//GEN-LAST:event_addHotelButtonActionPerformed
 
@@ -227,16 +279,69 @@ public class MainFrame extends javax.swing.JFrame {
         } else {
             int index = hotelList.getSelectedRow();
             
-            String id = (String) hotelList.getValueAt(index, 0);
+            BigInteger id = (BigInteger) hotelList.getValueAt(index, 0);
             String name = (String) hotelList.getValueAt(index, 1);
             String address = (String) hotelList.getValueAt(index, 2);
             String phoneNumber = (String) hotelList.getValueAt(index, 3);
             
-            EditHotelFrame editHotelFrame = new EditHotelFrame(this, id, name, address, phoneNumber);
+            EditHotelFrame editHotelFrame = new EditHotelFrame(this, id.toString(), name, address, phoneNumber, webServiceClient);
             editHotelFrame.setVisible(true);
         }
         
     }//GEN-LAST:event_editHotelButtonActionPerformed
+
+    private void loadHotelsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadHotelsButtonActionPerformed
+        List<Hotel> hotels = webServiceClient.sendGetAllHotelsRequest();
+        
+        Object[] columnNames = {"Id", "Name", "Address", "Phone number"};
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+        
+        for (Hotel hotel: hotels){
+            
+            Object[] rowData = new Object[4];
+            
+            rowData[0] = hotel.getId();
+            rowData[1] = hotel.getName();
+            rowData[2] = hotel.getAddress();
+            rowData[3] = hotel.getPhoneNumber();
+            
+            model.addRow(rowData);
+        }
+        hotelList.setModel(model);
+        model.fireTableDataChanged();
+    }//GEN-LAST:event_loadHotelsButtonActionPerformed
+
+    private void deleteHotelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteHotelButtonActionPerformed
+        if (hotelList.getSelectedRowCount() != 1){
+            TableSelectErrorDialog tableSelectErrorDialog = new TableSelectErrorDialog(this, false);
+            tableSelectErrorDialog.setVisible(true);
+        } else {
+            int index = hotelList.getSelectedRow();
+            BigInteger id = (BigInteger) hotelList.getValueAt(index, 0);
+            
+            webServiceClient.sendHotelRemoveRequest(id);
+        }
+    }//GEN-LAST:event_deleteHotelButtonActionPerformed
+
+    private void loadCustomersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadCustomersButtonActionPerformed
+        List<Customer> customers = webServiceClient.sendGetAllCustomersRequest();
+        
+        Object[] columnNames = {"Id", "Name", "Address"};
+        DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
+        
+        for (Customer customer: customers){
+            
+            Object[] rowData = new Object[3];
+            
+            rowData[0] = customer.getId();
+            rowData[1] = customer.getName();
+            rowData[2] = customer.getAddress();
+            
+            model.addRow(rowData);
+        }
+        customerList.setModel(model);
+        model.fireTableDataChanged();
+    }//GEN-LAST:event_loadCustomersButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -1,3 +1,7 @@
+
+import java.math.BigInteger;
+import webServiceClient.WebServiceClient;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -16,8 +20,10 @@ public class EditHotelFrame extends javax.swing.JFrame {
     private String address;
     private String phoneNumber;
     
-
-    EditHotelFrame(MainFrame mainFrame, String id, String name, String address, String phoneNumber) {
+    private WebServiceClient webServiceClient;
+    
+    EditHotelFrame(MainFrame mainFrame, String id, String name, String address, String phoneNumber, WebServiceClient webServiceClient) {
+        this.webServiceClient = webServiceClient;
         
         this.mainFrame = mainFrame;
         this.hotelId = hotelId;
@@ -27,12 +33,12 @@ public class EditHotelFrame extends javax.swing.JFrame {
         
         initComponents();
         
+        this.hotelIdTextField.setText(id);
         this.hotelNameTextField.setText(name);
         this.hotelAddressTextField.setText(address);
         this.hotelPhoneNumberTextField.setText(phoneNumber);
         
         this.setTitle("Edit Hotel");
-        
         
         mainFrame.setVisible(false);
     }
@@ -46,7 +52,7 @@ public class EditHotelFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        hotelNameTextField = new javax.swing.JTextField();
+        hotelIdTextField = new javax.swing.JTextField();
         hotelAddressTextField = new javax.swing.JTextField();
         hotelPhoneNumberTextField = new javax.swing.JTextField();
         cancelButton = new javax.swing.JButton();
@@ -54,12 +60,14 @@ public class EditHotelFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        hotelNameTextField = new javax.swing.JTextField();
+        idLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        hotelNameTextField.addActionListener(new java.awt.event.ActionListener() {
+        hotelIdTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hotelNameTextFieldActionPerformed(evt);
+                hotelIdTextFieldActionPerformed(evt);
             }
         });
 
@@ -83,12 +91,25 @@ public class EditHotelFrame extends javax.swing.JFrame {
         });
 
         editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Address");
 
         jLabel3.setText("Phone Number");
 
         jLabel4.setText("Name");
+
+        hotelNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hotelNameTextFieldActionPerformed(evt);
+            }
+        });
+
+        idLabel.setText("Id");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,7 +124,7 @@ public class EditHotelFrame extends javax.swing.JFrame {
                                 .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(hotelNameTextField)
+                            .addComponent(hotelIdTextField)
                             .addComponent(hotelAddressTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                             .addComponent(hotelPhoneNumberTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -114,17 +135,27 @@ public class EditHotelFrame extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(hotelNameTextField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(hotelIdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hotelNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hotelAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,7 +163,7 @@ public class EditHotelFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hotelPhoneNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -146,9 +177,9 @@ public class EditHotelFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hotelPhoneNumberTextFieldActionPerformed
 
-    private void hotelNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelNameTextFieldActionPerformed
+    private void hotelIdTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelIdTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_hotelNameTextFieldActionPerformed
+    }//GEN-LAST:event_hotelIdTextFieldActionPerformed
 
     private void hotelAddressTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelAddressTextFieldActionPerformed
         // TODO add your handling code here:
@@ -159,12 +190,30 @@ public class EditHotelFrame extends javax.swing.JFrame {
         mainFrame.setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        BigInteger id = BigInteger.valueOf(Long.parseLong(hotelIdTextField.getText()));
+        String name = hotelNameTextField.getText();
+        String address = hotelAddressTextField.getText();
+        String phoneNumber = hotelAddressTextField.getText();
+        
+        webServiceClient.sendEditHotelRequest(id, name, address, phoneNumber);
+        
+        this.dispose();
+        mainFrame.setVisible(true);
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void hotelNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotelNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hotelNameTextFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton editButton;
     private javax.swing.JTextField hotelAddressTextField;
+    private javax.swing.JTextField hotelIdTextField;
     private javax.swing.JTextField hotelNameTextField;
     private javax.swing.JTextField hotelPhoneNumberTextField;
+    private javax.swing.JLabel idLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

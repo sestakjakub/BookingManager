@@ -1,3 +1,8 @@
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import webServiceClient.WebServiceClient;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,10 +15,12 @@
 public class AddHotelFrame extends javax.swing.JFrame {
 
     private MainFrame mainFrame;
+    private WebServiceClient webServiceClient;
     
-    AddHotelFrame(MainFrame mainFrame) {
-        
+    AddHotelFrame(MainFrame mainFrame, WebServiceClient webServiceClient) {
         this.mainFrame = mainFrame;
+        this.webServiceClient = webServiceClient;
+        
         initComponents();
         this.setTitle("Add Hotel");
         
@@ -71,6 +78,11 @@ public class AddHotelFrame extends javax.swing.JFrame {
         });
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Address");
 
@@ -150,6 +162,17 @@ public class AddHotelFrame extends javax.swing.JFrame {
         this.dispose();
         mainFrame.setVisible(true);
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        String name = hotelNameTextField.getText();
+        String address = hotelAddressTextField.getText();
+        String phoneNumber = hotelAddressTextField.getText();
+        
+        webServiceClient.sendHotelAddRequest(name, address, phoneNumber);
+        
+        this.dispose();
+        mainFrame.setVisible(true);
+    }//GEN-LAST:event_addButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

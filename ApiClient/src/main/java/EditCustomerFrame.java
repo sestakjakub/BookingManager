@@ -1,3 +1,7 @@
+
+import java.math.BigInteger;
+import webServiceClient.WebServiceClient;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,12 +13,30 @@
  */
 public class EditCustomerFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddHotelFrame
-     */
-    public EditCustomerFrame() {
+    private MainFrame mainFrame;
+    
+    private BigInteger customerId;
+    private String name;
+    private String address;
+    
+    private WebServiceClient webServiceClient;
+    
+    EditCustomerFrame(MainFrame mainFrame, BigInteger id, String name, String address, WebServiceClient webServiceClient) {
+        this.webServiceClient = webServiceClient;
+        
+        this.mainFrame = mainFrame;
+        this.customerId = customerId;
+        this.name = name;
+        this.address = address;
+        
         initComponents();
-        this.setTitle("Edit Customer");
+        
+        this.customerNameTextField.setText(name);
+        this.customerAddressTextField.setText(address);
+        
+        this.setTitle("Edit Hotel");
+        
+        mainFrame.setVisible(false);
     }
 
     /**
@@ -48,8 +70,18 @@ public class EditCustomerFrame extends javax.swing.JFrame {
         });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Address");
 
@@ -107,40 +139,21 @@ public class EditCustomerFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_customerAddressTextFieldActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddHotelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddHotelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddHotelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddHotelFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.dispose();
+        mainFrame.setVisible(true);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditCustomerFrame().setVisible(true);
-            }
-        });
-    }
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        String name = customerNameTextField.getText();
+        String address = customerAddressTextField.getText();
+        
+        webServiceClient.sendEditCustomerRequest(customerId, name, address);
+        
+        this.dispose();
+        mainFrame.setVisible(true);
+    }//GEN-LAST:event_editButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField customerAddressTextField;

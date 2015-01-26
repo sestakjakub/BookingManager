@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="myTargetNamespace" xmlns:tns="myTargetNamespace">
+  <xs:element name="GetAllHotelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Hotels"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Hotels">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tns:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Hotel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Id"/>
+        <xs:element ref="tns:Name"/>
+        <xs:element ref="tns:Address"/>
+        <xs:element ref="tns:PhoneNumber"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetAllHotelRequest">
+    <xs:complexType/>
+  </xs:element>
+
+  <xs:element name="AddHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="EditHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="RemoveHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Customers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tns:Customer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Customer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Id"/>
+        <xs:element ref="tns:Name"/>
+        <xs:element ref="tns:Address"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="GetAllCustomerRequest">
+    <xs:complexType/>
+  </xs:element>
+
+  <xs:element name="GetAllCustomerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Customers"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="AddCustomerRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Customer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="EditCustomerRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Customer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="RemoveCustomerRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="tns:Customer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Id" type="xs:integer"/>
+  <xs:element name="Name" type="xs:string"/>
+  <xs:element name="Address" type="xs:string"/>
+  <xs:element name="PhoneNumber" type="xs:string"/>
+</xs:schema>
