@@ -12,9 +12,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+import validators.CustomerValidator;
 
 /**
  *
@@ -32,6 +38,13 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+    @Autowired
+    private MessageSource messageSource;
+
+    @InitBinder("customerFormular")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new CustomerValidator());
+    }
 
     @RequestMapping("/customers")
     public String customers() {
@@ -48,14 +61,24 @@ public class CustomerController {
 
     @RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
     public String editCustomer(@RequestParam long customerId, Model model) {
+        CustomerFormular customerForm;
+        if (customerId == 0) {
+            customerForm = new CustomerFormular();
+        } else {
+            customerForm = new CustomerFormular(customerService.findCustomer(customerId));
+        }
         
-        model.addAttribute("customerId", customerId);
+        model.addAttribute("customerForm", customerForm);
         return "customer-edit";
     }
 
     @RequestMapping(value = "/customer/edit/submit", method = RequestMethod.POST)
-    public String submitCustomer(@ModelAttribute CustomerFormular customerForm,
-            UriComponentsBuilder uriBuilder) {
+    public String submitCustomer(@Valid @ModelAttribute CustomerFormular customerForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerForm", customerForm);
+            return "customer-edit";
+        }
+        
         CustomerDTO customer = customerService.findCustomer(customerForm.getId());
         if (customer == null) {
             customer = new CustomerDTO();
@@ -66,9 +89,17 @@ public class CustomerController {
                 customer.setRole("ROLE_USER");
             customerForm.modifyDTO(customer);
             customerService.addCustomer(customer);
+            redirectAttributes.addFlashAttribute(
+                    "message",
+                    messageSource.getMessage("customer.add.message", new Object[]{customer.getId(), customer.getAddress(), customer.getName(), customer.getPassword()}, Locale.US)
+            );
         } else {
             customerForm.modifyDTO(customer);
             customerService.updateCustomer(customer);
+            redirectAttributes.addFlashAttribute(
+                    "message",
+                    messageSource.getMessage("customer.add.message", new Object[]{customer.getId(), customer.getAddress(), customer.getName(), customer.getPassword()}, Locale.US)
+            );
         }
         
         return "redirect:" + uriBuilder.path("/").build();

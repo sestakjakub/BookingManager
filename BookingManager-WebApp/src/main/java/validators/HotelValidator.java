@@ -6,6 +6,7 @@
 package validators;
 
 import cz.muni.fi.pa165.bookingmanager.api.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.webapp.HotelFormular;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -18,12 +19,12 @@ public class HotelValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> type) {
-        return HotelDTO.class.isAssignableFrom(type);
+        return HotelFormular.class.isAssignableFrom(type);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        HotelDTO hotel = (HotelDTO) o;
+        HotelFormular hotel = (HotelFormular) o;
         
         ValidationUtils.rejectIfEmpty(errors, "name", "hotel.name.empty");
         ValidationUtils.rejectIfEmpty(errors, "address", "hotel.address.empty");

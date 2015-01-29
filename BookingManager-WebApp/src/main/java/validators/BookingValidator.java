@@ -5,7 +5,7 @@
  */
 package validators;
 
-import cz.muni.fi.pa165.bookingmanager.api.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.webapp.BookingFormular;
 import cz.muni.fi.pa165.bookingmanager.webapp.RoomFormular;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -15,34 +15,32 @@ import org.springframework.validation.Validator;
  *
  * @author Jana
  */
-public class RoomValidator implements Validator {
+public class BookingValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> type) {
-        return RoomFormular.class.isAssignableFrom(type);
+        return BookingFormular.class.isAssignableFrom(type);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        RoomFormular room = (RoomFormular) o;
+        BookingFormular room = (BookingFormular) o;
         
         ValidationUtils.rejectIfEmpty(errors, "number", "room.number.empty");
         ValidationUtils.rejectIfEmpty(errors, "capacity", "room.capacity.empty");
         ValidationUtils.rejectIfEmpty(errors, "price", "room.price.empty");
                 
-        if(room.getNumber() < 0){
-            errors.rejectValue("number", "room.roomNumber.negative");            
-        }
-        
-        if(room.getCapacity() < 0){
-            errors.rejectValue("capacity", "room.capacity.negative");            
-        }
-        
-        if(room.getPrice() < 0){
-            errors.rejectValue("price", "room.price.negative");            
-        }
+//        if(room.getNumber() < 0){
+//            errors.rejectValue("number", "room.roomNumber.negative");            
+//        }
+//        
+//        if(room.getCapacity() < 0){
+//            errors.rejectValue("capacity", "room.capacity.negative");            
+//        }
+//        
+//        if(room.getPrice() < 0){
+//            errors.rejectValue("price", "room.price.negative");            
+//        }
         
     }
-    
-    
 }

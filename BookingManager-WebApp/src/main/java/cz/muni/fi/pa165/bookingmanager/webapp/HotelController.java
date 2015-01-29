@@ -42,7 +42,7 @@ public class HotelController {
     @Autowired
     private MessageSource messageSource;
 
-    @InitBinder("hotelDTO")
+    @InitBinder("hotelFormular")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new HotelValidator());
     }
@@ -80,7 +80,7 @@ public class HotelController {
     }
 
     @RequestMapping(value = "/hotel/edit/submit", method = RequestMethod.POST)
-    public String submitHotel(@ModelAttribute HotelFormular hotelForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
+    public String submitHotel(@Valid @ModelAttribute HotelFormular hotelForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("hotelForm", hotelForm);
