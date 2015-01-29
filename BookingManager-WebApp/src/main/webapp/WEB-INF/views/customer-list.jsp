@@ -15,7 +15,7 @@
         <div class="btn-group" role="group">
             <form action="${pageContext.request.contextPath}/customer/edit">
                 <input type="hidden" name="customerId" value="0">
-                <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="customer.button.create"/>">
+<!--                <input formmethod="get" class="btn btn-primary" type="submit" value="<fmt:message key="customer.button.create"/>">-->
             </form>
         </div>
         <table class="table">
